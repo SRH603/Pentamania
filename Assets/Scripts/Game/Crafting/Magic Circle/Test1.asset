@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7cb9daee668d40b593abc2dc3c4d10e, type: 3}
+  m_Name: Test1
+  m_EditorClassIdentifier: 
+  taskId: test01
+  title: "\u4E0D\u662F\u54E5\u4EEC"
+  description: "\u5236\u4F5C\u4E00\u4E2Atest\u7269\u54C1\uFF0C\u4F60\u53EA\u6709100\u79D2\u7684\u4E8B\u4EF6\u3002\u52A0\u6CB9\u5C11\u5E74\uFF01"
+  requirements:
+  - requirementType: 0
+    targetId: test
+    quantity: 1
+  timeLimitSeconds: 100
+  rewardPack: {fileID: 11400000, guid: 00cbf20d39f784fdeb8ed6192757b7df, type: 2}
