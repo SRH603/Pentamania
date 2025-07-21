@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/StartMenu_Melodie.unity
     guid: b69c591ad9d7b294ba14668734020801
   - enabled: 1
-    path: Assets/Scenes/MasterScene.unity
+    path: Assets/Scenes/Game/MasterScene.unity
     guid: 85c4bae2c514445018ef79694d26230d
   - enabled: 1
     path: Assets/Scenes/Game/EndMenu_Melodie.unity

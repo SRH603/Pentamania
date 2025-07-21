@@ -75,3 +75,6 @@ Assets/AddressableAssetsData/AssetGroups/*.link
 # ========== Unity Collaborate (旧系统) ==========
 .collabignore
 .collab/*
+
+**/.DS_Store
+!*.meta

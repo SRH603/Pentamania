@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 
 /// <summary>
@@ -16,7 +17,7 @@ public abstract class CraftingMachineObject : MonoBehaviour
     /// Creates a copy of the prefab of the ingredient at whatever location this machine outputs resources at. 
     /// </summary>
     /// <param name="ingredient">The ingredient to be created.</param>
-    public abstract void CreateIngredient(Ingredient ingredient);
+    public abstract void CreateIngredient(Ingredient ingredient); // this should call CreateIngredientGameObject with an overwritten position
 
     /// <summary>
     /// Destroys a given ingredient. Not the same as removing the object component of the ingredient.
@@ -34,12 +35,28 @@ public abstract class CraftingMachineObject : MonoBehaviour
         InitCraftingMachine();
     }
 
-    protected void InsertIngredient(GameObject ingredientGameObject)
+    public void InsertIngredient(GameObject ingredientGameObject)
     {
         // Get the ingredient's ingredient script
         Ingredient ingredient = ingredientGameObject.GetComponent<IngredientObject>().GetIngredient();
 
         // Add the ingredient to the crafting machine
         craftingMachine.InsertIngredient(ingredient);
+    }
+
+    /// <summary>
+    /// Creates a new game object for the ingredient at a given position.
+    /// </summary>
+    /// <param name="position">The position to create the object.</param>
+    /// <param name="ingredient">The ingredient to be created.</param>
+    protected void CreateIngredientGameObject(Transform position, Ingredient ingredient)
+    {
+        GameObject gameObject = ingredient.GetPrefab();
+        Instantiate(gameObject, transform);
+    }
+
+    public CraftingMachine GetCraftingMachine()
+    {
+        return craftingMachine;
     }
 }
