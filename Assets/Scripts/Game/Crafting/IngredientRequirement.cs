@@ -16,7 +16,7 @@ public class IngredientRequirement
 
     public bool CompareIngredient(Ingredient ingredient)
     {
-        if (!ingredientId.Equals(ingredient.IngredientId))
+        if (!ingredientId.Equals(ingredient.ingredientId))
         {
             return false;
         }

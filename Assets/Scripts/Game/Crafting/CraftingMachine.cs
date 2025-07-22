@@ -1,208 +1,144 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 /// <summary>
-/// Handles logic regarding when and how ingredients interact. 
-/// Does not handle the creation or deletion of IngredientObjects, that is the responsibility of CraftingMachineObject.
+/// 纯逻辑层：管理当前机器中的所有 <see cref="Ingredient"/> 数量，
+/// 并根据绑定的 <see cref="Recipe"/> 判定、执行反应。
+/// 不负责场景物体的销毁 / 生成，全部交由 <see cref="CraftingMachineObject"/> 派生类实现。
 /// </summary>
 public class CraftingMachine
 {
-    // this is the object which is responsible for handling interactions with actual objects and not logic.
-    private CraftingMachineObject craftingMachineObject;
-    // stores which crafting machine this is, for reference with recipes.
-    private string craftingMachineId;
-    private List<Ingredient> ingredients;
-
-    /// <summary>
-    /// Toggles whether this CraftingMachine will repeat a reaction if possible.
-    /// </summary>
-    public bool batchProduction = true;
-    /// <summary>
-    /// Toggles whether this CraftingMachine will try a reaction with all products after a reaction as well.
-    /// Might be buggy / bad performance.
-    /// </summary>
-    public bool recursiveProduction = false;
-
-    /// <summary>
-    /// Initializes a new instance of the logic behind this crafting machine. 
-    /// Called solely by CraftingMachineObject.
-    /// </summary>
-    /// <param name="craftingMachineObject">The CraftingMachineObject creating this CraftingMachine.</param>
-    /// <param name="craftingMachineId">Which crafting machine this is. Ex: "Cauldron".</param>
-    public CraftingMachine(CraftingMachineObject craftingMachineObject, string craftingMachineId)
+    #region 内部数据结构
+    private class Stack
     {
-        this.craftingMachineObject = craftingMachineObject;
-        this.craftingMachineId = craftingMachineId;
-        ingredients = new List<Ingredient>();
+        public Ingredient Def;   // ScriptableObject 定义
+        public float Amount;     // 数量（可为体积/克/件，由配方统一约定）
+
+        public Stack(Ingredient def, float amount)
+        {
+            Def = def;
+            Amount = amount;
+        }
+    }
+    #endregion
+
+    private readonly CraftingMachineObject _host;
+    private readonly string _machineId;
+    private readonly List<Recipe> _recipes;           // 绑定在 Cauldron 上
+    private readonly List<Stack> _inventory = new();  // 现存原料
+
+    public IReadOnlyList<Recipe> Recipes => _recipes;
+    public IReadOnlyList<Ingredient> CurrentIngredients
+    {
+        get
+        {
+            List<Ingredient> list = new();
+            foreach (var s in _inventory) list.Add(s.Def);
+            return list;
+        }
     }
 
-    /// <summary>
-    /// Adds a new ingredient to this crafting machine.
-    /// </summary>
-    /// <param name="ingredient">The ingredient that will be added to the crafting machine.</param>
-    public void InsertIngredient(Ingredient ingredient)
+    public CraftingMachine(CraftingMachineObject host, string machineId, IEnumerable<Recipe> recipes)
     {
-        // if an existing ingredient has the same id, combine them into one stack
-        foreach (Ingredient existingIngredient in ingredients)
+        _host      = host;
+        _machineId = machineId;
+        _recipes   = new List<Recipe>(recipes);
+        Debug.Log($"[{_machineId}] CraftingMachine 创建完毕，已载入配方 {_recipes.Count} 条");
+    }
+
+    #region 原料操作
+    /// <summary>把原料放入机器（同 id 则堆叠）。</summary>
+    public void InsertIngredient(Ingredient ing, float amount)
+    {
+        Debug.Log($"[{_machineId}] 请求插入 {ing.ingredientId} x{amount}");
+        foreach (var s in _inventory)
         {
-            if (existingIngredient.IngredientId.Equals(ingredient.IngredientId))
+            if (s.Def == ing)      // 同一个 ScriptableObject => 同一原料
             {
-                existingIngredient.quantity += ingredient.quantity;
+                s.Amount += amount;
+                Debug.Log($"[{_machineId}] 堆叠 => {ing.ingredientId} 现有 {s.Amount}");
                 return;
             }
         }
-
-        // otherwise, add the ingredient to the list of ingredients we have
-        ingredients.Add(ingredient);
+        _inventory.Add(new Stack(ing, amount));
+        Debug.Log($"[{_machineId}] 新增堆栈 => {ing.ingredientId} 现有 {amount}");
     }
 
-    /// <summary>
-    /// Checks the passed in ingredient's reactions. 
-    /// For most machines, call this when a new ingredient is added, right after InsterIngredient().
-    /// </summary>
-    /// <param name="ingredient">The ingredient whose reactions we will check.</param>
-    /// <returns>All new ingredients created by the reaction.</returns>
-    public Ingredient[] CheckReactions(Ingredient ingredient)
+    /// <summary>返回当前总量（用于爆炸检测）。</summary>
+    public float GetTotalAmount()
     {
-        Ingredient[] productArray = ingredient.CheckReaction(ingredients.ToArray());
-        if (productArray == null) {
-            return null;
-        }
-        List<Ingredient> products = productArray.ToList();
-        
-        foreach (Ingredient product in products)
-        {
-            InsertIngredient(product);
-        }
+        float sum = 0f;
+        foreach (var s in _inventory) sum += s.Amount;
+        return sum;
+    }
+    #endregion
 
-        // check for products with zero quantity
-        ClearDepletedIngredients();
-
-        // if we have batch production turned on, will attempt this reaction a second time
-        if (batchProduction)
+    #region 配方判定
+    /// <summary>当库存发生变化时调用，尝试匹配并执行配方。</summary>
+    public bool TryProcessRecipes()
+    {
+        Debug.Log(_recipes);
+        foreach (var r in _recipes)
         {
-            Ingredient[] extraProducts = CheckReactions(ingredient);
-            if (extraProducts != null)
+            if (r.machineId != _machineId) continue;      // 非本机配方跳过
+            Debug.Log("111");
+            if (MatchRecipe(r, out Dictionary<Ingredient, float> consumeMap))
             {
-                foreach (Ingredient product in extraProducts)
+                Debug.Log($"[{_machineId}] 配方 {r.name} 满足，开始产出");
+                // 1) 消耗原料
+                foreach (var kv in consumeMap)
                 {
-                    products.Add(product);
+                    Consume(kv.Key, kv.Value);
                 }
-            }
-        }
-
-        // if we have recursive production, try production on each product
-        // this is probably bad code
-        if (recursiveProduction)
-        {
-            List<Ingredient> recursiveExtraProducts = new List<Ingredient>();
-            foreach (Ingredient product in products)
-            {
-                Ingredient[] extraProducts = CheckReactions(product);
-                if (extraProducts != null)
+                // 2) 生成产物
+                foreach (var p in r.products)
                 {
-                    foreach (Ingredient extraProduct in extraProducts)
-                    {
-                        recursiveExtraProducts.Add(extraProduct);
-                    }
+                    _host.SpawnProduct(p.ingredient, p.amount);
                 }
+                return true;
             }
-            foreach (Ingredient product in recursiveExtraProducts)
+        }
+        Debug.Log($"[{_machineId}] 当前未满足任何配方");
+        return false;
+    }
+
+    /// <summary>检查库存是否满足配方，如满足返回需要扣除的数量。</summary>
+    private bool MatchRecipe(Recipe r, out Dictionary<Ingredient, float> consume)
+    {
+        consume = new Dictionary<Ingredient, float>();
+        foreach (var req in r.reactants)
+        {
+            Stack stack = _inventory.Find(s => s.Def == req.ingredient);
+            if (stack == null)
             {
-                products.Add(product);
+                Debug.Log($"[{_machineId}] 缺少原料 {req.ingredient.ingredientId}");
+                return false;
             }
-        }
 
-        return products.ToArray();
-    }
-
-    // gets rid of all ingredients that have zero quantity left
-    private void ClearDepletedIngredients()
-    {
-        List<Ingredient> newIngredients = new List<Ingredient>();
-
-        foreach (Ingredient i in ingredients)
-        {
-            if (i.quantity > 0)
+            // 判断数量区间
+            if (stack.Amount < req.minAmount || stack.Amount > req.maxAmount)
             {
-                newIngredients.Add(i);
+                Debug.Log($"[{_machineId}] 原料 {req.ingredient.ingredientId} 数量 {stack.Amount} 不在 [{req.minAmount},{req.maxAmount}]");
+                return false;
             }
+
+            consume[req.ingredient] = req.minAmount; // 基础消耗：先按 min 扣，后续可扩展比例/偏差逻辑
         }
-
-        ingredients = newIngredients;
-    }
-
-    /// <summary>
-    /// Checks all reactions with all ingredients in this crafting machine.
-    /// Probably will go unused.
-    /// Don't use without checking in with Dillon about the ramifications of this method.
-    /// </summary>
-    /// <returns>All new ingredients created by the reactions.</returns>
-    public Ingredient[] CheckAllReactions()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Removes all ingredients from this crafting machine.
-    /// </summary>
-    /// <param name="deleteIngredients">Whether the ingredients should be deleted via the CraftingMachineObject.</param>
-    public void ClearAllIngredients(bool deleteIngredients)
-    {
-        if (deleteIngredients)
-        {
-            // safely delete the ingredients without iteration
-            while (ingredients.Count > 0)
-            {
-                craftingMachineObject.DestroyIngredient(ingredients[0]);
-            }
-        }
-
-        ingredients.Clear();
-    }
-
-    public void ClearAllIngredients()
-    {
-        ClearAllIngredients(false);
-    }
-
-    /// <summary>
-    /// Tries to remove a specific ingredient from this crafting machine.
-    /// </summary>
-    /// <param name="ingredient">The ingredient to be removed.</param>
-    /// <param name="deleteIngredient">Whether the ingredient should be deleted via the CraftingMachineObject.</param>
-    /// <returns>Whether the ingredient was successfully removed. (False if the ingredient wasn't in the crafting machine)</returns>
-    public bool RemoveIngredient(Ingredient ingredient, bool deleteIngredient)
-    {
-        // if the ingredient is not contained in this crafting machine, return false.
-        if (!ingredients.Contains(ingredient))
-        {
-            return false;
-        }
-
-        ingredients.Remove(ingredient);
-
-        if (deleteIngredient)
-        {
-            craftingMachineObject.DestroyIngredient(ingredient);
-        }
-
         return true;
     }
 
-    public bool RemoveIngredient(Ingredient ingredient)
+    /// <summary>真正扣库存（若归零则移除堆栈）。</summary>
+    private void Consume(Ingredient ing, float amount)
     {
-        return RemoveIngredient(ingredient, false);
+        Stack stack = _inventory.Find(s => s.Def == ing);
+        if (stack == null) return;
+        stack.Amount -= amount;
+        Debug.Log($"[{_machineId}] 消耗 {ing.ingredientId} {amount}，剩余 {stack.Amount}");
+        if (stack.Amount <= 0.0001f)
+        {
+            _inventory.Remove(stack);
+            Debug.Log($"[{_machineId}] {ing.ingredientId} 堆栈清空并移除");
+        }
     }
-
-    public string GetId()
-    {
-        return craftingMachineId;
-    }
-
-    public Ingredient[] GetIngredients()
-    {
-        return ingredients.ToArray();
-    }
+    #endregion
 }

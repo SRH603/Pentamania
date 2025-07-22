@@ -1,62 +1,64 @@
-using System.Diagnostics;
 using UnityEngine;
 
 /// <summary>
-/// This is the base script attached to a CraftingMachine (anything that can turn ingredients into another ingredient).
-/// The CraftingMachineObject script is responsible for registering a collision with an ingredient, 
-/// and passing that ingredient to the logical script (CraftingMachine).
-/// It also then creates an ingredient or deletes an ingredient, and also is responsible for informing the crafting machine 
-/// when an ingredient is no longer present.
+/// 所有可“炼制 / 合成”对象的抽象基类。  
+/// 负责：  
+///     • 保存 <see cref="CraftingMachine"/> 实例；  
+///     • 将场景中的 <see cref="IngredientObject"/> 吸收为纯数据；  
+///     • 提供 <see cref="SpawnProduct"/> 给逻辑层回调以实例化产物；  
+///     • 如需删除原料，可重写 <see cref="DestroyIngredient"/>。  
 /// </summary>
 public abstract class CraftingMachineObject : MonoBehaviour
 {
-    // Stores what crafting machine this object will pass its collisions to.
+    /// <summary>逻辑层实例。</summary>
     protected CraftingMachine craftingMachine;
 
-    /// <summary>
-    /// Creates a copy of the prefab of the ingredient at whatever location this machine outputs resources at. 
-    /// </summary>
-    /// <param name="ingredient">The ingredient to be created.</param>
-    public abstract void CreateIngredient(Ingredient ingredient); // this should call CreateIngredientGameObject with an overwritten position
-
-    /// <summary>
-    /// Destroys a given ingredient. Not the same as removing the object component of the ingredient.
-    /// </summary>
-    /// <param name="ingredient">The ingredient to be destroyed.</param>
-    public abstract void DestroyIngredient(Ingredient ingredient);
-
-    /// <summary>
-    /// Initializes this CraftingMachineObject's CraftingMachine. This is mandatory to be implemented by all children.
-    /// </summary>
-    protected abstract void InitCraftingMachine();
-
-    void Awake()
+    #region 生命周期
+    protected virtual void Awake()
     {
         InitCraftingMachine();
     }
+    #endregion
 
-    public void InsertIngredient(GameObject ingredientGameObject)
-    {
-        // Get the ingredient's ingredient script
-        Ingredient ingredient = ingredientGameObject.GetComponent<IngredientObject>().GetIngredient();
-
-        // Add the ingredient to the crafting machine
-        craftingMachine.InsertIngredient(ingredient);
-    }
+    #region 子类必须实现
+    /// <summary>子类负责在此 new <see cref="CraftingMachine"/> 并把自身传入。</summary>
+    protected abstract void InitCraftingMachine();
 
     /// <summary>
-    /// Creates a new game object for the ingredient at a given position.
+    /// 当 <see cref="CraftingMachine"/> 判定有产物时会调用此函数。  
+    /// 子类应在此实例化 prefab、做动画或掉落等。
     /// </summary>
-    /// <param name="position">The position to create the object.</param>
-    /// <param name="ingredient">The ingredient to be created.</param>
-    protected void CreateIngredientGameObject(Transform position, Ingredient ingredient)
+    public abstract void SpawnProduct(Ingredient ingredient, float amount);
+    #endregion
+
+    #region 可选重写
+    /// <summary>
+    /// 若需要物理方式销毁 / 特效，可在子类覆写。  
+    /// 默认仅做 Debug。
+    /// </summary>
+    public virtual void DestroyIngredient(Ingredient ingredient)
     {
-        GameObject gameObject = ingredient.GetPrefab();
-        Instantiate(gameObject, transform);
+        Debug.Log($"[{name}] DestroyIngredient 默认实现 —— {ingredient?.ingredientId}");
+    }
+    #endregion
+
+    #region 工具函数
+    /// <summary>
+    /// 将场景里的 <see cref="IngredientObject"/> 转化为数据并放入逻辑层。  
+    /// 由具体触发器（如坩埚）在检测到碰撞时调用。
+    /// </summary>
+    protected void InsertIngredientObject(IngredientObject ingObj)
+    {
+        if (!ingObj) return;
+
+        Ingredient data  = ingObj.GetIngredient();
+        float      count = data.quantity <= 0 ? 1f : data.quantity;
+
+        Debug.Log($"[{name}] InsertIngredientObject -> {data.ingredientId} ×{count}");
+        craftingMachine.InsertIngredient(data, count);
     }
 
-    public CraftingMachine GetCraftingMachine()
-    {
-        return craftingMachine;
-    }
+    /// <summary>便于其他脚本获取逻辑对象。</summary>
+    public CraftingMachine GetCraftingMachine() => craftingMachine;
+    #endregion
 }

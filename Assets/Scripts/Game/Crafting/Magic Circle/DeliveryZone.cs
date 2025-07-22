@@ -9,7 +9,7 @@ public class DeliveryZone : MonoBehaviour
         if (ingObj == null) return;
         
         Ingredient ing = ingObj.GetIngredient();
-        TaskManager.Instance.OnItemDelivered(ing.IngredientId, ing.quantity);
+        TaskManager.Instance.OnItemDelivered(ing.ingredientId, (int)ing.quantity);
         Destroy(other.gameObject);
         
         Debug.Log($"{ingObj.name} is submitted");

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using IngredientBehaviorType = IngredientObject.IngredientBehaviorType;
 
 /// <summary>
@@ -15,58 +17,44 @@ using IngredientBehaviorType = IngredientObject.IngredientBehaviorType;
 /// The actual script attached to an object is the IngredientObject script, which is responsible for setting all these variables.<br/>
 /// <br/>
 /// </summary>
-public class Ingredient
+
+[CreateAssetMenu(menuName="Game/Ingredient")]
+public class Ingredient : ScriptableObject 
 {
     // stores which ingredient this is
-    public string IngredientId { get; private set; }
+    [SerializeField] public string ingredientId;
     // Determines whether this ingredient is a solid, liquid, or dust.
-    public IngredientBehaviorType IngredientBehavior { get; private set; }
+    [SerializeField] public IngredientBehaviorType ingredientBehavior;
     // how much of this ingredient is involved.
-    public int quantity;
-    // the actual recipes that are involved
-    public Recipe[] Recipes { get; private set; }
+    [SerializeField] public float quantity;
     // stores which game object prefab this ingredient is associated with.
     // this is necessary to convert Ingredients to IngredientObjects.
+    [SerializeField] public List<Tag> tags;
+
+    [SerializeField] public IngredientObject prefab;
     // Recipes are checked on a first come first serve basis and only one recipe can occur from a single ingredient.
     private IngredientObject ingredientObject;
     // defines a path to the game object that represents this ingredient.
     // Nessecary to convert Ingredients to IngredientObjects if the IngredientObject has already been detached.
-    private string gameObjectPath;
+    // private string gameObjectPath;
+    
+    
 
-    public Ingredient(string ingredientId, int quantity, Recipe[] recipes, string gameObjectPath, IngredientBehaviorType ingredientBehavior)
+    public Ingredient(string ingredientId, float quantity, IngredientBehaviorType ingredientBehavior)
     {
-        IngredientId = ingredientId;
+        this.ingredientId = ingredientId;
         this.quantity = quantity;
-        Recipes = recipes;
-        this.gameObjectPath = gameObjectPath;
-        IngredientBehavior = ingredientBehavior;
+        //this.gameObjectPath = gameObjectPath;
+        this.ingredientBehavior = ingredientBehavior;
     }
 
-    public Ingredient(IngredientObject ingredientObject, int quantity, string gameObjectPath)
+    public Ingredient(IngredientObject ingredientObject, float quantity)
     {
         this.ingredientObject = ingredientObject;
-        IngredientId = ingredientObject.GetIngredientId();
+        this.ingredientId = ingredientObject.GetIngredientId();
         this.quantity = quantity;
-        Recipes = ingredientObject.InitializeRecipes();
-        this.gameObjectPath = gameObjectPath;
-        IngredientBehavior = ingredientObject.GetIngredientBehavior();
-    }
-
-    public Ingredient[] CheckReaction(Ingredient[] ingredients)
-    {
-        // Loop through the recipes in this ingredient
-        foreach (Recipe recipe in Recipes)
-        {
-            // check the reaction, and if it produces a result, return that.
-            // this means that recipes are checked in a first come, first serve basis, and later recipes are ignored.
-            Ingredient[] products = recipe.CheckReaction(ingredients);
-            if (products != null)
-            {
-                return products;
-            }
-        }
-
-        return null;
+        //this.gameObjectPath = gameObjectPath;
+        this.ingredientBehavior = ingredientObject.GetIngredientBehavior();
     }
 
     /// <summary>
@@ -100,26 +88,6 @@ public class Ingredient
     /// <returns>A prefab to be instantiated.</returns>
     public GameObject GetPrefab()
     {
-        return Resources.Load<GameObject>(gameObjectPath);
+        return prefab.gameObject;
     }
-
-    /// <summary>
-    /// Gets a new objectless ingredient from a provided path.
-    /// </summary>
-    /// <param name="path">The path to get the ingredient from. The head is Resources/Prefabs/Ingredients</param>
-    /// <returns></returns>
-    public static Ingredient GetIngredientFromPath(string path)
-    {
-        GameObject masterIngredient = Resources.Load<GameObject>("Prefabs/Ingredients/" + path);
-        IngredientObject ingredientObject = masterIngredient.GetComponent<IngredientObject>();
-        return ingredientObject.InitializeObjectlessIngredient();
-    }
-
-    public void ReduceQuantityByRequirement(IngredientRequirement requirement)
-    {
-        if (requirement.ingredientId.Equals(IngredientId))
-        {
-            quantity -= requirement.quantity;
-        }
-    }  
 }
