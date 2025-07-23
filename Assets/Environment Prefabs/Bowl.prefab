@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 810805242122066908}
   - component: {fileID: 5913662088450833491}
   - component: {fileID: 7528144627448814159}
-  - component: {fileID: 9112841701668390471}
   m_Layer: 0
   m_Name: Bowl
   m_TagString: Untagged
@@ -27,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6272515475287615575}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.770212, y: 0.86046195, z: -3.9934454}
-  m_LocalScale: {x: 0.7428288, y: 0.7428288, z: 0.7428288}
+  m_LocalScale: {x: 1.2865376, y: 0.93676084, z: 2.2908316}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7a37724d2c3b7a642a3aaf7b1eaaac5f, type: 2}
+  - {fileID: 2100000, guid: 84bf9b9ea47ae054da451ee49b6ba7c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,25 +86,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9112841701668390471
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6272515475287615575}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 477525350536967170, guid: ec1bea330d224f04da9cec66737e0749, type: 3}

@@ -240,68 +240,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &1467616646
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1467616648}
-  - component: {fileID: 1467616647}
-  m_Layer: 0
-  m_Name: HDRThingy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1467616647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467616646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f19d9143a39eb3b46bc4563e9889cfbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_DrawDistance: 1000
-  m_FadeScale: 0.9
-  m_StartAngleFade: 180
-  m_EndAngleFade: 180
-  m_UVScale: {x: 1, y: 1}
-  m_UVBias: {x: 0, y: 0}
-  m_AffectsTransparency: 0
-  m_TransparentTextureResolution:
-    m_Override: 256
-    m_UseOverride: 1
-    m_Level: 0
-  m_DecalLayerMask: 1
-  m_ScaleMode: 0
-  m_Offset: {x: 0, y: 0, z: 0}
-  m_Size: {x: 1, y: 1, z: 1}
-  m_FadeFactor: 1
-  m_Version: 3
---- !u!4 &1467616648
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467616646}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7.010502, y: 0.2803583, z: -0.89215326}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1614649602
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: ShapeModule.angle
-      value: 10
+      value: 17.955921
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: SubModule.enabled
@@ -607,11 +545,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: ShapeModule.m_Rotation.x
-      value: 260
+      value: 272.4477
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
+      propertyPath: ShapeModule.m_Rotation.y
+      value: 116.93348
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: ShapeModule.m_Rotation.z
-      value: 0
+      value: 245.16495
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: ShapeModule.radius.value
@@ -659,7 +601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 10
+      value: 9.951291
       objectReference: {fileID: 0}
     - target: {fileID: 8746025182121777636, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: SubModule.subEmitters.Array.size
@@ -1301,4 +1243,3 @@ SceneRoots:
   - {fileID: 3481549465258775265}
   - {fileID: 7708746441927173399}
   - {fileID: 1027302666557321791}
-  - {fileID: 1467616648}
