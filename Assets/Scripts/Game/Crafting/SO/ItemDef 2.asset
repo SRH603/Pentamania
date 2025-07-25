@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0ead1d8eafc349d19b7a44493b5aaf84, type: 3}
   m_Name: ItemDef 2
   m_EditorClassIdentifier: Assembly-CSharp::ItemDef
-  ingredientId: test1
+  ingredientId: test3
+  audioType: 0
   maxStack: 2147483647
-  mesh: {fileID: -4189514412694937182, guid: 147ae308eec018b40a7b312ae58f44c7, type: 3}
-  material: {fileID: 2100000, guid: 9346e8cca828940b4ad0eb0a31c1ca27, type: 2}
-  scale: {x: 50, y: 50, z: 50}
+  baseIngredient: {fileID: 8343167407413159200, guid: d56cf1aacbea4704cac4d7983df1a0ad, type: 3}
+  mesh: {fileID: 0}
+  material: {fileID: 0}
+  scale: {x: 1, y: 1, z: 1}

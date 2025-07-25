@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDef
   ingredientId: 
   maxStack: 2147483647
-  mesh: {fileID: 5595516657732599146, guid: e77b4ceca30ec4ba18d89216a93f0d10, type: 3}
-  material: {fileID: 2100000, guid: 9346e8cca828940b4ad0eb0a31c1ca27, type: 2}
+  baseIngredient: {fileID: 7189354759328668625, guid: 2d6267c6688f649cdb4723acbc771cca, type: 3}
+  mesh: {fileID: 0}
+  material: {fileID: 0}
+  scale: {x: 1, y: 1, z: 1}

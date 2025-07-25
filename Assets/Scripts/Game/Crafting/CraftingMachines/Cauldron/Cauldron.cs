@@ -7,72 +7,88 @@ public class Cauldron
 {
     private readonly ItemStorage itemStorage;
     private readonly FluidStorage fluidStorage;
-    private readonly string machineId;
     private readonly List<CauldronRecipe> recipes;
 
     public event Action OnInventoryChanged;
     public event Action<float> OnExplode;
-    
-    public Cauldron(string machineId, IEnumerable<CauldronRecipe> recipes,
+
+    public Cauldron(IEnumerable<CauldronRecipe> recipes,
                     int itemSlots = 16, int fluidTanks = 1, float tankCap = 9999f)
     {
-        this.machineId = machineId;
-        this.recipes   = new List<CauldronRecipe>(recipes);
-        itemStorage    = new ItemStorage(itemSlots);
-        fluidStorage   = new FluidStorage(fluidTanks, tankCap);
-        Debug.Log($"[CauldronData] Created id={machineId}, recipes={this.recipes.Count}");
+        this.recipes = new List<CauldronRecipe>(recipes);
+        itemStorage = new ItemStorage(itemSlots);
+        fluidStorage = new FluidStorage(fluidTanks, tankCap);
     }
-
-    #region API
-    public float GetTotalAmount(Func<ItemStack, float> itemMeasure = null,
-                                Func<FluidStack, float> fluidMeasure = null)
+    
+    public float GetTotalAmount(Func<ItemStack, float> itemMeasure = null, Func<FluidStack, float> fluidMeasure = null)
     {
-        itemMeasure  ??= (it => it.amount);
-        fluidMeasure ??= (fl => fl.volume);
+        if (itemMeasure == null)
+            itemMeasure = it => it.amount;
+
+        if (fluidMeasure == null)
+            fluidMeasure = fl => fl.volume;
+
 
         float sum = 0f;
-        foreach (var it in itemStorage.View())  if (!it.IsEmpty) sum += itemMeasure(it);
-        foreach (var fl in fluidStorage.View()) if (!fl.IsEmpty) sum += fluidMeasure(fl);
+        foreach (var it in itemStorage.View()) 
+            if (!it.IsEmpty) 
+                sum += itemMeasure(it);
+        foreach (var fl in fluidStorage.View()) 
+            if (!fl.IsEmpty) 
+                sum += fluidMeasure(fl);
         return sum;
     }
 
     public bool TryGetOnlyFluid(out FluidDef def, out float vol)
     {
-        def = null; vol = 0f;
+        def = null;
+        vol = 0f;
         FluidDef found = null;
         foreach (var tank in fluidStorage.View())
         {
-            if (tank.IsEmpty) continue;
-            if (found == null) { found = tank.Def; vol = tank.volume; }
-            else if (found != tank.Def) return false;
-            else vol += tank.volume;
+            if (tank.IsEmpty)
+                continue;
+            if (found == null)
+            {
+                found = tank.Def;
+                vol = tank.volume;
+            }
+            else if (found != tank.Def) 
+                return false;
+            else 
+                vol += tank.volume;
         }
-        if (found == null) return false;
+        if (found == null)
+            return false;
         def = found;
         return true;
     }
-    #endregion
-
-    #region I/O
+    
     public void InsertSolid(ItemStack stack)
     {
-        if (stack.IsEmpty) return;
+        if (stack.IsEmpty)
+            return;
         int remain = itemStorage.Insert(stack);
-        if (remain > 0) Debug.LogWarning($"[CauldronData] Item overflow: {stack.Def.name} x{remain}");
+        if (remain > 0)
+            Debug.Log("Exceeds (Solid)");
         OnInventoryChanged?.Invoke();
     }
 
-    public void InsertLiquid(FluidStack stack)
+    public float InsertLiquid(FluidStack stack)
     {
-        if (stack.IsEmpty) return;
+        if (stack.IsEmpty)
+            return 0;
         float remain = fluidStorage.Fill(stack);
-        if (remain > 0) Debug.LogWarning($"[CauldronData] Fluid overflow: {stack.Def.name} ~{remain}");
+        if (remain > 0)
+            Debug.Log("Exceeds (Liquid)");
         OnInventoryChanged?.Invoke();
+        return remain;
     }
 
     public float TakeFluid(FluidDef def, float request)
     {
-        if (request <= 0f) return 0f;
+        if (request <= 0f)
+            return 0f;
         FluidStack drained = fluidStorage.Drain(f => f.Def == def, Mathf.CeilToInt(request));
         float got = Mathf.Min(request, drained.volume);
         if (got < drained.volume)
@@ -82,9 +98,7 @@ public class Cauldron
         OnInventoryChanged?.Invoke();
         return got;
     }
-    #endregion
-
-    #region Recipe
+    
     public bool TryProcessOnce(out List<ItemStack> solidsToSpawn, out List<FluidStack> liquidsToStay)
     {
         solidsToSpawn = null;
@@ -92,14 +106,13 @@ public class Cauldron
 
         foreach (var r in recipes)
         {
-            if (r.machineId != machineId) continue;
             if (MatchRecipe(r, out var consumeMap, out float ratio))
             {
                 foreach (var kv in consumeMap)
                 {
                     Consume(kv.Key, kv.Value);
                 }
-                
+
                 solidsToSpawn = new List<ItemStack>();
                 liquidsToStay = new List<FluidStack>();
 
@@ -114,7 +127,7 @@ public class Cauldron
                     else if (p.ingredient is FluidDef fluidDef)
                         liquidsToStay.Add(new FluidStack(fluidDef, amt));
                 }
-                
+
                 foreach (var fl in liquidsToStay) InsertLiquid(fl);
 
                 OnInventoryChanged?.Invoke();
@@ -130,17 +143,19 @@ public class Cauldron
     {
         consume = new Dictionary<IngredientDef, float>();
         proportionRatio = 1f;
-        
+
         Dictionary<IngredientDef, float> amounts = GetAmountsDict();
-        
+
         float limiting = float.MaxValue;
         bool anyProportional = false;
 
         foreach (var req in r.reactants)
         {
             amounts.TryGetValue(req.ingredient, out float have);
-            if (have < req.minAmount) return false;
-            if (have > req.maxAmount) {
+            if (have < req.minAmount) 
+                return false;
+            if (have > req.maxAmount)
+            {
             }
             consume[req.ingredient] = req.minAmount;
 
@@ -156,40 +171,47 @@ public class Cauldron
         {
             proportionRatio = Mathf.Clamp(limiting, 0f, float.MaxValue);
         }
-        
+
         float deviation = CalcDeviation(r.reactants, amounts);
         if (deviation > 0 && r.explosionCurve.deviationToPower != null)
         {
             float power = r.explosionCurve.deviationToPower.Evaluate(deviation);
-            if (power > 0.0001f) OnExplode?.Invoke(power);
+            if (power > 0.0001f)
+                OnExplode?.Invoke(power);
         }
 
         return true;
     }
 
-    private Dictionary<IngredientDef,float> GetAmountsDict()
+    private Dictionary<IngredientDef, float> GetAmountsDict()
     {
         Dictionary<IngredientDef, float> map = new();
         foreach (var it in itemStorage.View())
         {
-            if (it.IsEmpty) continue;
-            if (!map.TryAdd(it.Def, it.amount)) map[it.Def] += it.amount;
+            if (it.IsEmpty)
+                continue;
+            if (!map.TryAdd(it.Def, it.amount)) 
+                map[it.Def] += it.amount;
         }
         foreach (var fl in fluidStorage.View())
         {
-            if (fl.IsEmpty) continue;
-            if (!map.TryAdd(fl.Def, fl.volume)) map[fl.Def] += fl.volume;
+            if (fl.IsEmpty) 
+                continue;
+            if (!map.TryAdd(fl.Def, fl.volume))
+                 map[fl.Def] += fl.volume;
         }
         return map;
     }
 
     private bool HasProportional(CauldronRecipe r)
     {
-        foreach (var req in r.reactants) if (req.proportional) return true;
+        foreach (var req in r.reactants) 
+            if (req.proportional) 
+                return true;
         return false;
     }
 
-    private float CalcDeviation(RequirementRange[] reqs, Dictionary<IngredientDef,float> have)
+    private float CalcDeviation(RequirementRange[] reqs, Dictionary<IngredientDef, float> have)
     {
         float dev = 0f;
         foreach (var req in reqs)
@@ -212,5 +234,36 @@ public class Cauldron
             TakeFluid(fluidDef, amt);
         }
     }
-    #endregion
+
+    // DEBUG STUFF
+    public void ShowIngredients()
+    {
+        string debugOutput = "";
+        debugOutput += "Solid Ingredients: \n";
+        if (itemStorage == null)
+        {
+            Debug.Log("Uh oh");
+        }
+        foreach (ItemStack itemStack in itemStorage.View())
+        {
+            if (itemStack.amount == 0)
+            {
+                continue;
+            }
+            debugOutput += $"ItemStack {itemStack.Def.GetId()} with quant {itemStack.amount}\n";
+        }
+
+        debugOutput += "Fluid Ingredients: \n";
+        foreach (FluidStack fluidStack in fluidStorage.View())
+        {
+            if (fluidStack.volume == 0)
+            {
+                continue;
+            }
+            debugOutput += $"ItemStack {fluidStack.Def.GetId()} with quant {fluidStack.volume}\n";
+        }
+
+        Debug.Log(debugOutput);
+    }
+
 }

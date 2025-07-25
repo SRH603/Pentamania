@@ -9,8 +9,9 @@ public class CauldronLiquidReceiver : MonoBehaviour
         GetComponent<Collider>().isTrigger = true;
         cauldron = GetComponentInParent<CauldronObject>();
     }
-    public void ReceiveLiquid(FluidDef def, float amount)
+    public float ReceiveLiquid(FluidDef def, float amount)
     {
-        cauldron?.ReceiveLiquid(def, amount);
+        return cauldron.ReceiveLiquid(def, amount);
     }
+
 }

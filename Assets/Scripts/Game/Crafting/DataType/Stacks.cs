@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,7 +8,7 @@ public interface IngredientStack {
 }
 
 [System.Serializable]
-public class ItemStack : IStackable<ItemStack>, IngredientStack
+public struct ItemStack : IStackable<ItemStack>, IngredientStack
 {
     [SerializeField]
     private ItemDef def;
@@ -19,11 +20,20 @@ public class ItemStack : IStackable<ItemStack>, IngredientStack
     }
 
     public int amount;
+    public List<IngredientTag> tags;
 
+    public ItemStack(ItemDef def, int amount, List<IngredientTag> tags)
+    {
+        this.def = def;
+        this.amount = amount;
+        this.tags = tags;
+    }
+    
     public ItemStack(ItemDef def, int amount)
     {
-        Def = def;
+        this.def = def;
         this.amount = amount;
+        this.tags = new List<IngredientTag>();
     }
 
     public bool IsEmpty => Def == null || amount <= 0;
@@ -47,7 +57,7 @@ public class ItemStack : IStackable<ItemStack>, IngredientStack
 }
 
 [System.Serializable]
-public class FluidStack : IngredientStack, IStackable<FluidStack>
+public struct FluidStack : IngredientStack, IStackable<FluidStack>
 {
     [SerializeField]
     private FluidDef def;
@@ -59,11 +69,20 @@ public class FluidStack : IngredientStack, IStackable<FluidStack>
     }
 
     public float volume;
+    public List<IngredientTag> tags;
+    
+    public FluidStack(FluidDef def, float volume, List<IngredientTag> tags)
+    {
+        this.def = def;
+        this.volume = volume;
+        this.tags = tags;
+    }
 
     public FluidStack(FluidDef def, float volume)
     {
-        Def = def;
+        this.def = def;
         this.volume = volume;
+        this.tags = new List<IngredientTag>();
     }
 
     public bool IsEmpty => Def == null || volume <= 0;

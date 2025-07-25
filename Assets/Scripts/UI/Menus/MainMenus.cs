@@ -7,7 +7,7 @@ public class MainMenus : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(2);
-        Debug.Log("I clicked you!");
+        Debug.Log("I clicked you!");   
     }
 
     public void QuitGame()

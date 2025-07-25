@@ -847,6 +847,14 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 8872672440784050607, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872672440784050607, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8912735677676671640, guid: 0b7ab31d77bb0cb4ab2e6e6e8014f6f3, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1188,6 +1196,10 @@ PrefabInstance:
     - target: {fileID: 2228575887334559119, guid: 4d67c43ef0de5104ea306ca4fb9c8714, type: 3}
       propertyPath: m_Name
       value: FX_Fog
+      objectReference: {fileID: 0}
+    - target: {fileID: 6424468067031221941, guid: 4d67c43ef0de5104ea306ca4fb9c8714, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.3
       objectReference: {fileID: 0}
     - target: {fileID: 8832790144823805198, guid: 4d67c43ef0de5104ea306ca4fb9c8714, type: 3}
       propertyPath: m_LocalPosition.x

@@ -24,7 +24,7 @@ MonoBehaviour:
     proportional: 0
   products:
   - ingredient: {fileID: 11400000, guid: 0103b422758ca4627aebf703ac25c908, type: 2}
-    amount: 11
+    amount: 20
   explosionCurve:
     deviationToPower:
       serializedVersion: 2

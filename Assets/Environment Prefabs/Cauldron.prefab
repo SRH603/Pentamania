@@ -6243,8 +6243,8 @@ GameObject:
   - component: {fileID: 5283250198531265971}
   - component: {fileID: 2395881385123447898}
   - component: {fileID: 4816095822267300358}
-  - component: {fileID: 3810728379462207281}
   - component: {fileID: 372008867642261079}
+  - component: {fileID: 3076868437783594546}
   m_Layer: 0
   m_Name: Cauldron
   m_TagString: Untagged
@@ -6323,25 +6323,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3810728379462207281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8499218948440386218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2aa5ca7ce8e05f438c6fb922a858e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxCapacity: 20
-  outputPoint: {fileID: 0}
-  recipes:
-  - {fileID: 11400000, guid: 6260e5531a1e24b65b8f4bd020d9b0e4, type: 2}
-  solidReceiver: {fileID: 6294113688255026405}
-  liquidReceiver: {fileID: 5039722199897988196}
-  scoopReceiver: {fileID: 7224531604879240519}
 --- !u!64 &372008867642261079
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6364,6 +6345,88 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4164511204261677510, guid: 5ee6d5978a91f284fbf37e5c88653d66, type: 3}
+--- !u!114 &3076868437783594546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8499218948440386218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e84617d720a48748c3cddb4e632f925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCapacity: 100
+  itemSlots: 16
+  fluidTanks: 1
+  tankCapacity: 9999
+  outputPoint: {fileID: 0}
+  recipes: []
+  solidObjectPrefab: {fileID: 0}
+--- !u!1 &8942781087791184839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8548320260513522243}
+  - component: {fileID: 5706289452225600484}
+  m_Layer: 0
+  m_Name: FireSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8548320260513522243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8942781087791184839}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7759391588225258929}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5706289452225600484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8942781087791184839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1574554977
+      Data2: 1271393539
+      Data3: -1040736083
+      Data4: -1256367266
+    Path: event:/SFX/Ambience/Fireplace
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 10000
 --- !u!1 &9001318430531442447
 GameObject:
   m_ObjectHideFlags: 0
@@ -6409,6 +6472,7 @@ Transform:
   - {fileID: 5283250198531265971}
   - {fileID: 7066226663584645010}
   - {fileID: 5498037436403568300}
+  - {fileID: 8548320260513522243}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9027040711149778363

@@ -6,12 +6,13 @@ using Random = System.Random;
 public class CauldronObject : MonoBehaviour
 {
     [SerializeField] private float maxCapacity = 100f;
-    [SerializeField] private int   itemSlots   = 16;
-    [SerializeField] private int   fluidTanks  = 1;
+    [SerializeField] private int itemSlots   = 16;
+    [SerializeField] private int fluidTanks  = 1;
     [SerializeField] private float tankCapacity = 9999f;
     [SerializeField] private Transform outputPoint;
     [SerializeField] private CauldronRecipe[] recipes;
     [SerializeField] private GameObject solidObjectPrefab;
+    [SerializeField] private GameObject liquidPlane;
 
     private Cauldron data;
     
@@ -20,7 +21,7 @@ public class CauldronObject : MonoBehaviour
 
     private void Awake()
     {
-        data = new Cauldron("cauldron", recipes, itemSlots, fluidTanks, tankCapacity);
+        data = new Cauldron(recipes, itemSlots, fluidTanks, tankCapacity);
         data.OnExplode += HandleExplosion;
     }
 
@@ -28,21 +29,24 @@ public class CauldronObject : MonoBehaviour
     public void ReceiveSolid(SolidObject sObj)
     {
         if (!sObj) return;
-        //var ing = sObj.GetIngredient() as ItemStack? ?? default;
-        ItemStack ing = sObj.GetIngredient() as ItemStack;
-        var stack = ing;
-        if (stack.IsEmpty) return;
+        //var ing = sObj.GetIngredient() as ItemStack ?? default;
+        //ItemStack ing = sObj.GetIngredient() as ItemStack;
 
+        ItemStack ing = (ItemStack)sObj.GetIngredient();
+
+        var stack = ing;
+
+        if (stack.IsEmpty) return;
         data.InsertSolid(stack);
         Destroy(sObj.gameObject);
         AfterInsert();
     }
 
-    public void ReceiveLiquid(FluidDef def, float vol)
+    public float ReceiveLiquid(FluidDef def, float vol)
     {
-        if (!def || vol <= 0f) return;
-        data.InsertLiquid(new FluidStack(def, vol));
+        if (!def || vol <= 0f) return 0;
         AfterInsert();
+        return data.InsertLiquid(new FluidStack(def, vol));
     }
 
     
@@ -85,6 +89,8 @@ public class CauldronObject : MonoBehaviour
             HandleExplosion(total - maxCapacity);
             return;
         }
+
+        data.ShowIngredients();
         
         bool any = false;
         while (data.TryProcessOnce(out var solids, out var liquids))
@@ -92,15 +98,17 @@ public class CauldronObject : MonoBehaviour
             any = true;
             if (solids != null)
                 foreach (var s in solids) SpawnSolid(s);
+            if (liquids != null)
+            {
+                liquidPlane.GetComponent<MeshRenderer>().material = liquids[0].Def.GetMaterial();
+            }
         }
         if (any) Debug.Log("[CauldronObj] Recipes processed.");
     }
 
     private void SpawnSolid(ItemStack stack)
     {
-        if (stack.IsEmpty) return;
-        if (!stack.Def) return;
-        
+        if (stack.IsEmpty || !stack.Def) return;
         int count = stack.amount;
         for (int i = 0; i < count; i++)
         {
@@ -115,7 +123,7 @@ public class CauldronObject : MonoBehaviour
             var rb = go.GetComponent<Rigidbody>();
             so.Init(stack);
 
-            go.transform.position = outputPoint ? outputPoint.position : transform.position + Vector3.up * 0.5f;
+            go.transform.position = outputPoint ? outputPoint.position : transform.position + Vector3.up * 2f;
             rb.AddForce(new Vector3(UnityEngine.Random.Range(-100,100), 10000, UnityEngine.Random.Range(-100,100)), ForceMode.Impulse);
         }
 
@@ -124,7 +132,7 @@ public class CauldronObject : MonoBehaviour
 
     private void HandleExplosion(float power)
     {
-        Debug.LogError($"[CauldronObj] EXPLOSION! power={power}");
+        Debug.Log($"[CauldronObj] EXPLOSION! power={power}");
         OnExplodeVisual?.Invoke(power);
         // TODO VISUAL
     }

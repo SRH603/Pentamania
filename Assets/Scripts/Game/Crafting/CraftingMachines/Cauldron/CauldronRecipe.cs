@@ -10,7 +10,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName="Game/Recipe/Cauldron")]
 public class CauldronRecipe: ScriptableObject
 {
-    public string machineId; // "Cauldron"
     // stores which ingredients must be present to cause the reaction.
     //public IngredientRequirement[] requiredReactants;
     // stores which ingredients are to be created after the reaction occurs.

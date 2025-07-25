@@ -12,7 +12,13 @@ public class CauldronSolidReceiver : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         SolidObject solid = other.GetComponent<SolidObject>();
-        if (!solid) return;
+        if (!solid)
+            return;
+
+        if (solid.GetType() != typeof(SolidObject))
+            //Destroy(other);
+            return;
+        
         cauldron.ReceiveSolid(solid);
     }
 }

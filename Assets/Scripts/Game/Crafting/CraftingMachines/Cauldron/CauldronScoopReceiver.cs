@@ -12,8 +12,8 @@ public class CauldronScoopReceiver : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var c = other.GetComponent<IFluidContainer>();
-        if (c == null) return;
-        Debug.Log($"[ScoopReceiver] OnTriggerEnter {other.name}");
+        if (c == null)
+            return;
         cauldron.TryScoopLiquid(c);
     }
 }

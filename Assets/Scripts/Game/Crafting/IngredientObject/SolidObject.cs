@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SolidObject : PassableIngredientObject
 {
-    [SerializeField] private ItemStack ingredient;
+    [SerializeField] protected ItemStack ingredient;  
 
-    public void Start()
+    protected void Start()
     {
         Init(ingredient);
     }
@@ -42,5 +42,6 @@ public class SolidObject : PassableIngredientObject
         gameObject.GetComponent<MeshRenderer>().material = item.Def.GetMaterial();
         gameObject.GetComponent<MeshFilter>().mesh = item.Def.GetMesh();
         gameObject.GetComponent<MeshCollider>().sharedMesh = item.Def.GetMesh();
+        
     }
 }

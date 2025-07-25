@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 [System.Serializable]
@@ -54,7 +55,11 @@ public class ItemStorage : IItemStorage
             else
                 result.amount += toTake;
 
-            slots[i].amount -= toTake;
+            ItemStack temp = new ItemStack();
+            temp = slots[i];
+            temp.amount -= toTake;
+            slots[i] = temp;
+            //slots[i].amount -= toTake;
             amount -= toTake;
 
             if (slots[i].amount <= 0)
@@ -94,7 +99,12 @@ public class FluidStorage : IFluidStorage
             {
                 float room = capacities[i] - tanks[i].volume; 
                 float toFill = Mathf.Min(room, remain);
-                tanks[i].volume += toFill;
+                
+                FluidStack temp = new FluidStack();
+                temp = tanks[i];
+                temp.volume += toFill;
+                tanks[i] = temp;
+                //tanks[i].volume += toFill;
                 remain -= toFill;
             }
         }
@@ -125,7 +135,11 @@ public class FluidStorage : IFluidStorage
             else
                 result.volume += toTake;
 
-            tanks[i].volume -= toTake;
+            FluidStack temp = new FluidStack();
+            temp = tanks[i];
+            temp.volume -= toTake;
+            tanks[i] = temp;
+            //anks[i].volume -= toTake;
             amount -= toTake;
 
             if (tanks[i].volume <= 0)

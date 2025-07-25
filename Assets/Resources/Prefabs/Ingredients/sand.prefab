@@ -74,28 +74,32 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 41b9950903e69443eaef8912a49859f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5342582992308854337}
+      addedObject: {fileID: 525446127663853402}
   m_SourcePrefab: {fileID: 100100000, guid: 41b9950903e69443eaef8912a49859f2, type: 3}
 --- !u!1 &4117428471333276294 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 41b9950903e69443eaef8912a49859f2, type: 3}
   m_PrefabInstance: {fileID: 3883618765118339031}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5342582992308854337
-MonoBehaviour:
+--- !u!64 &525446127663853402
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4117428471333276294}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53aec3ec3839f7e4093be9f908436e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ingredientId: Sand
-  ingredientBehavior: 2
-  quantity: 1
-  recipePaths:
-  - test_recipe
-  gameObjectPath: 
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1616869600523437451, guid: 41b9950903e69443eaef8912a49859f2, type: 3}
