@@ -1,17 +1,50 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class CauldronLiquidReceiver : MonoBehaviour
 {
     private CauldronObject cauldron;
+    private readonly HashSet<FluidContainer> sources = new HashSet<FluidContainer>();
+    
     private void Awake()
     {
         GetComponent<Collider>().isTrigger = true;
         cauldron = GetComponentInParent<CauldronObject>();
     }
-    public float ReceiveLiquid(FluidDef def, float amount)
+    
+    private void OnTriggerEnter(Collider other)
     {
-        return cauldron.ReceiveLiquid(def, amount);
+        var src = other.GetComponent<FluidContainer>();
+        if (src) sources.Add(src);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        var src = other.GetComponent<FluidContainer>();
+        if (src) sources.Remove(src);
     }
 
+    private void FixedUpdate()
+    {
+        if (sources.Count == 0) return;
+
+        var toRemove = new List<FluidContainer>();
+
+        foreach (var src in sources)
+        {
+            if (src == null) { toRemove.Add(src); continue; }
+            
+            FluidStack drained = src.TryPour();
+            if (drained.IsEmpty) continue;
+            
+            float remain = cauldron.ReceiveLiquid(drained);
+
+            drained.volume = remain;
+            
+            if (remain > 0f)
+                src.Fill(drained);
+        }
+
+        foreach (var s in toRemove) sources.Remove(s);
+    }
 }

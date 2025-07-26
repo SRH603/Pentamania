@@ -19,7 +19,6 @@ public class MortarPestleReceiver : MonoBehaviour
             return;
         if (!mortar)
             return;
-        Debug.Log("111");
         mortar.PestleHit();
     }
 }

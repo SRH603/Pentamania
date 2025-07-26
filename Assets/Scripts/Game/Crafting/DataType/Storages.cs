@@ -23,18 +23,22 @@ public class ItemStorage : IItemStorage
         
         for (int i = 0; i < slots.Count && stack.amount > 0; i++)
         {
-            if (!slots[i].IsEmpty && slots[i].Def == stack.Def)
+            if (!slots[i].IsEmpty && slots[i].CanMerge(stack))
             {
-                slots[i].Merge(ref stack);
-                slots[i] = slots[i];
+                //Debug.Log("[Storage Debugger] Merged");
+                var slot = slots[i];
+                slot.Merge(ref stack);
+                slots[i] = slot;
             }
         }
         for (int i = 0; i < slots.Count && stack.amount > 0; i++)
         {
             if (slots[i].IsEmpty)
             {
+                //Debug.Log("[Storage Debugger] Inserted to a new slot");
                 int toMove = Mathf.Min(stack.amount, stack.Def.GetMaxStack());
-                slots[i] = new ItemStack(stack.Def, toMove);
+                //slots[i] = new ItemStack(stack.Def, toMove);
+                slots[i] = stack.CopyWithAmount(toMove);
                 stack.amount -= toMove;
             }
         }
@@ -51,7 +55,7 @@ public class ItemStorage : IItemStorage
 
             int toTake = Mathf.Min(amount, slots[i].amount);
             if (result.IsEmpty)
-                result = new ItemStack(slots[i].Def, toTake);
+                result = slots[i].CopyWithAmount(toTake);
             else
                 result.amount += toTake;
 
@@ -67,6 +71,13 @@ public class ItemStorage : IItemStorage
         }
         return result;
     }
+    
+    public void Clear()
+    {
+        int count = slots.Count;
+        slots = new List<ItemStack>(count);
+        for (int i = 0; i < count; i++) slots.Add(new ItemStack(null, 0));
+    }
 }
 
 [System.Serializable]
@@ -74,6 +85,8 @@ public class FluidStorage : IFluidStorage
 {
     [SerializeField] private List<FluidStack> tanks;
     [SerializeField] private List<float> capacities;
+    
+    public int TankCount => tanks.Count;
 
     public FluidStorage(int tankCount, float eachCapacity)
     {
@@ -95,10 +108,16 @@ public class FluidStorage : IFluidStorage
         
         for (int i = 0; i < tanks.Count && remain > 0; i++)
         {
-            if (!tanks[i].IsEmpty && tanks[i].Def == stack.Def)
+            if (!tanks[i].IsEmpty && tanks[i].CanMerge(stack))
             {
                 float room = capacities[i] - tanks[i].volume; 
                 float toFill = Mathf.Min(room, remain);
+
+                /*
+                var tank = tanks[i];
+                tank.Merge(ref stack);
+                tanks[i] = tank;
+                */
                 
                 FluidStack temp = new FluidStack();
                 temp = tanks[i];
@@ -106,14 +125,16 @@ public class FluidStorage : IFluidStorage
                 tanks[i] = temp;
                 //tanks[i].volume += toFill;
                 remain -= toFill;
+                
             }
         }
         for (int i = 0; i < tanks.Count && remain > 0; i++)
         {
             if (tanks[i].IsEmpty)
             {
+                Debug.Log("[Storage] Created a new tank");
                 float toFill = Mathf.Min(capacities[i], remain);
-                tanks[i] = new FluidStack(stack.Def, toFill);
+                tanks[i] = stack.CopyWithVolume(toFill);
                 remain -= toFill;
             }
         }
@@ -131,7 +152,7 @@ public class FluidStorage : IFluidStorage
             float toTake = Mathf.Min(amount, tanks[i].volume);
 
             if (result.IsEmpty)
-                result = new FluidStack(tanks[i].Def, toTake);
+                result = tanks[i].CopyWithVolume(toTake);
             else
                 result.volume += toTake;
 
@@ -146,5 +167,12 @@ public class FluidStorage : IFluidStorage
                 tanks[i] = new FluidStack(null, 0);
         }
         return result;
+    }
+    
+    public void Clear()
+    {
+        int count = tanks.Count;
+        tanks = new List<FluidStack>(count);
+        for (int i = 0; i < count; i++) tanks.Add(new FluidStack(null, 0));
     }
 }

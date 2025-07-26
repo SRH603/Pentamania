@@ -186,7 +186,7 @@ public class Mortar
     {
         consumeDict = new Dictionary<IngredientDef, float>();
 
-        foreach (RequirementRange requirement in recipeCandidate.reactants)
+        foreach (Requirement requirement in recipeCandidate.reactants)
         {
             float ownedAmount = 0f;
             currentAmounts.TryGetValue(requirement.ingredient, out ownedAmount);
@@ -200,7 +200,7 @@ public class Mortar
         foreach (KeyValuePair<IngredientDef, float> pair in currentAmounts)
         {
             bool declared = false;
-            foreach (RequirementRange requirement in recipeCandidate.reactants)
+            foreach (Requirement requirement in recipeCandidate.reactants)
             {
                 if (requirement.ingredient == pair.Key)
                 {

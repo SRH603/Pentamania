@@ -7,7 +7,7 @@ using UnityEngine;
 public class MortarRecipe : ScriptableObject
 {
     public string machineId = "mortar";
-    public RequirementRange[] reactants;
+    public Requirement[] reactants;
     public SolidProductSpec[] products;
 }
 

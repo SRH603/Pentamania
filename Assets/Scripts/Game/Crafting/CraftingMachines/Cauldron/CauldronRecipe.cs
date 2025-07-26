@@ -15,18 +15,18 @@ public class CauldronRecipe: ScriptableObject
     // stores which ingredients are to be created after the reaction occurs.
     // for json conversion, this is a string array of the paths to IngredientObjects used to get the Ingredients this Recipe produces.
     
-    public RequirementRange[] reactants;
+    //public Requirement[] reactants;
+    public IngredientRequirement[] requirement;
     public ProductSpec[] products;
-    public ExplosionCurve explosionCurve;
 }
 
 [Serializable]
-public struct RequirementRange {
-    public IngredientDef ingredient;
-    public float minAmount;
-    public float maxAmount;
-    public bool proportional;
+public struct IngredientRequirement
+{
+    public IngredientTag tag;
+    public int weight;
 }
+
 [Serializable]
 public struct ProductSpec {
     public IngredientDef ingredient;
@@ -34,7 +34,9 @@ public struct ProductSpec {
 }
 
 [Serializable]
-public struct ExplosionCurve
-{
-    public AnimationCurve deviationToPower;
+public struct Requirement {
+    public IngredientDef ingredient;
+    public float minAmount;
+    public float maxAmount;
+    public bool proportional;
 }

@@ -11,7 +11,7 @@ public class FluidContainer : SolidObject, IFluidContainer
     [SerializeField] private ParticleSystem pourEffect;
     [SerializeField] private GameObject fluidDisplay;
 
-    private bool isPouring;
+    //private bool isPouring;
     private CauldronLiquidReceiver receiverCache;
 
     public float Capacity => capacity;
@@ -65,63 +65,17 @@ public class FluidContainer : SolidObject, IFluidContainer
         }
     }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        receiverCache = other.GetComponent<CauldronLiquidReceiver>();
-        /*
-        if (receiverCache)
-            Debug.Log("111");
-            */
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<CauldronLiquidReceiver>())
-        {
-            StopPour();
-            receiverCache = null;
-            //Debug.Log("222");
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        //throw new System.Exception("Hey, implement the rest of Fluid Container!");
-        if (!receiverCache) return;
-        if (fluidIngredient.volume <= 0f) return;
-
-        float angle = Vector3.Angle(transform.up, Vector3.up);
-        if (angle < angleThreshold)
-        {
-            StopPour();
-            return;
-        }
-
-        float delta = Mathf.Min(pourRateLps * Time.deltaTime, fluidIngredient.volume);
-        fluidIngredient.volume -= delta;
-        // TODO: Convert the crafting machine to use better stacks
-        fluidIngredient.volume += receiverCache.ReceiveLiquid(fluidIngredient.Def, delta);
-
-        if (!isPouring) StartPour();
-
-        if (Mathf.Approximately(fluidIngredient.volume, 0f))
-        {
-            //Debug.Log($"[{name}] is empty");
-            StopPour();
-        }
-    }
-    
     private void StartPour()
     {
-        isPouring = true;
+        //isPouring = true;
         if (pourEffect) pourEffect.Play();
         //Debug.Log("111");
     }
 
     private void StopPour()
     {
-        if (!isPouring) return;
-        isPouring = false;
+        //if (!isPouring) return;
+        //isPouring = false;
         if (pourEffect) pourEffect.Stop();
         //Debug.Log("111");
     }
@@ -171,19 +125,41 @@ public class FluidContainer : SolidObject, IFluidContainer
     }
     */
     
-    public FluidStack Drain(int amount)
+    public FluidStack Drain(float amount)
     {
         if (fluidIngredient.IsEmpty || amount <= 0) 
             return new FluidStack(null, 0);
 
         float toDrain = Mathf.Min(fluidIngredient.volume, amount);
-        FluidDef def = fluidIngredient.Def;
+        
+        FluidStack drained = fluidIngredient.CopyWithVolume(toDrain);
+        
         fluidIngredient.volume -= toDrain;
 
-        if (fluidIngredient.volume == 0) 
+        if (Mathf.Approximately(fluidIngredient.volume, 0f))
             fluidIngredient = new FluidStack(null, 0);
 
-        return new FluidStack(def, toDrain);
+
+        return drained;
+    }
+    
+    public FluidStack TryPour()
+    {
+        if (fluidIngredient.IsEmpty ||
+            Vector3.Angle(transform.up, Vector3.up) < angleThreshold)
+        {
+            StopPour();
+            return FluidStack.Empty;
+        }
+
+        float requestVol = pourRateLps * Time.deltaTime;
+        
+        FluidStack poured = Drain(requestVol);
+        
+        if (!poured.IsEmpty) StartPour();
+        if (fluidIngredient.IsEmpty) StopPour();
+
+        return poured;
     }
     
     public bool CanAccept(FluidDef def)

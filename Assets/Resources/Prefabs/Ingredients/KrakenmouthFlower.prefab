@@ -276,4 +276,6 @@ MonoBehaviour:
   ingredient:
     def: {fileID: 11400000, guid: d4e96d4b7294e3d4da40fe321e44bfaf, type: 2}
     amount: 1
-    tags: []
+    tags:
+    - id: test
+      value: 1

@@ -26,6 +26,6 @@ public interface IFluidContainer
     float Capacity { get; }
     FluidStack CurrentFluid { get; }
     float Fill(FluidStack stack);
-    FluidStack Drain(int amount);
+    FluidStack Drain(float amount);
     bool CanAccept(FluidDef def);
 }
