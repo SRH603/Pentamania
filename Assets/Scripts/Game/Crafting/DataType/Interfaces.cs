@@ -27,5 +27,5 @@ public interface IFluidContainer
     FluidStack CurrentFluid { get; }
     float Fill(FluidStack stack);
     FluidStack Drain(float amount);
-    bool CanAccept(FluidDef def);
+    bool CanAccept(FluidStack stack);
 }

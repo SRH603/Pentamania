@@ -16,7 +16,25 @@ MonoBehaviour:
   - tag:
       id: test
       value: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
+      colorWeight: 0
     weight: 1
   products:
-  - ingredient: {fileID: 11400000, guid: 8d33a57fbd3f845018ffdb77500fa73c, type: 2}
+  - itemProduct:
+      def: {fileID: 11400000, guid: b268fa6d120154e128b172be82525b80, type: 2}
+      amount: 10
+      tags:
+      - id: test
+        value: 11
+        color: {r: 0, g: 0, b: 0, a: 0}
+        colorWeight: 0
+    fluidProduct:
+      def: {fileID: 11400000, guid: 8d33a57fbd3f845018ffdb77500fa73c, type: 2}
+      volume: 10
+      tags:
+      - id: test222
+        value: 11
+        color: {r: 1, g: 0.10849059, b: 0.10849059, a: 0}
+        colorWeight: 0
+    ingredient: {fileID: 11400000, guid: 8d33a57fbd3f845018ffdb77500fa73c, type: 2}
     amount: 100

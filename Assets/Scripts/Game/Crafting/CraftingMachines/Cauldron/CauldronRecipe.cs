@@ -28,7 +28,10 @@ public struct IngredientRequirement
 }
 
 [Serializable]
-public struct ProductSpec {
+public struct ProductSpec
+{
+    public ItemStack itemProduct;
+    public FluidStack fluidProduct;
     public IngredientDef ingredient;
     public float amount;
 }

@@ -1,18 +1,15 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 [CreateAssetMenu(menuName = "Game/Recipe/Mortar", fileName = "MortarRecipe")]
 public class MortarRecipe : ScriptableObject
 {
-    public string machineId = "mortar";
-    public Requirement[] reactants;
-    public SolidProductSpec[] products;
-}
+    [Serializable]
+    public struct ReactantSpec { public ItemDef ingredient; public int amount; }
 
-[Serializable]
-public struct SolidProductSpec {
-    public ItemDef ingredient;
-    public int amount;
+    [Header("Reactants (Solid)")]
+    public ReactantSpec[] reactants;
+
+    [Header("Product (FluidStack)")]
+    public FluidStack product;     // 直接设为 FluidStack，可在 Inspector 中配置 tag 列表
 }

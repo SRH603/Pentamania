@@ -57,7 +57,6 @@ public class FluidContainer : SolidObject, IFluidContainer
             // TODO:
             // change liquid color to fluidIngredient.Def.GetMaterial();
             fluidDisplay.GetComponent<MeshRenderer>().material = fluidIngredient.Def.GetMaterial();
-
         }
         else
         {
@@ -103,14 +102,14 @@ public class FluidContainer : SolidObject, IFluidContainer
             return 0;
         }
             
-        if (!CanAccept(stack.Def)) 
+        if (!CanAccept(stack)) 
             return stack.volume;
 
         float room = capacity - fluidIngredient.volume;
         float toFill = Mathf.Min(room, stack.volume);
 
         if (fluidIngredient.IsEmpty)
-            SetFluidIngredient(new FluidStack(stack.Def, toFill));
+            SetFluidIngredient(stack.CopyWithVolume(toFill));
         else
             fluidIngredient.volume += toFill;
 
@@ -162,8 +161,15 @@ public class FluidContainer : SolidObject, IFluidContainer
         return poured;
     }
     
+    /*
     public bool CanAccept(FluidDef def)
     {
         return fluidIngredient.IsEmpty || fluidIngredient.Def.Equals(def);
+    }
+    */
+    
+    public bool CanAccept(FluidStack stack)
+    {
+        return fluidIngredient.IsEmpty || fluidIngredient.CanMerge(stack);
     }
 }

@@ -132,7 +132,7 @@ public class FluidStorage : IFluidStorage
         {
             if (tanks[i].IsEmpty)
             {
-                Debug.Log("[Storage] Created a new tank");
+                //Debug.Log("[Storage] Created a new tank");
                 float toFill = Mathf.Min(capacities[i], remain);
                 tanks[i] = stack.CopyWithVolume(toFill);
                 remain -= toFill;

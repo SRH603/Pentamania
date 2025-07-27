@@ -66,7 +66,8 @@ public class Cauldron
             
             if (found.IsEmpty)
             {
-                found = new FluidStack(tank.Def, tank.volume);
+                //found = new FluidStack(tank.Def, tank.volume);
+                found = tank.Copy();
             }
             else if (!found.CanMerge(tank))
             {
@@ -87,6 +88,40 @@ public class Cauldron
         }
             
         return true;
+    }
+
+    public Color CalculateFluidColor()
+    {
+        Color totalColor = Color.black;
+        float totalWeight = 0f;
+        
+        foreach (var st in itemStorage.View())
+        {
+            if (st.IsEmpty || st.tags == null) continue;
+
+            foreach (var t in st.tags)
+            {
+                float weight = t.value * st.amount * t.colorWeight;
+                totalColor += t.color * weight;
+                totalWeight += weight;
+            }
+        }
+        
+        foreach (var fl in fluidStorage.View())
+        {
+            if (fl.IsEmpty || fl.tags == null) continue;
+
+            foreach (var t in fl.tags)
+            {
+                float weight = t.value * fl.volume * t.colorWeight;
+                totalColor += t.color * weight;
+                totalWeight += weight;
+            }
+        }
+        
+        Color finalColor = totalWeight > 0 ? totalColor / totalWeight : Color.black;
+
+        return finalColor;
     }
     
     /*
@@ -120,6 +155,12 @@ public class Cauldron
     {
         if (stack.IsEmpty)
             return;
+        if (stack.Def.GetId() == "cleansing_elixir")
+        {
+            itemStorage.Clear();
+            fluidStorage.Clear();
+            return;
+        }
         int remain = itemStorage.Insert(stack);
         if (remain > 0)
             Debug.Log("[Cauldron] Exceeds (Solid)");
@@ -203,14 +244,24 @@ public class Cauldron
         foreach (var p in best.products)
         {
             float amt = p.amount;
+            solidsToSpawn.Add(p.itemProduct);
+            liquidsToStay.Add(p.fluidProduct);
+            //Debug.Log(p.fluidProduct);
+            /*
             if (p.ingredient is ItemDef itemDef)
                 solidsToSpawn.Add(new ItemStack(itemDef, Mathf.RoundToInt(amt)));
             else if (p.ingredient is FluidDef fluidDef)
                 liquidsToStay.Add(new FluidStack(fluidDef, amt));
+                */
+            InsertLiquid(p.fluidProduct);
         }
         
+        //Debug.Log(liquidsToStay.Count);
+        /*
         foreach (var fl in liquidsToStay)
             InsertLiquid(fl);
+            */
+            
 
         OnInventoryChanged?.Invoke();
         return true;
@@ -247,6 +298,12 @@ public class Cauldron
         }
         return dev;
     }
+
+    public void HandleExplosion(float power)
+    {
+        itemStorage.Clear();
+        fluidStorage.Clear();
+    }
     
 private Dictionary<string, double> BuildTagMap()
 {
@@ -275,6 +332,7 @@ private Dictionary<string, double> BuildTagMap()
     }
     return map;
 }
+
 
 public float GetSimilarity(
     CauldronRecipe recipe,

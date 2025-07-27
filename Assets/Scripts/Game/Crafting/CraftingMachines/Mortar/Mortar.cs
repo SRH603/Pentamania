@@ -1,346 +1,257 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
 public class Mortar
 {
-    private readonly List<MortarRecipe> recipeList;
-
-    private readonly List<ItemStack> solidStackList = new List<ItemStack>();
+    private readonly List<MortarRecipe> recipes;
+    private readonly List<ItemStack> solids = new();
     private readonly FluidStorage fluidStorage;
+    private readonly FluidDef mixedDustDef;
+    private const float PROGRESS_DECAY = 0.7f;
     private float grindProgress;
-    private float progressDecayFactor = 0.7f;
 
     public event Action OnInventoryChanged;
     public event Action<float> OnProgressChanged;
+    public event Action<bool> OnCraftComplete;
 
-    public Mortar(IEnumerable<MortarRecipe> recipeSource, int fluidTankCount = 1, float tankCapacity = 9999f)
+    public Mortar(IEnumerable<MortarRecipe> recipeSrc, FluidDef mixedDust, int tankCap = 9999)
     {
-        recipeList = new List<MortarRecipe>(recipeSource);
-        fluidStorage = new FluidStorage(fluidTankCount, tankCapacity);
+        recipes = new List<MortarRecipe>(recipeSrc);
+        mixedDustDef = mixedDust;
+        fluidStorage = new FluidStorage(1, tankCap);
         grindProgress = 0f;
+        Debug.Log($"[Mortar] Created, recipe count={recipes.Count}");
     }
 
-    public float Progress
-    {
-        get
-        {
-            return grindProgress;
-        }
-    }
-    public IReadOnlyList<ItemStack> SolidsView
-    {
-        get
-        {
-            return solidStackList;
-        }
-    }
-    public IReadOnlyList<FluidStack> FluidsView
-    {
-        get
-        {
-            return fluidStorage.View();
-        }
-    }
+    public float Progress => grindProgress;
+    public IReadOnlyList<ItemStack> SolidsView => solids;
+    public IReadOnlyList<FluidStack> FluidsView => fluidStorage.View();
 
-    public void RaiseInventoryChanged()
+    public void InsertSolid(ItemStack incoming)
     {
-        if (OnInventoryChanged != null)
-        {
-            OnInventoryChanged();
-        }
+        if (incoming.IsEmpty) return;
+        int idx = solids.FindIndex(s => !s.IsEmpty && s.Def == incoming.Def);
+        if (idx >= 0) { var s = solids[idx]; s.amount += incoming.amount; solids[idx] = s; }
+        else solids.Add(incoming);
+        Debug.Log($"[Mortar] InsertSolid {incoming.Def.GetId()} x{incoming.amount}");
+        DecayProgress();
+        OnInventoryChanged?.Invoke();
     }
     
-    public void InsertSolid(ItemStack incomingStack)
+    public void RemoveSolid(ItemStack outgoing)
     {
-        if (incomingStack.IsEmpty)
-        {
-            return;
-        }
+        if (outgoing.IsEmpty) return;
 
-        bool alreadyMerged = false;
-        for (int i = 0; i < solidStackList.Count; i++)
-        {
-            ItemStack storedStack = solidStackList[i];
-            if (!storedStack.IsEmpty && storedStack.Def == incomingStack.Def)
-            {
-                storedStack.amount += incomingStack.amount;
-                solidStackList[i] = storedStack;
-                alreadyMerged = true;
-                break;
-            }
-        }
-        if (!alreadyMerged)
-        {
-            solidStackList.Add(incomingStack);
-        }
+        int idx = solids.FindIndex(s => !s.IsEmpty && s.Def == outgoing.Def);
+        if (idx < 0) return;
 
+        var cur = solids[idx];
+        cur.amount -= outgoing.amount;
+        if (cur.amount <= 0) solids.RemoveAt(idx);
+        else                 solids[idx] = cur;
+
+        Debug.Log($"[Mortar] RemoveSolid {outgoing.Def.GetId()} x{outgoing.amount}");
         DecayProgress();
-        if (OnInventoryChanged != null)
-        {
-            OnInventoryChanged();
-        }
+        OnInventoryChanged?.Invoke();
     }
 
-    public void InsertLiquid(FluidStack incomingFluid)
+    public float ScoopLiquid(FluidDef def, float volReq)
     {
-        if (incomingFluid.IsEmpty)
+        FluidStack drained = fluidStorage.Drain(f => f.Def == def, volReq);
+        float real = Mathf.Min(volReq, drained.volume);
+        if (real < drained.volume) fluidStorage.Fill(drained.CopyWithVolume(drained.volume - real));
+        Debug.Log($"[Mortar] ScoopLiquid {def.GetId()} requested={volReq} got={real}");
+        OnInventoryChanged?.Invoke();
+        return real;
+    }
+    
+    public float InsertLiquid(FluidStack stack)
+    {
+        if (stack.IsEmpty)
+            return 0;
+        float remain = fluidStorage.Fill(stack);
+        if (remain > 0)
+            Debug.Log("[Mortar] Exceeds (Liquid)");
+        OnInventoryChanged?.Invoke();
+        return remain;
+    }
+
+    public FluidStack TakeFluid(FluidStack stack)
+    {
+        if (stack.IsEmpty)
+            return new FluidStack(null, 0);
+        
+        FluidStack drained = fluidStorage.Drain(f => f.Def == stack.Def, stack.volume);
+        float got = Mathf.Min(stack.volume, drained.volume);
+        if (got < drained.volume)
         {
-            return;
+            InsertLiquid(new FluidStack(stack.Def, drained.volume - got));
+        }
+        OnInventoryChanged?.Invoke();
+
+        stack.volume = got;
+        return stack;
+    }
+
+    public bool TryGetOnlyFluid(out FluidStack found)
+    {
+        found = new FluidStack();
+        foreach (var tank in fluidStorage.View())
+        {
+            if (tank.IsEmpty) continue;
+            
+            if (found.IsEmpty)
+            {
+                found = tank.Copy();
+            }
+            else if (!found.CanMerge(tank))
+            {
+                //Debug.Log("Can not merge");
+                return false;
+            }
+            else
+            {
+                found.volume += tank.volume;
+            }
         }
 
-        float remain = fluidStorage.Fill(incomingFluid);
-        DecayProgress();
-        if (OnInventoryChanged != null)
+        if (found.IsEmpty)
         {
-            OnInventoryChanged();
+            Debug.Log("[Mortar] No Fluid inside");
+            return false;
         }
+        //Debug.Log($"[Mortar] {found.tags.Count}");
+        return true;
+    }
+
+    public void PestleHit(float baseInc)
+    {
+        float totalMass = solids.Sum(s => s.amount);
+        grindProgress = Mathf.Clamp01(grindProgress + baseInc / Mathf.Max(1f, totalMass));
+        Debug.Log($"[Mortar] PestleHit progress={grindProgress:F3}");
+        OnProgressChanged?.Invoke(grindProgress);
     }
 
     private void DecayProgress()
     {
-        grindProgress = grindProgress * progressDecayFactor;
-        if (grindProgress < 0f)
-        {
-            grindProgress = 0f;
-        }
-        if (OnProgressChanged != null)
-        {
-            OnProgressChanged(grindProgress);
-        }
-    }
-    
-    public void PestleHit(float baseIncrement)
-    {
-        float totalMass = CalculateTotalMass();
-        float increment = baseIncrement / Mathf.Max(1f, totalMass);
-        grindProgress = Mathf.Clamp01(grindProgress + increment);
-
-        if (OnProgressChanged != null)
-        {
-            OnProgressChanged(grindProgress);
-        }
+        grindProgress *= PROGRESS_DECAY;
+        if (grindProgress < 0.0001f) grindProgress = 0f;
+        Debug.Log($"[Mortar] Progress decayed to {grindProgress:F3}");
+        OnProgressChanged?.Invoke(grindProgress);
     }
 
-    private float CalculateTotalMass()
+    public bool TryCraft()
     {
-        float sum = 0f;
-        foreach (ItemStack eachStack in solidStackList)
+        if (grindProgress < 0.999f) return false;
+        var amountMap = solids.GroupBy(s => (IngredientDef)s.Def).ToDictionary(g => g.Key, g => (float)g.Sum(x => x.amount));
+        var inputSet = new HashSet<IngredientDef>(amountMap.Keys);
+        var candidates = recipes.Where(r => new HashSet<IngredientDef>(r.reactants.Select(x => x.ingredient)).SetEquals(inputSet)).ToList();
+        if (candidates.Count == 0)
         {
-            if (!eachStack.IsEmpty)
+            Debug.Log("[Mortar] No candidate recipe, produce by-product");
+            MakeByproduct(amountMap);
+            return true;
+        }
+        float BestScore(MortarRecipe r)
+        {
+            float totalInput = amountMap.Values.Sum();
+            int totalRecipe = r.reactants.Sum(x => x.amount);
+            float scale = totalInput / totalRecipe;
+            float diff = 0f;
+            foreach (var ra in r.reactants)
             {
-                sum += eachStack.amount;
+                amountMap.TryGetValue(ra.ingredient, out float have);
+                diff += Mathf.Abs(have - ra.amount * scale);
             }
+            float score = 1f - diff / totalInput;
+            return Mathf.Clamp01(score);
         }
-        foreach (FluidStack eachFluid in fluidStorage.View())
+        var best = candidates.OrderByDescending(BestScore).First();
+        float bestSim = BestScore(best);
+        Debug.Log($"[Mortar] BestSim={bestSim:F3}");
+        if (bestSim < 0.80f)
         {
-            if (!eachFluid.IsEmpty)
-            {
-                sum += eachFluid.volume;
-            }
+            Debug.Log("[Mortar] Similarity < 0.8, produce by-product");
+            MakeByproduct(amountMap);
+            return true;
         }
-        return sum;
-    }
-    
-    public bool TryCraft(out MortarRecipe matchedRecipe,
-                         out Dictionary<IngredientDef, float> consumeMap,
-                         out List<ItemStack> productList)
-    {
-        matchedRecipe = null;
-        consumeMap = null;
-        productList = null;
-
-        if (grindProgress < 0.999f)
-        {
-            return false;
-        }
-
-        Dictionary<IngredientDef, float> amountDict = BuildAmountDictionary();
-
-        foreach (MortarRecipe recipeCandidate in recipeList)
-        {
-
-            Dictionary<IngredientDef, float> consumeTemp;
-            bool recipeOk = MatchRecipeStrict(recipeCandidate, amountDict, out consumeTemp);
-            if (recipeOk)
-            {
-                matchedRecipe = recipeCandidate;
-                consumeMap = consumeTemp;
-                productList = new List<ItemStack>();
-
-                foreach (SolidProductSpec spec in recipeCandidate.products)
-                {
-                    ItemStack produced = new ItemStack(spec.ingredient, spec.amount);
-                    productList.Add(produced);
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool MatchRecipeStrict(MortarRecipe recipeCandidate,
-                                   Dictionary<IngredientDef, float> currentAmounts,
-                                   out Dictionary<IngredientDef, float> consumeDict)
-    {
-        consumeDict = new Dictionary<IngredientDef, float>();
-
-        foreach (Requirement requirement in recipeCandidate.reactants)
-        {
-            float ownedAmount = 0f;
-            currentAmounts.TryGetValue(requirement.ingredient, out ownedAmount);
-            if (ownedAmount < requirement.minAmount)
-                return false;
-            if (ownedAmount > requirement.maxAmount)
-                return false;
-            consumeDict[requirement.ingredient] = requirement.minAmount;
-        }
-
-        foreach (KeyValuePair<IngredientDef, float> pair in currentAmounts)
-        {
-            bool declared = false;
-            foreach (Requirement requirement in recipeCandidate.reactants)
-            {
-                if (requirement.ingredient == pair.Key)
-                {
-                    declared = true;
-                    break;
-                }
-            }
-            if (!declared && pair.Value > 0f)
-                return false;
-        }
+        ProduceRecipe(best, amountMap);
         return true;
     }
 
-    private Dictionary<IngredientDef, float> BuildAmountDictionary()
+    private void ProduceRecipe(MortarRecipe recipe, Dictionary<IngredientDef, float> amountMap)
     {
-        Dictionary<IngredientDef, float> map = new Dictionary<IngredientDef, float>();
+        int totalIn = amountMap.Values.Sum(x => (int)x);
+        int totalNeed = recipe.reactants.Sum(x => x.amount);
+        int factor = Mathf.Max(1, totalIn / totalNeed);
+        float outVol = recipe.product.volume * factor;
 
-        foreach (ItemStack stackItem in solidStackList)
+        FluidStack outStack = new FluidStack(recipe.product.Def, outVol)
         {
-            if (stackItem.IsEmpty)
-                continue;
-            if (!map.ContainsKey(stackItem.Def))
-                map[stackItem.Def] = stackItem.amount;
-            else
-                map[stackItem.Def] += stackItem.amount;
-        }
+            tags = recipe.product.tags != null ? new List<IngredientTag>(recipe.product.tags) : null
+        };
+        outStack = recipe.product.CopyWithVolume(outVol);
+        Debug.Log($"[Mortar] ProduceRecipe {outStack.Def.GetId()} volume={outStack.volume}");
+        fluidStorage.Fill(outStack);
 
-        foreach (FluidStack fluidItem in fluidStorage.View())
-        {
-            if (fluidItem.IsEmpty)
-            {
-                continue;
-            }
-            if (!map.ContainsKey(fluidItem.Def))
-                map[fluidItem.Def] = fluidItem.volume;
-            else
-                map[fluidItem.Def] += fluidItem.volume;
-        }
-
-        return map;
-    }
-    
-    public void DoCraft(Dictionary<IngredientDef, float> consumeDict)
-    {
-        foreach (KeyValuePair<IngredientDef, float> pair in consumeDict)
-        {
-            if (pair.Key is ItemDef)
-            {
-                ItemDef targetDef = (ItemDef)pair.Key;
-                float remain = pair.Value;
-
-                for (int i = 0; i < solidStackList.Count && remain > 0f; i++)
-                {
-                    ItemStack stackItem = solidStackList[i];
-                    if (stackItem.IsEmpty || stackItem.Def != targetDef)
-                    {
-                        continue;
-                    }
-
-                    int taken = Mathf.Min(Mathf.RoundToInt(remain), stackItem.amount);
-                    stackItem.amount -= taken;
-                    remain -= taken;
-                    
-                    
-                    if (stackItem.amount <= 0)
-                        stackItem = new ItemStack(null, 0);
-                    solidStackList[i] = stackItem;
-                }
-            }
-            else if (pair.Key is FluidDef)
-            {
-                FluidDef fluidDefTarget = (FluidDef)pair.Key;
-                TakeFluid(fluidDefTarget, pair.Value);
-            }
-        }
-
-        solidStackList.RemoveAll(stackElement => stackElement.IsEmpty);
+        solids.Clear();
         grindProgress = 0f;
+        OnProgressChanged?.Invoke(grindProgress);
+        OnInventoryChanged?.Invoke();
+        OnCraftComplete?.Invoke(true);
+    }
 
-        if (OnProgressChanged != null)
-            OnProgressChanged(grindProgress);
+    private void MakeByproduct(Dictionary<IngredientDef, float> amountMap)
+    {
+        float totalVol = amountMap.Values.Sum();
+        if (totalVol <= 0f) return;
+
+        List<IngredientTag> tagMap = BuildTagMap();
+        FluidStack mixed = new FluidStack(mixedDustDef, totalVol) { tags = new List<IngredientTag>() };
+        foreach (var tag in tagMap)
+        {
+            mixed.tags.Add(new IngredientTag(tag));
+        }
         
-        
-        if (OnInventoryChanged != null)
-            OnInventoryChanged();
+        Debug.Log($"[Mortar] MakeByproduct mixed_dust volume={totalVol} tagCount={tagMap.Count}");
+        fluidStorage.Fill(mixed);
+
+        solids.Clear();
+        grindProgress = 0f;
+        OnProgressChanged?.Invoke(grindProgress);
+        OnInventoryChanged?.Invoke();
+        OnCraftComplete?.Invoke(false);
+    }
+
+    private List<IngredientTag> BuildTagMap()
+    {
+        var dict = new Dictionary<string, double>();
+        foreach (var st in solids)
+        {
+            if (st.IsEmpty || st.tags == null) continue;
+            foreach (var t in st.tags)
+            {
+                double add = t.value * st.amount;
+                if (dict.TryGetValue(t.id, out var cur)) dict[t.id] = cur + add;
+                else dict[t.id] = add;
+            }
+        }
+        return dict.Select(kv => new IngredientTag(kv.Key, (float)kv.Value)).ToList();
     }
     
-    public bool TryGetOnlyFluid(out FluidDef def, out float volume)
+    //DEBUG
+    
+    public List<ItemStack> GetItemStorage()
     {
-        def = null;
-        volume = 0f;
-
-        FluidDef foundDef = null;
-        float foundVol = 0f;
-
-        foreach (FluidStack tank in fluidStorage.View())
-        {
-            if (tank.IsEmpty)
-            {
-                continue;
-            }
-
-            if (foundDef == null)
-            {
-                foundDef = tank.Def;
-                foundVol = tank.volume;
-            }
-            else if (foundDef != tank.Def)
-            {
-                return false;
-            }
-            else
-            {
-                foundVol += tank.volume;
-            }
-        }
-
-        if (foundDef == null)
-            return false;
-
-        def = foundDef;
-        volume = foundVol;
-        return true;
+        return solids;
     }
-
-    public float TakeFluid(FluidDef def, float requestAmount)
+    
+    public FluidStorage GetFluidStorage()
     {
-        FluidStack drained = fluidStorage.Drain(x => x.Def == def, Mathf.CeilToInt(requestAmount));
-        float realTake = Mathf.Min(requestAmount, drained.volume);
-
-        if (realTake < drained.volume)
-        {
-            FluidStack back = new FluidStack(def, drained.volume - realTake);
-            fluidStorage.Fill(back);
-        }
-
-        if (OnInventoryChanged != null)
-        {
-            OnInventoryChanged();
-        }
-        return realTake;
+        return fluidStorage;
     }
 }

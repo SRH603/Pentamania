@@ -164,7 +164,7 @@ public struct FluidStack : IngredientStack, IStackable<FluidStack>
                         (tags != null && other.tags != null && TagListsEqual(tags, other.tags));
         bool defEqual = Def == other.Def;
         bool notEmpty = !IsEmpty && !other.IsEmpty;
-        Debug.Log($"[Fluid Stack] Tags: {tagEqual}, Defs: {defEqual}, Not Empty: {notEmpty}");
+        //Debug.Log($"[Fluid Stack] Tags: {tagEqual}, Defs: {defEqual}, Not Empty: {notEmpty}");
         return defEqual && tagEqual && notEmpty;
     }
 
@@ -197,6 +197,24 @@ public struct FluidStack : IngredientStack, IStackable<FluidStack>
         // var newTags = tags == null ? null : new List<IngredientTag>(tags);
         //Debug.Log("[Fluid Stack] " + newTags.Count);
         return new FluidStack(def, newVol, newTags);
+    }
+    
+    public readonly FluidStack Copy()
+    {
+        List<IngredientTag> newTags = null;
+
+        if (tags != null)
+        {
+            newTags = new List<IngredientTag>(tags.Count);
+            foreach (var tag in tags)
+            {
+                newTags.Add(new IngredientTag(tag));
+            }
+        }
+        
+        // var newTags = tags == null ? null : new List<IngredientTag>(tags);
+        //Debug.Log("[Fluid Stack] " + newTags.Count);
+        return new FluidStack(def, volume, newTags);
     }
     
     private static bool TagListsEqual(List<IngredientTag> a, List<IngredientTag> b)

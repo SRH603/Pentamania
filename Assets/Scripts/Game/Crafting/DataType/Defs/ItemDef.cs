@@ -23,6 +23,7 @@ public class ItemDef : IngredientDef
     
     public Vector3 GetScale()
     {
+        //Debug.Log(baseIngredient.transform.localScale.ToString());
         return baseIngredient.transform.localScale;
     }
     

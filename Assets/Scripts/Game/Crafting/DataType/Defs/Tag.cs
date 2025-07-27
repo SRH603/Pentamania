@@ -6,17 +6,23 @@ public class IngredientTag
 {
     public string id;
     public float value;
+    public Color color;
+    public float colorWeight;
 
-    public IngredientTag(string id, float value)
+    public IngredientTag(string id, float value, Color color = new Color(), float colorWeight = 0)
     {
         this.id = id;
         this.value = value;
+        this.color = color;
+        this.colorWeight = colorWeight;
     }
     
     public IngredientTag(IngredientTag src)
     {
         id = src.id;
         value = src.value;
+        color = src.color;
+        colorWeight = src.colorWeight;
     }
     
     public override bool Equals(object obj)

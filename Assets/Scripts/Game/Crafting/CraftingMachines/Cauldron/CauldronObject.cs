@@ -29,11 +29,25 @@ public class CauldronObject : MonoBehaviour
     //DEBUG
     [SerializeField] private ItemStorage itemStorage;
     [SerializeField] private FluidStorage fluidStorage;
+    
+    //COLOR
+    [SerializeField] private Color targetColor = Color.white;
+    [SerializeField] private float fadeSpeed = 1.0f;
+    private Material liquidMaterial;
+
+    [Header("Visual Effects")] 
+    [SerializeField] private ParticleSystem craftingFinishedNormal;
+    [SerializeField] private ParticleSystem craftingFinishedInferior;
+    [SerializeField] private ParticleSystem craftingFinishedAdvanced;
+    [SerializeField] private ParticleSystem explosion;
 
     private void Awake()
     {
         data = new Cauldron(recipes, itemSlots, fluidTanks, tankCapacity);
         data.OnExplode += HandleExplosion;
+        targetColor = liquidPlane.GetComponent<MeshRenderer>().material.color;
+        if (liquidPlane != null)
+            liquidMaterial = liquidPlane.GetComponent<MeshRenderer>().material;
     }
     
     void Update()
@@ -55,6 +69,28 @@ public class CauldronObject : MonoBehaviour
         itemStorage = data.GetItemStorage();
         fluidStorage = data.GetFluidStorage();
 
+        UpdateFluidColor();
+    }
+
+    private void UpdateFluidColor()
+    {
+        if (liquidMaterial == null) return;
+
+        Color currentColor = liquidMaterial.GetColor("_BaseColor");
+        Color newColor = Color.Lerp(currentColor, targetColor, fadeSpeed * Time.deltaTime);
+        liquidMaterial.SetColor("_BaseColor", newColor);
+        
+    }
+    
+    public void UpdateTargetColor()
+    {
+        targetColor = data.CalculateFluidColor();
+        //Debug.Log("[Cauldron] Updated the target color: " + targetColor);
+    }
+    
+    public void UpdateCustomTargetColor(Color color)
+    {
+        targetColor = color;
     }
 
     #region Spoon
@@ -125,7 +161,7 @@ public class CauldronObject : MonoBehaviour
             Debug.Log("[CauldronObj] Cannot scoop: none or multiple liquids");
             return;
         }
-        if (!container.CanAccept(cauldronFluid.Def))
+        if (!container.CanAccept(cauldronFluid))
         {
             Debug.Log("[Cauldron] Container can't accept this fluid");
             return;
@@ -140,16 +176,22 @@ public class CauldronObject : MonoBehaviour
         
         //float take = Mathf.Min(capacityLeft, cauldronVol);
         FluidStack take = data.TakeFluid(cauldronFluid);
+        float took = take.volume;
         take.volume = container.Fill(take);
         data.InsertLiquid(take);
 
-        Debug.Log($"[Cauldron] Scooped {take.volume}, container now has {container.CurrentFluid.volume}");
+        UpdateTargetColor();
+        //liquidPlane.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", data.CalculateFluidColor());
+        
+        Debug.Log($"[Cauldron] Scooped {took}, container now has {container.CurrentFluid.volume}");
     }
     #endregion
 
     #region PRIVATE
     private void AfterInsert()
     {
+        UpdateTargetColor();
+        
         float total = data.GetTotalAmount();
         if (total > maxCapacity)
         {
@@ -177,24 +219,47 @@ public class CauldronObject : MonoBehaviour
     
     private void TryProcessCauldron()
     {
+        /*
+        int guard = 0;
         bool anyRecipe = false;
 
         while (data.TryProcessOnce(out var solids, out var liquids))
         {
+            if (++guard > 200) { Debug.LogError("Loop runaway"); break; }
             anyRecipe = true;
 
             if (solids != null)
                 foreach (var s in solids) SpawnSolid(s);
-
+            
+            /*
+            if (liquids != null)
+                foreach (var l in liquids) data.InsertLiquid(l);
+                */
+/*
             if (liquids != null && liquids.Count > 0)
                 liquidPlane.GetComponent<MeshRenderer>().material = liquids[0].Def.GetMaterial();
         }
-        if (anyRecipe) Debug.Log("[Cauldron] Recipes processed");
+    */
+        bool anyRecipe = data.TryProcessOnce(out var solids, out var liquids);
+        if (anyRecipe)
+        {
+            if (solids != null)
+                foreach (var s in solids) SpawnSolid(s);
+
+            if (liquids != null && liquids.Count > 0)
+                UpdateCustomTargetColor(liquids[0].Def.GetMaterial().color);
+                //liquidPlane.GetComponent<MeshRenderer>().material = liquids[0].Def.GetMaterial();
+            
+
+            Debug.Log("[Cauldron] Recipe processed once");
+        }
+        //if (anyRecipe) Debug.Log("[Cauldron] Recipes processed");
 
         // TODO Byproduct Logic
         if (!anyRecipe && !data.IsEmpty() && data.ByproductDef)
         {
             data.InsertLiquid(new FluidStack(data.ByproductDef, data.ByproductVol));
+            UpdateCustomTargetColor(data.ByproductDef.GetMaterial().color);
             liquidPlane.GetComponent<MeshRenderer>().material = data.ByproductDef.GetMaterial();
             Debug.Log("[Cauldron] No recipe found, produced by-product");
         }
@@ -230,7 +295,8 @@ public class CauldronObject : MonoBehaviour
     {
         Debug.Log($"[Cauldron] EXPLOSION! power={power}");
         OnExplodeVisual?.Invoke(power);
-        // TODO VISUAL
+        data.HandleExplosion(power);
+        explosion.Play();
     }
     #endregion
 }

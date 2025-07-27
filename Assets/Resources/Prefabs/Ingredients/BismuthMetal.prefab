@@ -321,6 +321,8 @@ MonoBehaviour:
     tags:
     - id: test1
       value: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
+      colorWeight: 0
 --- !u!65 &3147100979725379093
 BoxCollider:
   m_ObjectHideFlags: 0
