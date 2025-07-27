@@ -4,16 +4,23 @@ using UnityEngine;
 public class MortarSolidReceiver : MonoBehaviour
 {
     private MortarObject mortar;
-    void Awake() { GetComponent<Collider>().isTrigger = true; mortar = GetComponentInParent<MortarObject>(); }
+
+    void Awake()
+    {
+        GetComponent<Collider>().isTrigger = true;
+        mortar = GetComponentInParent<MortarObject>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
         var so = other.GetComponent<SolidObject>();
-        if (so && so.GetType() == typeof(SolidObject)) mortar.SolidEntered(so);
+        if (so && so.GetType() == typeof(SolidObject))
+            mortar.SolidEntered(so);
     }
     void OnTriggerExit(Collider other)
     {
         var so = other.GetComponent<SolidObject>();
-        if (so && so.GetType() == typeof(SolidObject)) mortar.SolidExited(so);
+        if (so && so.GetType() == typeof(SolidObject))
+            mortar.SolidExited(so);
     }
 }

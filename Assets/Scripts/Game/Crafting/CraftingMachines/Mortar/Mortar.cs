@@ -24,7 +24,6 @@ public class Mortar
         mixedDustDef = mixedDust;
         fluidStorage = new FluidStorage(1, tankCap);
         grindProgress = 0f;
-        Debug.Log($"[Mortar] Created, recipe count={recipes.Count}");
     }
 
     public float Progress => grindProgress;
@@ -33,10 +32,16 @@ public class Mortar
 
     public void InsertSolid(ItemStack incoming)
     {
-        if (incoming.IsEmpty) return;
+        if (incoming.IsEmpty)
+            return;
         int idx = solids.FindIndex(s => !s.IsEmpty && s.Def == incoming.Def);
-        if (idx >= 0) { var s = solids[idx]; s.amount += incoming.amount; solids[idx] = s; }
-        else solids.Add(incoming);
+        if (idx >= 0)
+        {
+            var s = solids[idx];
+            s.amount += incoming.amount; solids[idx] = s;
+        }
+        else
+            solids.Add(incoming);
         Debug.Log($"[Mortar] InsertSolid {incoming.Def.GetId()} x{incoming.amount}");
         DecayProgress();
         OnInventoryChanged?.Invoke();
@@ -44,15 +49,19 @@ public class Mortar
     
     public void RemoveSolid(ItemStack outgoing)
     {
-        if (outgoing.IsEmpty) return;
+        if (outgoing.IsEmpty)
+            return;
 
         int idx = solids.FindIndex(s => !s.IsEmpty && s.Def == outgoing.Def);
-        if (idx < 0) return;
+        if (idx < 0)
+            return;
 
         var cur = solids[idx];
         cur.amount -= outgoing.amount;
-        if (cur.amount <= 0) solids.RemoveAt(idx);
-        else                 solids[idx] = cur;
+        if (cur.amount <= 0)
+            solids.RemoveAt(idx);
+        else
+            solids[idx] = cur;
 
         Debug.Log($"[Mortar] RemoveSolid {outgoing.Def.GetId()} x{outgoing.amount}");
         DecayProgress();
@@ -63,7 +72,8 @@ public class Mortar
     {
         FluidStack drained = fluidStorage.Drain(f => f.Def == def, volReq);
         float real = Mathf.Min(volReq, drained.volume);
-        if (real < drained.volume) fluidStorage.Fill(drained.CopyWithVolume(drained.volume - real));
+        if (real < drained.volume) 
+            fluidStorage.Fill(drained.CopyWithVolume(drained.volume - real));
         Debug.Log($"[Mortar] ScoopLiquid {def.GetId()} requested={volReq} got={real}");
         OnInventoryChanged?.Invoke();
         return real;
@@ -132,21 +142,23 @@ public class Mortar
     {
         float totalMass = solids.Sum(s => s.amount);
         grindProgress = Mathf.Clamp01(grindProgress + baseInc / Mathf.Max(1f, totalMass));
-        Debug.Log($"[Mortar] PestleHit progress={grindProgress:F3}");
+        Debug.Log($"[Mortar] PestleHit progress={grindProgress}");
         OnProgressChanged?.Invoke(grindProgress);
     }
 
     private void DecayProgress()
     {
         grindProgress *= PROGRESS_DECAY;
-        if (grindProgress < 0.0001f) grindProgress = 0f;
-        Debug.Log($"[Mortar] Progress decayed to {grindProgress:F3}");
+        if (grindProgress < 0.0001f)
+            grindProgress = 0f;
+        Debug.Log($"[Mortar] Progress decayed to {grindProgress}");
         OnProgressChanged?.Invoke(grindProgress);
     }
 
     public bool TryCraft()
     {
-        if (grindProgress < 0.999f) return false;
+        if (grindProgress < 0.999f)
+            return false;
         var amountMap = solids.GroupBy(s => (IngredientDef)s.Def).ToDictionary(g => g.Key, g => (float)g.Sum(x => x.amount));
         var inputSet = new HashSet<IngredientDef>(amountMap.Keys);
         var candidates = recipes.Where(r => new HashSet<IngredientDef>(r.reactants.Select(x => x.ingredient)).SetEquals(inputSet)).ToList();
@@ -172,10 +184,10 @@ public class Mortar
         }
         var best = candidates.OrderByDescending(BestScore).First();
         float bestSim = BestScore(best);
-        Debug.Log($"[Mortar] BestSim={bestSim:F3}");
+        Debug.Log($"[Mortar] BestSim={bestSim}");
         if (bestSim < 0.80f)
         {
-            Debug.Log("[Mortar] Similarity < 0.8, produce by-product");
+            Debug.Log("[Mortar] Similarity < 80%, produce by-product");
             MakeByproduct(amountMap);
             return true;
         }
@@ -208,7 +220,8 @@ public class Mortar
     private void MakeByproduct(Dictionary<IngredientDef, float> amountMap)
     {
         float totalVol = amountMap.Values.Sum();
-        if (totalVol <= 0f) return;
+        if (totalVol <= 0f)
+            return;
 
         List<IngredientTag> tagMap = BuildTagMap();
         FluidStack mixed = new FluidStack(mixedDustDef, totalVol) { tags = new List<IngredientTag>() };
@@ -232,12 +245,15 @@ public class Mortar
         var dict = new Dictionary<string, double>();
         foreach (var st in solids)
         {
-            if (st.IsEmpty || st.tags == null) continue;
+            if (st.IsEmpty || st.tags == null)
+                continue;
             foreach (var t in st.tags)
             {
                 double add = t.value * st.amount;
-                if (dict.TryGetValue(t.id, out var cur)) dict[t.id] = cur + add;
-                else dict[t.id] = add;
+                if (dict.TryGetValue(t.id, out var cur))
+                    dict[t.id] = cur + add;
+                else
+                    dict[t.id] = add;
             }
         }
         return dict.Select(kv => new IngredientTag(kv.Key, (float)kv.Value)).ToList();

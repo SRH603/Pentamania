@@ -6,10 +6,7 @@ public class MortarRecipe : ScriptableObject
 {
     [Serializable]
     public struct ReactantSpec { public ItemDef ingredient; public int amount; }
-
-    [Header("Reactants (Solid)")]
+    
     public ReactantSpec[] reactants;
-
-    [Header("Product (FluidStack)")]
-    public FluidStack product;     // 直接设为 FluidStack，可在 Inspector 中配置 tag 列表
+    public FluidStack product;
 }
