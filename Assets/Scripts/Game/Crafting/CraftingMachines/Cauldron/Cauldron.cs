@@ -233,19 +233,45 @@ public class Cauldron
                 best = r;
             }
         }
-        
-        if (best == null || bestScore <= 0.0001) return false;
+
+        if (best == null || bestScore <= 0.0001)
+        {
+            Debug.Log("[Cauldron] No recipe matched");
+            return false;
+        }
         
         Debug.Log($"[Cauldron] Recipe matched: {best} with a similarity of {bestScore}");
+        
+        float t = GetTotalAmount();
+        float c = 0f;
         
         itemStorage.Clear();
         fluidStorage.Clear();
 
+        foreach (var i in best.requirement)
+        {
+            c += i.weight;
+        }
+
+        float m = t / c;
+        
+        Debug.Log($"[Cauldron] Recipe multiplier is: {m}");
+        
         foreach (var p in best.products)
         {
             float amt = p.amount;
-            solidsToSpawn.Add(p.itemProduct);
-            liquidsToStay.Add(p.fluidProduct);
+            if (!p.itemProduct.IsEmpty)
+            {
+                var ni = p.itemProduct.CopyWithAmount((int)(p.itemProduct.amount * amt * m));
+                solidsToSpawn.Add(ni);
+            }
+
+            if (!p.itemProduct.IsEmpty)
+            {
+                var nf = p.fluidProduct.CopyWithVolume(p.fluidProduct.volume * amt * m);
+                liquidsToStay.Add(nf);
+                InsertLiquid(nf);
+            }
             //Debug.Log(p.fluidProduct);
             /*
             if (p.ingredient is ItemDef itemDef)
@@ -253,7 +279,6 @@ public class Cauldron
             else if (p.ingredient is FluidDef fluidDef)
                 liquidsToStay.Add(new FluidStack(fluidDef, amt));
                 */
-            InsertLiquid(p.fluidProduct);
         }
         
         //Debug.Log(liquidsToStay.Count);
