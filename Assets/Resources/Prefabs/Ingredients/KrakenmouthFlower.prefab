@@ -277,5 +277,5 @@ MonoBehaviour:
     def: {fileID: 11400000, guid: d4e96d4b7294e3d4da40fe321e44bfaf, type: 2}
     amount: 1
     tags:
-    - id: test
+    - tagDef: {fileID: 11400000, guid: a82fc43ed22534034bd6d7a25a5c19e0, type: 2}
       value: 1

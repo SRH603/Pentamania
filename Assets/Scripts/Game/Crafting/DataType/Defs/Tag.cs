@@ -1,42 +1,53 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class IngredientTag
 {
-    public string id;
+    public IngredientTagDef ingredientTagDef;
     public float value;
-    public Color color;
-    public float colorWeight;
-
-    public IngredientTag(string id, float value, Color color = new Color(), float colorWeight = 0)
+    
+    public IngredientTag(IngredientTagDef ingredientTagDef, float value)
     {
-        this.id = id;
+        this.ingredientTagDef = ingredientTagDef;
         this.value = value;
-        this.color = color;
-        this.colorWeight = colorWeight;
     }
     
     public IngredientTag(IngredientTag src)
     {
-        id = src.id;
+        ingredientTagDef = src.ingredientTagDef;
         value = src.value;
-        color = src.color;
-        colorWeight = src.colorWeight;
     }
     
     public override bool Equals(object obj)
     {
         if (obj is IngredientTag other)
         {
-            return id == other.id && Mathf.Approximately(this.value, other.value);
+            if (ingredientTagDef == null || other.ingredientTagDef == null)
+                return false;
+            return ingredientTagDef == other.ingredientTagDef && Mathf.Approximately(this.value, other.value);
         }
         return false;
     }
 
+    /*
     public override int GetHashCode()
     {
-        return id.GetHashCode() ^ value.GetHashCode();
+        return ingredientTagDef.GetHashCode() ^ value.GetHashCode();
+    }
+    */
+    
+    public override int GetHashCode()
+    {
+        // ① “unchecked” 防止溢出异常；② null 时返回 0
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 31 + (ingredientTagDef != null ? ingredientTagDef.GetHashCode() : 0);
+            hash = hash * 31 + value.GetHashCode();
+            return hash;
+        }
     }
 }
 

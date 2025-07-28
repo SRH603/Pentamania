@@ -13,28 +13,22 @@ MonoBehaviour:
   m_Name: Dev
   m_EditorClassIdentifier: 
   requirement:
-  - tag:
-      id: test
-      value: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
-      colorWeight: 0
+  - ingredientTag: {fileID: 11400000, guid: a82fc43ed22534034bd6d7a25a5c19e0, type: 2}
     weight: 1
+  - ingredientTag: {fileID: 11400000, guid: f12f4e9f148ad4000ae31f614294f918, type: 2}
+    weight: 3
   products:
   - itemProduct:
       def: {fileID: 11400000, guid: b268fa6d120154e128b172be82525b80, type: 2}
       amount: 10
       tags:
-      - id: test
+      - ingredientTagDef: {fileID: 11400000, guid: 088197d1d40fd4e9db743050f0262ef9, type: 2}
         value: 11
-        color: {r: 0, g: 0, b: 0, a: 0}
-        colorWeight: 0
     fluidProduct:
       def: {fileID: 11400000, guid: 8d33a57fbd3f845018ffdb77500fa73c, type: 2}
       volume: 10
       tags:
-      - id: test222
+      - ingredientTagDef: {fileID: 11400000, guid: 4ff29ba954f1d4361bdd53fe5d8a91f1, type: 2}
         value: 11
-        color: {r: 1, g: 0.10849059, b: 0.10849059, a: 0}
-        colorWeight: 0
     ingredient: {fileID: 11400000, guid: 8d33a57fbd3f845018ffdb77500fa73c, type: 2}
-    amount: 100
+    amount: 1.2

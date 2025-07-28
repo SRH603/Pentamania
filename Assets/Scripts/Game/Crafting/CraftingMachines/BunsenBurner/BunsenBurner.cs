@@ -1,101 +1,129 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class BunsenBurner
 {
-    private readonly List<BunsenEntry> trackedEntries = new List<BunsenEntry>();
-    private readonly Dictionary<ItemDef, BunsenBurnerRecipe> recipeDictionary;
-
-    public BunsenBurner(IEnumerable<BunsenBurnerRecipe> recipeCollection)
+    [Serializable]
+    private class ProcessEntry
     {
-        recipeDictionary = new Dictionary<ItemDef, BunsenBurnerRecipe>();
-        foreach (BunsenBurnerRecipe currentRecipe in recipeCollection)
-        {
-            if (currentRecipe != null && currentRecipe.input != null && currentRecipe.output != null)
-                recipeDictionary[currentRecipe.input] = currentRecipe;
-        }
+        public SolidObject solid;
+        public ItemStack inStack;
+        public float timeLeft;
+        public bool matched;
+        public BunsenBurnerRecipe recipe;
     }
 
-    public void AddSolid(SolidObject newObject)
+    private readonly List<BunsenBurnerRecipe> recipes;
+    private readonly IngredientTagDef burnedTagDef;
+    private readonly float fallbackCookTime;
+
+    private readonly List<ProcessEntry> processes = new();
+
+    public event Action<SolidObject> OnCookFinish;
+    public event Action OnInventoryChanged;
+
+    public BunsenBurner(IEnumerable<BunsenBurnerRecipe> recipeSrc,
+                        IngredientTagDef burnedTagDef,
+                        float fallbackCookTime = 3f)
     {
-        if (newObject == null)
-            return;
-
-        IngredientStack ingredientInfo = newObject.GetIngredient();
-        if (!(ingredientInfo is ItemStack))
-            return;
-
-        ItemStack objectStack = (ItemStack)ingredientInfo;
-        if (objectStack.IsEmpty)
-            return;
-
-        for (int i = 0; i < trackedEntries.Count; i++)
-        {
-            if (trackedEntries[i].trackedSolid == newObject)
-                return;
-        }
-
-        trackedEntries.Add(new BunsenEntry(newObject, 0f));
+        recipes = new List<BunsenBurnerRecipe>(recipeSrc);
+        this.burnedTagDef = burnedTagDef;
+        this.fallbackCookTime = Mathf.Max(0.1f, fallbackCookTime);
     }
 
-    public void RemoveSolid(SolidObject leavingObject)
+    #region API
+    public void InsertSolid(SolidObject so)
     {
-        for (int i = trackedEntries.Count - 1; i >= 0; i--)
+        if (!so) return;
+
+        ItemStack stack = (ItemStack)so.GetIngredient();
+        if (stack.IsEmpty) return;
+
+        if (HasBurnedTag(stack)) return;
+
+        BunsenBurnerRecipe recipe = recipes
+            .FirstOrDefault(r => r.input.Def == stack.Def);
+
+        float cookTime = recipe ? recipe.burnTime : fallbackCookTime;
+
+        processes.Add(new ProcessEntry
         {
-            if (trackedEntries[i].trackedSolid == leavingObject)
-                trackedEntries.RemoveAt(i);
-        }
+            solid = so,
+            inStack = stack.CopyWithAmount(stack.amount),
+            matched = recipe != null,
+            recipe = recipe,
+            timeLeft = cookTime
+        });
+
+        Debug.Log($"[Bunsen Burner] Inserted {stack.Def.GetId()}  cookTime = {cookTime}s");
+        OnInventoryChanged?.Invoke();
     }
 
-    public List<SolidObject> Tick(float deltaTime)
+    public void RemoveSolid(SolidObject so)
     {
-        List<SolidObject> finishedObjects = new List<SolidObject>();
-
-        for (int i = trackedEntries.Count - 1; i >= 0; i--)
-        {
-            BunsenEntry entry = trackedEntries[i];
-
-            if (entry.trackedSolid == null)
-            {
-                trackedEntries.RemoveAt(i);
-                continue;
-            }
-
-            entry.timer += deltaTime;
-            trackedEntries[i] = entry;
-
-            IngredientStack ingredientInfo = entry.trackedSolid.GetIngredient();
-            if (!(ingredientInfo is ItemStack))
-                continue;
-
-            ItemStack currentStack = (ItemStack)ingredientInfo;
-            if (currentStack.IsEmpty)
-                continue;
-
-            BunsenBurnerRecipe matchingRecipe;
-            if (!recipeDictionary.TryGetValue(currentStack.Def, out matchingRecipe))
-                continue;
-            
-
-            if (entry.timer >= matchingRecipe.cookTime)
-            {
-                finishedObjects.Add(entry.trackedSolid);
-                trackedEntries.RemoveAt(i);
-            }
-        }
-
-        return finishedObjects;
+        processes.RemoveAll(p => p.solid == so);
+        OnInventoryChanged?.Invoke();
     }
+    #endregion
 
-    private struct BunsenEntry
+    #region Drive
+    public void Tick(float dt)
     {
-        public SolidObject trackedSolid;
-        public float timer;
+        if (processes.Count == 0) return;
 
-        public BunsenEntry(SolidObject solid, float startTimer)
+        for (int i = processes.Count - 1; i >= 0; i--)
         {
-            trackedSolid = solid;
-            timer = startTimer;
+            var p = processes[i];
+            p.timeLeft -= dt;
+
+            if (p.timeLeft > 0f) continue;
+
+            if (p.matched)
+                ApplyRecipe(p);
+            else
+                ApplyBurnLogic(p);
+
+            OnCookFinish?.Invoke(p.solid);
+            processes.RemoveAt(i);
+            OnInventoryChanged?.Invoke();
         }
     }
+    #endregion
+
+    #region Process
+    private void ApplyRecipe(ProcessEntry p)
+    {
+        ItemStack prod = p.recipe.output.CopyWithAmount(p.inStack.amount);
+        p.solid.SetIngredient(prod);
+        Debug.Log($"[Bunsen] Recipe found: {prod.Def.GetId()}");
+    }
+
+    private void ApplyBurnLogic(ProcessEntry p)
+    {
+        ItemStack st = p.inStack.CopyWithAmount(p.inStack.amount);
+
+        if (st.tags == null)
+            st.tags = new List<IngredientTag>();
+
+        if (!st.tags.Any())
+            st.tags.Add(new IngredientTag(burnedTagDef, 1f));
+        else
+        {
+            IngredientTag maxTag = st.tags.OrderByDescending(t => t.value).First();
+            foreach (var t in st.tags)
+                if (t != maxTag) t.value *= 2f;
+
+            st.tags.Add(new IngredientTag(burnedTagDef, 1f));
+        }
+
+        p.solid.SetIngredient(st);
+        Debug.Log("[Bunsen] Burned, tags adjusted & burned added");
+    }
+    #endregion
+
+    private bool HasBurnedTag(ItemStack s) =>
+        s.tags != null && s.tags.Any(t => t.ingredientTagDef == burnedTagDef);
 }

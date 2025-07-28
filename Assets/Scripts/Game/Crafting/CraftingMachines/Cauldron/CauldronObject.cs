@@ -39,7 +39,11 @@ public class CauldronObject : MonoBehaviour
     [SerializeField] private ParticleSystem craftingFinishedNormal;
     [SerializeField] private ParticleSystem craftingFinishedInferior;
     [SerializeField] private ParticleSystem craftingFinishedAdvanced;
-    [SerializeField] private ParticleSystem explosion;
+    //[SerializeField] private ParticleSystem explosion;
+
+    [Header("Advanced Effects")]
+    [SerializeField] private CauldronEffectExplosion explosion;
+    [SerializeField] private CauldronShaker shaker;
 
     private void Awake()
     {
@@ -70,6 +74,14 @@ public class CauldronObject : MonoBehaviour
         fluidStorage = data.GetFluidStorage();
 
         UpdateFluidColor();
+
+        shaker.positionShakeStrength = 0.06f * data.GetTotalAmount() / maxCapacity;
+        shaker.rotationShakeStrength = 5 * data.GetTotalAmount() / maxCapacity;
+    }
+
+    public float GetCurrentStrength()
+    {
+        return data.GetTotalAmount() / maxCapacity;
     }
 
     private void UpdateFluidColor()
@@ -79,7 +91,14 @@ public class CauldronObject : MonoBehaviour
         Color currentColor = liquidMaterial.GetColor("_BaseColor");
         Color newColor = Color.Lerp(currentColor, targetColor, fadeSpeed * Time.deltaTime);
         liquidMaterial.SetColor("_BaseColor", newColor);
-        
+    }
+    
+    private void SetFluidColor(Color color)
+    {
+        if (liquidMaterial == null) return;
+
+        Color currentColor = liquidMaterial.GetColor("_BaseColor");
+        liquidMaterial.SetColor("_BaseColor", color);
     }
     
     public void UpdateTargetColor()
@@ -87,10 +106,20 @@ public class CauldronObject : MonoBehaviour
         targetColor = data.CalculateFluidColor();
         //Debug.Log("[Cauldron] Updated the target color: " + targetColor);
     }
+
+    public Color CalculateFluidColor()
+    {
+        return data.CalculateFluidColor();
+    }
     
     public void UpdateCustomTargetColor(Color color)
     {
         targetColor = color;
+    }
+
+    public Color GetCurrentLiquidColor()
+    {
+        return liquidMaterial.GetColor("_BaseColor");
     }
 
     #region Spoon
@@ -296,7 +325,10 @@ public class CauldronObject : MonoBehaviour
         Debug.Log($"[Cauldron] EXPLOSION! power={power}");
         OnExplodeVisual?.Invoke(power);
         data.HandleExplosion(power);
-        explosion.Play();
+        //explosion.Play();
+        explosion.Explode(targetColor);
+        UpdateTargetColor();
+        SetFluidColor(data.CalculateFluidColor());
     }
     #endregion
 }

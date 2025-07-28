@@ -19,7 +19,5 @@ MonoBehaviour:
     def: {fileID: 11400000, guid: a33849be8f979485f89a4a4140f73a97, type: 2}
     volume: 10
     tags:
-    - id: NIUBI
+    - ingredientTagDef: {fileID: 11400000, guid: a82fc43ed22534034bd6d7a25a5c19e0, type: 2}
       value: 342
-      color: {r: 1, g: 0, b: 0, a: 0}
-      colorWeight: 0

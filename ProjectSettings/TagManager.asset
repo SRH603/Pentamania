@@ -19,11 +19,11 @@ TagManager:
   - Pestle
   - Cauldron
   - NoPhysicsCollide
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Room
+  - Furniture
+  - Intractable
+  - Machines
+  - Player Obstacle
   - 
   - 
   - 

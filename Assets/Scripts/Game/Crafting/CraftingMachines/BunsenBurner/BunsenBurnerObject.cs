@@ -3,84 +3,62 @@ using UnityEngine;
 
 public class BunsenBurnerObject : MonoBehaviour
 {
-    [SerializeField] private BunsenBurnerRecipe[] recipeList;
-    [SerializeField] private Transform productSpawnPoint;
+    [Header("General")]
+    [SerializeField] private BunsenBurnerRecipe[] recipes;
+    [SerializeField] private IngredientTagDef burnedTagDef;
+    [SerializeField] private float fallbackCookTime = 3f;
 
-    private BunsenBurner burnerData;
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem vfxStart;
+    [SerializeField] private ParticleSystem vfxSuccess;
+    [SerializeField] private ParticleSystem vfxBurned;
+
+    [SerializeField] private List<SolidObject> solidsInside = new();
+
+    private BunsenBurner burner;
 
     private void Awake()
     {
-        burnerData = new BunsenBurner(recipeList);
-    }
-
-    public void SolidEntered(SolidObject enteredObject)
-    {
-        burnerData.AddSolid(enteredObject);
-    }
-
-    public void SolidExited(SolidObject exitedObject)
-    {
-        burnerData.RemoveSolid(exitedObject);
+        burner = new BunsenBurner(recipes, burnedTagDef, fallbackCookTime);
+        burner.OnCookFinish += HandleFinish;
     }
 
     private void Update()
     {
-        List<SolidObject> finishedObjects = burnerData.Tick(Time.deltaTime);
-        for (int i = 0; i < finishedObjects.Count; i++)
-        {
-            ConvertSolid(finishedObjects[i]);
-        }
+        burner.Tick(Time.deltaTime);
     }
 
-    private void ConvertSolid(SolidObject targetObject)
+    #region Receive
+    public void SolidEntered(SolidObject so)
     {
-        if (targetObject == null)
-        {
-            return;
-        }
-
-        IngredientStack ingredientInfo = targetObject.GetIngredient();
-        if (!(ingredientInfo is ItemStack))
-        {
-            return;
-        }
-
-        ItemStack currentStack = (ItemStack)ingredientInfo;
-        if (currentStack.IsEmpty)
-        {
-            return;
-        }
-
-        BunsenBurnerRecipe matchedRecipe;
-        bool found = TryGetRecipe(currentStack.Def, out matchedRecipe);
-        if (!found)
-        {
-            return;
-        }
-
-        ItemStack newStack = new ItemStack(matchedRecipe.output, currentStack.amount);
-        targetObject.SetIngredient(newStack);
-
-        if (productSpawnPoint != null)
-        {
-            Vector3 offset = UnityEngine.Random.insideUnitSphere * 0.1f;
-            targetObject.transform.position = productSpawnPoint.position + offset;
-        }
+        if (!solidsInside.Contains(so))
+            solidsInside.Add(so);
+        burner.InsertSolid(so);
+        if (vfxStart) vfxStart.Play();
     }
 
-    private bool TryGetRecipe(ItemDef inputDefinition, out BunsenBurnerRecipe matchedRecipe)
+    public void SolidExited(SolidObject so)
     {
-        for (int i = 0; i < recipeList.Length; i++)
-        {
-            BunsenBurnerRecipe currentRecipe = recipeList[i];
-            if (currentRecipe != null && currentRecipe.input == inputDefinition)
-            {
-                matchedRecipe = currentRecipe;
-                return true;
-            }
-        }
+        solidsInside.Remove(so);
+        burner.RemoveSolid(so);
+    }
+    #endregion
 
-        matchedRecipe = null;
-        return false;
+    private void HandleFinish(SolidObject so)
+    {
+        ItemStack cur = (ItemStack)so.GetIngredient();
+        bool burned = cur.tags != null &&
+                      cur.tags.Exists(t => t.ingredientTagDef == burnedTagDef);
+
+        if (burned)
+        {
+            if (vfxBurned) vfxBurned.Play();
+            Debug.Log("[BunsenObj] Burned with no recipe");
+        }
+        else
+        {
+            if (vfxSuccess) vfxSuccess.Play();
+            Debug.Log("[BunsenObj] Burned with recipe");
+        }
     }
 }

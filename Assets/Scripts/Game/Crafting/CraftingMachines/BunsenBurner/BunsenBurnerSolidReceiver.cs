@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -7,29 +8,22 @@ public class BunsenBurnerSolidReceiver : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Collider>().isTrigger = true;
+        var col = GetComponent<Collider>();
+        col.isTrigger = true;
         burner = GetComponentInParent<BunsenBurnerObject>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        SolidObject solidObject = other.GetComponent<SolidObject>();
-        if (!solidObject)
-            return;
-        if (solidObject.GetType() != typeof(SolidObject))
-            return;
-        
-        burner.SolidEntered(solidObject);
+        var so = other.GetComponent<SolidObject>();
+        if (so && so.GetType() == typeof(SolidObject))
+            burner.SolidEntered(so);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        SolidObject solidObject = other.GetComponent<SolidObject>();
-        if (!solidObject)
-            return;
-        if (solidObject.GetType() != typeof(SolidObject))
-            return;
-        
-        burner.SolidExited(solidObject);
+        var so = other.GetComponent<SolidObject>();
+        if (so && so.GetType() == typeof(SolidObject))
+            burner.SolidExited(so);
     }
 }

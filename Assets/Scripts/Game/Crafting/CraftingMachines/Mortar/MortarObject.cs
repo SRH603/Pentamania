@@ -3,14 +3,15 @@ using UnityEngine;
 
 public class MortarObject : MonoBehaviour
 {
-    [Header("General")]
+    [Header("Recipe / MixedDust")]
     [SerializeField] private MortarRecipe[] recipeArray;
     [SerializeField] private FluidDef mixedDust;
-    
+
+    [Header("Pestle / Output")]
     [SerializeField] private float pestleBaseStep = 0.15f;
     [SerializeField] private Transform outputPoint;
 
-    [Header("VFXs")]
+    [Header("VFX")]
     [SerializeField] private ParticleSystem vfxHit;
     [SerializeField] private ParticleSystem vfxInsert;
     [SerializeField] private ParticleSystem vfxSuccess;
@@ -28,6 +29,7 @@ public class MortarObject : MonoBehaviour
     {
         mortar = new Mortar(recipeArray, mixedDust);
         mortar.OnCraftComplete += PlayCraftFX;
+        Debug.Log($"[MortarObj] Awake, recipes={recipeArray.Length}");
     }
 
     void Update()
@@ -41,7 +43,7 @@ public class MortarObject : MonoBehaviour
     {
         if (!solidsInside.Add(so)) return;
         mortar.InsertSolid((ItemStack)so.GetIngredient());
-        Debug.Log($"[Mortar] Solid entered: {so.GetIngredient().GetAbstractDef().name}");
+        Debug.Log($"[MortarObj] Solid entered: {so.GetIngredient().GetAbstractDef().name}");
         if (vfxInsert) vfxInsert.Play();
     }
 
@@ -51,17 +53,17 @@ public class MortarObject : MonoBehaviour
 
         ItemStack stack = (ItemStack)so.GetIngredient();
         mortar.RemoveSolid(stack);
-        Debug.Log($"[Mortar] Solid exited & removed: {stack.Def.GetId()}");
+        Debug.Log($"[MortarObj] Solid exited & removed: {stack.Def.GetId()}");
     }
 
     public void PestleHit()
     {
         mortar.PestleHit(pestleBaseStep);
-        Debug.Log($"[Mortar] Pestle hit, progress={mortar.Progress}");
+        Debug.Log($"[MortarObj] Pestle hit, progress={mortar.Progress:F3}");
         if (vfxHit) vfxHit.Play();
         if (mortar.TryCraft())
         {
-            Debug.Log("[Mortar] TryCraft triggered");
+            Debug.Log("[MortarObj] TryCraft triggered");
             ClearInsertedSolids();
         }
     }
@@ -99,12 +101,12 @@ public class MortarObject : MonoBehaviour
     {
         if (success)
         {
-            Debug.Log("[Mortar] Craft success");
+            Debug.Log("[MortarObj] Craft success");
             if (vfxSuccess) vfxSuccess.Play();
         }
         else
         {
-            Debug.Log("[Mortar] Craft produced by-product");
+            Debug.Log("[MortarObj] Craft produced by-product");
             if (vfxByproduct) vfxByproduct.Play();
         }
     }
@@ -113,7 +115,7 @@ public class MortarObject : MonoBehaviour
     {
         foreach (var so in solidsInside)
             if (so) Destroy(so.gameObject);
-        Debug.Log($"[Mortar] Cleared {solidsInside.Count} solids after craft");
+        Debug.Log($"[MortarObj] Cleared {solidsInside.Count} solids after craft");
         solidsInside.Clear();
     }
 }

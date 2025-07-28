@@ -242,22 +242,28 @@ public class Mortar
 
     private List<IngredientTag> BuildTagMap()
     {
-        var dict = new Dictionary<string, double>();
+        // 直接用 TagDef 作为 key，避免在收尾阶段再反查
+        var dict = new Dictionary<IngredientTagDef, float>();
+
         foreach (var st in solids)
         {
-            if (st.IsEmpty || st.tags == null)
-                continue;
+            if (st.IsEmpty || st.tags == null) continue;
+
             foreach (var t in st.tags)
             {
-                double add = t.value * st.amount;
-                if (dict.TryGetValue(t.id, out var cur))
-                    dict[t.id] = cur + add;
+                float add = t.value * st.amount;
+
+                if (dict.TryGetValue(t.ingredientTagDef, out var cur))
+                    dict[t.ingredientTagDef] = cur + add;
                 else
-                    dict[t.id] = add;
+                    dict[t.ingredientTagDef] = add;
             }
         }
-        return dict.Select(kv => new IngredientTag(kv.Key, (float)kv.Value)).ToList();
+
+        // 按 TagDef 聚合后直接生成新的 IngredientTag 列表
+        return dict.Select(kv => new IngredientTag(kv.Key, kv.Value)).ToList();
     }
+
     
     //DEBUG
     

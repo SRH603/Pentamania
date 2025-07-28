@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// A recipe defines an interaction between ingredients (reactants) which result in another ingredient for a specific machine.
@@ -23,7 +24,7 @@ public class CauldronRecipe: ScriptableObject
 [Serializable]
 public struct IngredientRequirement
 {
-    public IngredientTag tag;
+    [FormerlySerializedAs("tag")] public IngredientTagDef ingredientTag;
     public int weight;
 }
 

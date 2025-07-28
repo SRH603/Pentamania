@@ -101,8 +101,10 @@ public class Cauldron
 
             foreach (var t in st.tags)
             {
-                float weight = t.value * st.amount * t.colorWeight;
-                totalColor += t.color * weight;
+                if (t.ingredientTagDef == null)
+                    continue;
+                float weight = t.value * st.amount * t.ingredientTagDef.GetColorWeight();
+                totalColor += t.ingredientTagDef.GetColor() * weight;
                 totalWeight += weight;
             }
         }
@@ -113,8 +115,10 @@ public class Cauldron
 
             foreach (var t in fl.tags)
             {
-                float weight = t.value * fl.volume * t.colorWeight;
-                totalColor += t.color * weight;
+                if (t.ingredientTagDef == null)
+                    continue;
+                float weight = t.value * fl.volume * t.ingredientTagDef.GetColorWeight();
+                totalColor += t.ingredientTagDef.GetColor() * weight;
                 totalWeight += weight;
             }
         }
@@ -340,8 +344,8 @@ private Dictionary<string, double> BuildTagMap()
         foreach (var t in st.tags)
         {
             double add = t.value * st.amount;
-            if (map.TryGetValue(t.id, out var cur)) map[t.id] = cur + add;
-            else map[t.id] = add;
+            if (map.TryGetValue(t.ingredientTagDef.GetId(), out var cur)) map[t.ingredientTagDef.GetId()] = cur + add;
+            else map[t.ingredientTagDef.GetId()] = add;
         }
     }
     
@@ -351,8 +355,8 @@ private Dictionary<string, double> BuildTagMap()
         foreach (var t in fl.tags)
         {
             double add = t.value * fl.volume;
-            if (map.TryGetValue(t.id, out var cur)) map[t.id] = cur + add;
-            else map[t.id] = add;
+            if (map.TryGetValue(t.ingredientTagDef.GetId(), out var cur)) map[t.ingredientTagDef.GetId()] = cur + add;
+            else map[t.ingredientTagDef.GetId()] = add;
         }
     }
     return map;
@@ -367,8 +371,8 @@ public float GetSimilarity(
     var target = new Dictionary<string, (double r, int w)>();
     foreach (var req in recipe.requirement)
     {
-        string id = req.tag.id;
-        double value = req.tag.value;
+        string id = req.ingredientTag.GetId();
+        double value = req.weight;
         int weight = Mathf.Max(1, req.weight);
 
         if (target.TryGetValue(id, out var old))
