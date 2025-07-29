@@ -10,8 +10,10 @@ public class Potion : FluidDef
         return material;
     }
 
+/*
     public IngredientProperty[] GetProperties()
     {
         return properties;
     }
+    */
 }

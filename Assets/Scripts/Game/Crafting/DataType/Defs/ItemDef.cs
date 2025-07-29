@@ -13,12 +13,18 @@ public class ItemDef : IngredientDef
 
     public Mesh GetMesh()
     {
-        return baseIngredient.GetComponent<MeshFilter>().sharedMesh;
+        if (baseIngredient.GetComponent<MeshFilter>() != null)
+            return baseIngredient.GetComponent<MeshFilter>().sharedMesh;
+        else
+            return null;
     }
 
     public Material GetMaterial()
     {
-        return baseIngredient.GetComponent<MeshRenderer>().sharedMaterial;
+        if (baseIngredient.GetComponent<MeshRenderer>() != null)
+            return baseIngredient.GetComponent<MeshRenderer>().sharedMaterial;
+        else
+            return null;
     }
     
     public Vector3 GetScale()
@@ -26,9 +32,17 @@ public class ItemDef : IngredientDef
         //Debug.Log(baseIngredient.transform.localScale.ToString());
         return baseIngredient.transform.localScale;
     }
+
+    public GameObject GetPrefab()
+    {
+        //Debug.Log(baseIngredient.transform.localScale.ToString());
+        return baseIngredient;
+    }
     
+    /*
     public IngredientProperty[] GetProperties()
     {
         return properties;
     }
+    */
 }

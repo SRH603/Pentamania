@@ -44,12 +44,15 @@ public class CauldronObject : MonoBehaviour
     [Header("Advanced Effects")]
     [SerializeField] private CauldronEffectExplosion explosion;
     [SerializeField] private CauldronShaker shaker;
+    [SerializeField] private CauldronEffects effects;
 
     private void Awake()
     {
         data = new Cauldron(recipes, itemSlots, fluidTanks, tankCapacity);
         data.OnExplode += HandleExplosion;
-        targetColor = liquidPlane.GetComponent<MeshRenderer>().material.color;
+        targetColor = liquidPlane.GetComponent<MeshRenderer>().material.GetColor("_BaseColor");
+        targetColor = data.CalculateFluidColor();
+        SetFluidColor(targetColor);
         if (liquidPlane != null)
             liquidMaterial = liquidPlane.GetComponent<MeshRenderer>().material;
     }
@@ -327,6 +330,7 @@ public class CauldronObject : MonoBehaviour
         data.HandleExplosion(power);
         //explosion.Play();
         explosion.Explode(targetColor);
+        effects.Explode(power);
         UpdateTargetColor();
         SetFluidColor(data.CalculateFluidColor());
     }

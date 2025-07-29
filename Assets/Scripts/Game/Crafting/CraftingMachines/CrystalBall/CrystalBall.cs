@@ -28,7 +28,6 @@ public class CrystalBall
 
     private bool MatchRecipe(CrystalBallRecipe recipe, IngredientStack ingredient)
     {
-        return true;
-        //return ingredient.GetId().Equals(recipe.GetReactant().GetId());
+        return ingredient.GetAbstractDef().GetId().Equals(recipe.GetReactant().GetId());
     }
 }

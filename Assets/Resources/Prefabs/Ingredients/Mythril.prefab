@@ -118,9 +118,9 @@ Transform:
   m_GameObject: {fileID: 1056829706606133244}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6999965, y: -14.001361, z: 22.695364}
-  m_LocalScale: {x: 14.784788, y: 14.784788, z: 14.784789}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 16, y: 16, z: 16}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7452735910639454344}
   - {fileID: 7442227094016610936}
@@ -316,13 +316,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient:
-    def: {fileID: 11400000, guid: d217ea5f2e86c76449b9c65070c584ad, type: 2}
+    def: {fileID: 11400000, guid: a6485909d641c4edc9920a9558fb8b28, type: 2}
     amount: 1
     tags:
-    - id: test1
-      value: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
-      colorWeight: 0
+    - ingredientTagDef: {fileID: 11400000, guid: 5a6be0cec336644eebb548eed921ff16, type: 2}
+      value: 0.1
+    - ingredientTagDef: {fileID: 11400000, guid: fad7b79c1ad55496c9eb8a5d5746fe94, type: 2}
+      value: 0.7
+    - ingredientTagDef: {fileID: 11400000, guid: 82f4ad0b09b7340bab45689c3df6256f, type: 2}
+      value: 0.2
 --- !u!65 &3147100979725379093
 BoxCollider:
   m_ObjectHideFlags: 0

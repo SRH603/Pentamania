@@ -4,7 +4,7 @@ public abstract class IngredientDef : ScriptableObject
 {
     [SerializeField] protected string ingredientId;
     [SerializeField] private int audioType;
-    [SerializeField] protected IngredientProperty[] properties;
+    //[SerializeField] protected IngredientProperty[] properties;
 
     public string GetId()
     {

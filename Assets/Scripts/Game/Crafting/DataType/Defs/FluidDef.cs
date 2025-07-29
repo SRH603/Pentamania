@@ -10,8 +10,10 @@ public class FluidDef : IngredientDef
         return material;
     }
 
+/*
     public IngredientProperty[] GetProperties()
     {
         return properties;
     }
+    */
 }

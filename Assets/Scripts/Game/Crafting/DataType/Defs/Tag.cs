@@ -25,7 +25,7 @@ public class IngredientTag
         if (obj is IngredientTag other)
         {
             if (ingredientTagDef == null || other.ingredientTagDef == null)
-                return false;
+                return true;
             return ingredientTagDef == other.ingredientTagDef && Mathf.Approximately(this.value, other.value);
         }
         return false;

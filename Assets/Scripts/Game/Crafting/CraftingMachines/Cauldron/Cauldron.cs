@@ -123,9 +123,19 @@ public class Cauldron
             }
         }
         
-        Color finalColor = totalWeight > 0 ? totalColor / totalWeight : Color.black;
+        Color finalColor = totalWeight > 0 ? totalColor / totalWeight : Color.grey;
+        
+        Color.RGBToHSV(finalColor, out float h, out float s, out float v);
+        
+        float oldV = v * 100f;
+        
+        float mappedV = oldV / 100f * 60f;
+        
+        float finalV = mappedV / 100f;
 
-        return finalColor;
+        Color newColor = Color.HSVToRGB(h, s, finalV);
+
+        return newColor;
     }
     
     /*

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8984952915199582874
+--- !u!114 &-8957889693026367316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,42 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Bunsen Burner/Loop
+  m_Name: event:/SFX/Machines/Cauldron/Cauldron Start Cooking
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Bunsen Burner/Loop
+  Path: event:/SFX/Machines/Cauldron/Cauldron Start Cooking
   Guid:
-    Data1: -170651289
-    Data2: 1307278262
-    Data3: -1262414975
-    Data4: -377833863
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 6181599748756998496}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 23100
---- !u!114 &-8028500857801522743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Footstep
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Footstep
-  Guid:
-    Data1: 2001711027
-    Data2: 1331194662
-    Data3: -1318763330
-    Data4: -75227197
+    Data1: -666351186
+    Data2: 1222189429
+    Data3: 504997792
+    Data4: -917354686
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
@@ -54,8 +26,116 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
---- !u!114 &-7361415772731601200
+  Length: 2000
+--- !u!114 &-8338477179101994248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Bunsen Burner/Start
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Bunsen Burner/Start
+  Guid:
+    Data1: -68654755
+    Data2: 1160798455
+    Data3: 761694345
+    Data4: -938588912
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 450
+--- !u!114 &-8005282049726965646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Cauldron/Cauldron Take Ingredient
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Cauldron/Cauldron Take Ingredient
+  Guid:
+    Data1: 1481764276
+    Data2: 1213018498
+    Data3: -1848391281
+    Data4: -361930961
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 874
+--- !u!114 &-7624877282597759509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Cauldron/Cauldron Failure
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Cauldron/Cauldron Failure
+  Guid:
+    Data1: 1942069349
+    Data2: 1216714419
+    Data3: -1214921826
+    Data4: -36242945
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4500
+--- !u!114 &-6578888246627566305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Mortar and Pestle/Mortar Grind
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Mortar and Pestle/Mortar Grind
+  Guid:
+    Data1: -1970746542
+    Data2: 1117668142
+    Data3: 1268917678
+    Data4: 1686685621
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 674
+--- !u!114 &-6236646385872253142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,21 +145,76 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Item Land/Location
+  m_Name: parameter:/Usage/Crystal Ball Usage State
   m_EditorClassIdentifier: 
-  Name: Location
+  Name: Crystal Ball Usage State
   StudioPath: 
   Min: 0
-  Max: 10
+  Max: 1
   Default: 0
   ID:
-    data1: 1515576524
-    data2: 3659043458
+    data1: 3727718006
+    data2: 2914850922
   Type: 1
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-4493093358499469510
+--- !u!114 &-5914544357997048281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Pause Snapshot
+  m_EditorClassIdentifier: 
+  Path: snapshot:/Pause Snapshot
+  Guid:
+    Data1: -837523251
+    Data2: 1133390374
+    Data3: -1667767132
+    Data4: 698828227
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &-5873142590133021319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Level BGM
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Level BGM
+  Guid:
+    Data1: 1330748335
+    Data2: 1144249797
+    Data3: -1468178503
+    Data4: -77623433
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 6638045935943448296}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4720791957489120590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,7 +224,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Item Drop/Item
+  m_Name: parameter:/Item Pickup/Item
   m_EditorClassIdentifier: 
   Name: Item
   StudioPath: 
@@ -127,7 +262,7 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
---- !u!114 &-3987453947910935368
+--- !u!114 &-4177591597806029115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,14 +272,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cauldron/Cauldron Success
+  m_Name: event:/SFX/Machines/Cauldron/[TODO] Cauldron Shaking
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Cauldron/Cauldron Success
+  Path: event:/SFX/Machines/Cauldron/[TODO] Cauldron Shaking
   Guid:
-    Data1: 1384141467
-    Data2: 1278226316
-    Data3: 441310900
-    Data4: 1828930382
+    Data1: 1567138087
+    Data2: 1164444255
+    Data3: 1771818399
+    Data4: 479271033
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4174946617932495750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Items/Book Flip
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Items/Book Flip
+  Guid:
+    Data1: -1497003871
+    Data2: 1100725350
+    Data3: 1987660933
+    Data4: -906565752
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
@@ -152,36 +314,8 @@ MonoBehaviour:
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
-  MaxDistance: 20
-  Length: 2453
---- !u!114 &-3876259204587029391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Item Drop
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Item Drop
-  Guid:
-    Data1: 1644634628
-    Data2: 1264900231
-    Data3: -615494236
-    Data4: -1308304967
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: -4493093358499469510}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
+  MaxDistance: 2600
+  Length: 1218
 --- !u!114 &-3474315408662018273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +340,31 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
---- !u!114 &-2320182890505808173
+--- !u!114 &-3255149725565864231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music Manager/Scene
+  m_EditorClassIdentifier: 
+  Name: Scene
+  StudioPath: 
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 3745309336
+    data2: 926556841
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-3056407532189303968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,20 +374,76 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cauldron/Cauldron Take Ingredient
+  m_Name: event:/Music/Music Manager
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Cauldron/Cauldron Take Ingredient
+  Path: event:/Music/Music Manager
   Guid:
-    Data1: 1481764276
-    Data2: 1213018498
-    Data3: -1848391281
-    Data4: -361930961
+    Data1: -1202821001
+    Data2: 1180920344
+    Data3: 849759122
+    Data4: 1273590336
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
+  Parameters:
+  - {fileID: -3255149725565864231}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 15000
+--- !u!114 &-3045089189405119903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Cauldron/Cauldron Bubbling
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Cauldron/Cauldron Bubbling
+  Guid:
+    Data1: 534690647
+    Data2: 1264843255
+    Data3: 1691974319
+    Data4: 2099274433
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
   Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 24900
+--- !u!114 &-2526350897068991622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Items/Item Pickup
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Items/Item Pickup
+  Guid:
+    Data1: 1116238938
+    Data2: 1158247008
+    Data3: -1240631402
+    Data4: 1703743749
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -4720791957489120590}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
@@ -260,7 +474,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 18600
---- !u!114 &-1272196448647139178
+--- !u!114 &-348901401336312752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,9 +484,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Item Land
+  m_Name: event:/SFX/Machines/Bunsen Burner/Loop
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Item Land
+  Path: event:/SFX/Machines/Bunsen Burner/Loop
+  Guid:
+    Data1: -170651289
+    Data2: 1307278262
+    Data3: -1262414975
+    Data4: -377833863
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 3997342306906436294}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 23100
+--- !u!114 &-261239083700263456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Items/Item Land
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Items/Item Land
   Guid:
     Data1: -324479022
     Data2: 1273091263
@@ -284,37 +526,10 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -7361415772731601200}
+  - {fileID: 3511518749803098770}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-1042863431478217002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Bunsen Burner/Start
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Bunsen Burner/Start
-  Guid:
-    Data1: -68654755
-    Data2: 1160798455
-    Data3: 761694345
-    Data4: -938588912
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 450
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,95 +546,87 @@ MonoBehaviour:
   - {fileID: 7007597937853415162}
   - {fileID: 7331892254997206150}
   EditorEvents:
-  - {fileID: 6612477855248539283}
-  - {fileID: 6367557674045047514}
   - {fileID: 6643733940546000642}
-  - {fileID: -8028500857801522743}
-  - {fileID: -3876259204587029391}
-  - {fileID: 2416970963123330474}
-  - {fileID: 5317665469939926055}
-  - {fileID: -1042863431478217002}
-  - {fileID: 2294121213455294068}
-  - {fileID: -8984952915199582874}
-  - {fileID: -3987453947910935368}
-  - {fileID: 958055291211432202}
-  - {fileID: 4404619689924521239}
   - {fileID: -1446720478306695577}
-  - {fileID: 5053271626760419274}
-  - {fileID: -1272196448647139178}
-  - {fileID: -2320182890505808173}
+  - {fileID: 2846430279336696044}
+  - {fileID: -4177591597806029115}
+  - {fileID: 4017330816656039395}
+  - {fileID: 3063548992522976914}
+  - {fileID: 6034348489574585450}
+  - {fileID: -6578888246627566305}
+  - {fileID: 2404932064007540722}
+  - {fileID: -3045089189405119903}
+  - {fileID: -2526350897068991622}
+  - {fileID: -8338477179101994248}
+  - {fileID: -7624877282597759509}
+  - {fileID: -348901401336312752}
+  - {fileID: -3056407532189303968}
+  - {fileID: 2462840113021587360}
+  - {fileID: -4174946617932495750}
+  - {fileID: 8650908941931552904}
+  - {fileID: -8957889693026367316}
+  - {fileID: -5873142590133021319}
+  - {fileID: -8005282049726965646}
+  - {fileID: -5914544357997048281}
+  - {fileID: -261239083700263456}
   EditorParameters:
   - {fileID: -3474315408662018273}
   - {fileID: -4352216224616514025}
+  - {fileID: 6379931659667859263}
   MasterBanks:
   - {fileID: 7331892254997206150}
   StringsBanks:
   - {fileID: 7007597937853415162}
   cacheVersion: 131848
-  cacheTime: 638892980150578344
+  cacheTime: 638893131530925179
   SerializableEventsDict:
-  - key: event:/SFX/Mortar Grind
-    index: 0
-  - key: event:/SFX/Ambience/Unicorn Horn
-    index: 1
   - key: event:/SFX/Ambience/Fireplace
-    index: 2
-  - key: event:/SFX/Footstep
-    index: 3
-  - key: event:/SFX/Item Drop
-    index: 4
-  - key: event:/SFX/Cauldron/Cauldron Bubbling
-    index: 5
-  - key: event:/SFX/Item Pickup
-    index: 6
-  - key: event:/SFX/Bunsen Burner/Start
-    index: 7
-  - key: event:/SFX/Cauldron/Cauldron Failure
-    index: 8
-  - key: event:/SFX/Bunsen Burner/Loop
-    index: 9
-  - key: event:/SFX/Cauldron/Cauldron Success
-    index: 10
-  - key: event:/SFX/Bunsen Burner/End
-    index: 11
-  - key: event:/SFX/Cauldron/Cauldron Start Cooking
-    index: 12
+    index: 0
   - key: event:/SFX/Water Pour
+    index: 1
+  - key: event:/SFX/Items/Item Drop
+    index: 2
+  - key: event:/SFX/Machines/Cauldron/[TODO] Cauldron Shaking
+    index: 3
+  - key: event:/SFX/Ambience/Magic Circle
+    index: 4
+  - key: event:/SFX/Machines/Crystal Ball/Ambience
+    index: 5
+  - key: event:/SFX/Machines/Crystal Ball/Usage
+    index: 6
+  - key: event:/SFX/Machines/Mortar and Pestle/Mortar Grind
+    index: 7
+  - key: event:/Voicelines/Random Triggering
+    index: 8
+  - key: event:/SFX/Machines/Cauldron/Cauldron Bubbling
+    index: 9
+  - key: event:/SFX/Items/Item Pickup
+    index: 10
+  - key: event:/SFX/Machines/Bunsen Burner/Start
+    index: 11
+  - key: event:/SFX/Machines/Cauldron/Cauldron Failure
+    index: 12
+  - key: event:/SFX/Machines/Bunsen Burner/Loop
     index: 13
-  - key: event:/Music/BGM
+  - key: event:/Music/Music Manager
     index: 14
-  - key: event:/SFX/Item Land
+  - key: event:/SFX/Machines/Cauldron/Cauldron Success
     index: 15
-  - key: event:/SFX/Cauldron/Cauldron Take Ingredient
+  - key: event:/SFX/Items/Book Flip
     index: 16
---- !u!114 &958055291211432202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Bunsen Burner/End
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Bunsen Burner/End
-  Guid:
-    Data1: 1340951723
-    Data2: 1300598686
-    Data3: 1580128174
-    Data4: 1659384432
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 2163
---- !u!114 &1357367382800490679
+  - key: event:/SFX/Machines/Bunsen Burner/End
+    index: 17
+  - key: event:/SFX/Machines/Cauldron/Cauldron Start Cooking
+    index: 18
+  - key: event:/Music/Level BGM
+    index: 19
+  - key: event:/SFX/Machines/Cauldron/Cauldron Take Ingredient
+    index: 20
+  - key: snapshot:/Pause Snapshot
+    index: 21
+  - key: event:/SFX/Items/Item Land
+    index: 22
+--- !u!114 &2089178318165056179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,85 +636,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/BGM/BGM Intensity
-  m_EditorClassIdentifier: 
-  Name: BGM Intensity
-  StudioPath: 
-  Min: 0
-  Max: 10
-  Default: 0
-  ID:
-    data1: 2763456249
-    data2: 1371815228
-  Type: 1
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &2294121213455294068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cauldron/Cauldron Failure
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Cauldron/Cauldron Failure
-  Guid:
-    Data1: 1942069349
-    Data2: 1216714419
-    Data3: -1214921826
-    Data4: -36242945
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 4500
---- !u!114 &2416970963123330474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cauldron/Cauldron Bubbling
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Cauldron/Cauldron Bubbling
-  Guid:
-    Data1: 534690647
-    Data2: 1264843255
-    Data3: 1691974319
-    Data4: 2099274433
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 1
-  Is3D: 1
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 24900
---- !u!114 &4005198694845557221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Item Pickup/Item
+  m_Name: parameter:/Item Drop/Item
   m_EditorClassIdentifier: 
   Name: Item
   StudioPath: 
@@ -521,7 +650,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &4404619689924521239
+--- !u!114 &2404932064007540722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -531,14 +660,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cauldron/Cauldron Start Cooking
+  m_Name: event:/Voicelines/Random Triggering
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Cauldron/Cauldron Start Cooking
+  Path: event:/Voicelines/Random Triggering
   Guid:
-    Data1: -666351186
-    Data2: 1222189429
-    Data3: 504997792
-    Data4: -917354686
+    Data1: -1023443371
+    Data2: 1186616121
+    Data3: -1309056855
+    Data4: -1749899351
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
@@ -547,8 +676,8 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 2000
---- !u!114 &5053271626760419274
+  Length: 0
+--- !u!114 &2462840113021587360
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -558,25 +687,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/BGM
+  m_Name: event:/SFX/Machines/Cauldron/Cauldron Success
   m_EditorClassIdentifier: 
-  Path: event:/Music/BGM
+  Path: event:/SFX/Machines/Cauldron/Cauldron Success
   Guid:
-    Data1: 1330748335
-    Data2: 1144249797
-    Data3: -1468178503
-    Data4: -77623433
+    Data1: 1384141467
+    Data2: 1278226316
+    Data3: 441310900
+    Data4: 1828930382
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2444
+--- !u!114 &2846430279336696044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Items/Item Drop
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Items/Item Drop
+  Guid:
+    Data1: 1644634628
+    Data2: 1264900231
+    Data3: -615494236
+    Data4: -1308304967
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 1357367382800490679}
+  - {fileID: 2089178318165056179}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &5317665469939926055
+--- !u!114 &3063548992522976914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -586,25 +742,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Item Pickup
+  m_Name: event:/SFX/Machines/Crystal Ball/Ambience
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Item Pickup
+  Path: event:/SFX/Machines/Crystal Ball/Ambience
   Guid:
-    Data1: 1116238938
-    Data2: 1158247008
-    Data3: -1240631402
-    Data4: 1703743749
+    Data1: -138429875
+    Data2: 1240618630
+    Data3: 358938297
+    Data4: -280394261
   Banks:
   - {fileID: 7331892254997206150}
-  IsStream: 0
+  IsStream: 1
   Is3D: 1
-  IsOneShot: 1
-  Parameters:
-  - {fileID: 4005198694845557221}
+  IsOneShot: 0
+  Parameters: []
   MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &6181599748756998496
+  MaxDistance: 1800
+  Length: 27428
+--- !u!114 &3511518749803098770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Item Land/Location
+  m_EditorClassIdentifier: 
+  Name: Location
+  StudioPath: 
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 1515576524
+    data2: 3659043458
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &3997342306906436294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -628,7 +807,7 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
---- !u!114 &6367557674045047514
+--- !u!114 &4017330816656039395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -638,50 +817,99 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Ambience/Unicorn Horn
+  m_Name: event:/SFX/Ambience/Magic Circle
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Ambience/Unicorn Horn
+  Path: event:/SFX/Ambience/Magic Circle
   Guid:
-    Data1: -1594677618
-    Data2: 1307265306
-    Data3: -1634924651
-    Data4: 1888997621
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &6612477855248539283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Mortar Grind
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Mortar Grind
-  Guid:
-    Data1: -1970746542
-    Data2: 1117668142
-    Data3: 1268917678
-    Data4: 1686685621
+    Data1: -1429970890
+    Data2: 1336520134
+    Data3: 1235916435
+    Data4: -2071683092
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 674
+  MinDistance: 0
+  MaxDistance: 2800
+  Length: 0
+--- !u!114 &6034348489574585450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Crystal Ball/Usage
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Crystal Ball/Usage
+  Guid:
+    Data1: 1744007504
+    Data2: 1341368322
+    Data3: -2137781346
+    Data4: 226545938
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -6236646385872253142}
+  MinDistance: 0
+  MaxDistance: 90
+  Length: 1062
+--- !u!114 &6379931659667859263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Scene
+  m_EditorClassIdentifier: 
+  Name: Scene
+  StudioPath: parameter:/Scene
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 3745309336
+    data2: 926556841
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &6638045935943448296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Level BGM/BGM Intensity
+  m_EditorClassIdentifier: 
+  Name: BGM Intensity
+  StudioPath: 
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 2763456249
+    data2: 1371815228
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &6643733940546000642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,8 +934,8 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters: []
-  MinDistance: 9750
-  MaxDistance: 9750
+  MinDistance: 0
+  MaxDistance: 6800
   Length: 8906
 --- !u!114 &7007597937853415162
 MonoBehaviour:
@@ -724,10 +952,10 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638892980150578344
+  lastModified: 638893131530925179
   FileSizes:
   - Name: Desktop
-    Value: 1766
+    Value: 2576
   Exists: 1
 --- !u!114 &7331892254997206150
 MonoBehaviour:
@@ -744,8 +972,35 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638892980150568180
+  lastModified: 638893131530821953
   FileSizes:
   - Name: Desktop
-    Value: 1552000
+    Value: 1983936
   Exists: 1
+--- !u!114 &8650908941931552904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Bunsen Burner/End
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Bunsen Burner/End
+  Guid:
+    Data1: 1340951723
+    Data2: 1300598686
+    Data3: 1580128174
+    Data4: 1659384432
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 450
