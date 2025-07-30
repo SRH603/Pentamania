@@ -3,76 +3,153 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-
+[DisallowMultipleComponent]
 public class InfiniteSourceList : MonoBehaviour
 {
     public List<XRGrabInteractable> initialItems = new();
-    
-    private readonly Dictionary<XRGrabInteractable, Vector3> spawnPos = new();
-    private readonly Dictionary<XRGrabInteractable, Quaternion> spawnRot = new();
-    private readonly Dictionary<XRGrabInteractable, GameObject> prefabs = new();
 
-    void Awake()
+    public bool freezeOnStand = true;
+    public bool forceDynamicWhenGrabbed = true;
+    public RigidbodyConstraints frozenConstraints = RigidbodyConstraints.FreezeAll;
+    public RigidbodyConstraints releasedConstraints = RigidbodyConstraints.None;
+    public bool useGravityWhenGrabbed = true;
+
+    private class Slot
     {
+        public Vector3 pos;
+        public Quaternion rot;
+        public GameObject template;
+        public XRGrabInteractable current;
+    }
+
+    private readonly Dictionary<XRGrabInteractable, Slot> grabToSlot = new();
+    private readonly List<Slot> _slots = new();
+    private Transform templateBucket;
+
+    private void Awake()
+    {
+        templateBucket = new GameObject("[InfiniteSource_Templates]").transform;
+        templateBucket.SetParent(transform, false);
+
         foreach (var item in initialItems)
         {
-            if (item == null)
-                continue;
+            if (!item) continue;
 
+            var slot = new Slot
+            {
+                pos = item.transform.position,
+                rot = item.transform.rotation,
+                template = CreateCleanTemplate(item.gameObject)
+            };
 
-            spawnPos[item] = item.transform.position;
-            spawnRot[item] = item.transform.rotation;
-            prefabs[item] = item.gameObject;
-
-            FreezeItem(item);
-            Subscribe(item);
+            PrepareAsCurrent(item, slot);
+            _slots.Add(slot);
         }
     }
-    
-    private void Subscribe(XRGrabInteractable grab)
+
+    private GameObject CreateCleanTemplate(GameObject src)
     {
-        grab.selectEntered.RemoveListener(OnItemGrabbed);
-        grab.selectEntered.AddListener(OnItemGrabbed);
+        var t = Instantiate(src, templateBucket);
+        t.name = src.name + "_Template";
+        t.SetActive(false);
+
+        if (t.TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.None;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        if (t.TryGetComponent<XRGrabInteractable>(out var grab))
+        {
+            grab.enabled = true;
+        }
+
+        return t;
     }
-
-    private void OnItemGrabbed(SelectEnterEventArgs args)
-    {
-        var grabbed = args.interactableObject as XRGrabInteractable;
-        if (grabbed == null)
-            return;
-
-        UnfreezeItem(grabbed);
-        SpawnReplacement(grabbed);
-        grabbed.selectEntered.RemoveListener(OnItemGrabbed);
-    }
     
-    private void SpawnReplacement(XRGrabInteractable source)
+    private void PrepareAsCurrent(XRGrabInteractable grab, Slot slot)
     {
-        var position = spawnPos[source];
-        var rotation = spawnRot[source];
-        var prefab = prefabs[source];
-
-        var instantiate = Instantiate(prefab, position, rotation, transform);
-        var grab = instantiate.GetComponent<XRGrabInteractable>();
-
-        FreezeItem(grab);
-        spawnPos[grab] = position;
-        spawnRot[grab] = rotation;
-        prefabs[grab] = prefab;
+        grab.transform.SetPositionAndRotation(slot.pos, slot.rot);
 
         Subscribe(grab);
+        slot.current = grab;
+        grabToSlot[grab] = slot;
+
+        if (freezeOnStand) FreezeToStand(grab);
+        else MakeDynamic(grab);
     }
 
-    private static void FreezeItem(XRGrabInteractable grab)
+    private void Subscribe(XRGrabInteractable grab)
     {
-        var rigidbody = grab.GetComponent<Rigidbody>();
-        if (rigidbody) rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        grab.selectEntered.RemoveListener(OnSelectEntered);
+        grab.selectEntered.AddListener(OnSelectEntered);
     }
 
-    private static void UnfreezeItem(XRGrabInteractable grab)
+    private void OnSelectEntered(SelectEnterEventArgs args)
     {
-        var rigidbody = grab.GetComponent<Rigidbody>();
-        if (rigidbody)
-            rigidbody.constraints = RigidbodyConstraints.None;
+        var grabbed = args.interactableObject as XRGrabInteractable;
+        if (!grabbed) return;
+        if (!grabToSlot.TryGetValue(grabbed, out var slot)) return;
+
+        if (forceDynamicWhenGrabbed)
+            MakeDynamic(grabbed);
+
+        var replacement = SpawnReplacement(slot);
+
+        grabToSlot.Remove(grabbed);
+        slot.current = replacement;
+        grabToSlot[replacement] = slot;
+
+        grabbed.selectEntered.RemoveListener(OnSelectEntered);
+    }
+
+    private XRGrabInteractable SpawnReplacement(Slot slot)
+    {
+        var go = Instantiate(slot.template, slot.pos, slot.rot, transform);
+        go.name = slot.template.name.Replace("_Template", "") + "_Instance";
+        go.SetActive(true);
+
+        var grab = go.GetComponent<XRGrabInteractable>();
+        if (!grab) grab = go.AddComponent<XRGrabInteractable>();
+
+        if (!go.TryGetComponent<Rigidbody>(out var rb))
+            rb = go.AddComponent<Rigidbody>();
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.None;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        if (freezeOnStand)
+            FreezeToStand(grab);
+
+        Subscribe(grab);
+        return grab;
+    }
+
+    private void FreezeToStand(XRGrabInteractable grab)
+    {
+        if (grab.TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.isKinematic = false;
+            // rb.useGravity = false;
+            rb.constraints = frozenConstraints;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+
+    private void MakeDynamic(XRGrabInteractable grab)
+    {
+        if (grab.TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.constraints = releasedConstraints;
+            rb.isKinematic = false;
+            rb.useGravity = useGravityWhenGrabbed;
+        }
     }
 }

@@ -7,7 +7,7 @@ public class ItemDeletion : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("111rytu");
-        if (other.TryGetComponent<XRGrabInteractable>(out var interactable))
+        if (other.TryGetComponent<SolidObject>(out var interactable))
         {
             if (interactable.gameObject != gameObject)
             {

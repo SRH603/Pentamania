@@ -24,7 +24,7 @@ public class CauldronRecipe: ScriptableObject
 [Serializable]
 public struct IngredientRequirement
 {
-    [FormerlySerializedAs("tag")] public IngredientTagDef ingredientTag;
+    [FormerlySerializedAs("Tag")] public IngredientTagDef ingredientTag;
     public int weight;
 }
 
@@ -33,7 +33,7 @@ public struct ProductSpec
 {
     public ItemStack itemProduct;
     public FluidStack fluidProduct;
-    public IngredientDef ingredient;
+    //public IngredientDef ingredient;
     public float amount;
 }
 

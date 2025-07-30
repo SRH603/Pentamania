@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
+  m_Name: Power
+  m_EditorClassIdentifier: 
+  requirement:
+  - ingredientTag: {fileID: 11400000, guid: 4c5a3cb4556584040a09e72ef10f046c, type: 2}
+    weight: 15
+  - ingredientTag: {fileID: 11400000, guid: ffe9f5647300f419cb68fdfa43618c70, type: 2}
+    weight: 10
+  products:
+  - itemProduct:
+      def: {fileID: 0}
+      amount: 0
+      tags: []
+    fluidProduct:
+      def: {fileID: 11400000, guid: 449de82ca21cb4e34b999684bbcc92c3, type: 2}
+      volume: 25
+      tags: []
+    amount: 1

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BunsenBurnerObject : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class BunsenBurnerObject : MonoBehaviour
     [SerializeField] private float fallbackCookTime = 3f;
 
     [Header("VFX")]
-    [SerializeField] private ParticleSystem vfxStart;
-    [SerializeField] private ParticleSystem vfxSuccess;
-    [SerializeField] private ParticleSystem vfxBurned;
+    [SerializeField] private VisualEffect vfxStart;
+    [SerializeField] private VisualEffect vfxSuccess;
+    [SerializeField] private VisualEffect vfxBurned;
 
     [SerializeField] private List<SolidObject> solidsInside = new();
 
@@ -58,6 +59,7 @@ public class BunsenBurnerObject : MonoBehaviour
         else
         {
             if (vfxSuccess) vfxSuccess.Play();
+
             Debug.Log("[BunsenObj] Burned with recipe");
         }
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(100)]
 public class TaskAssigner : MonoBehaviour
@@ -8,6 +9,8 @@ public class TaskAssigner : MonoBehaviour
     [SerializeField] private TaskDef[] taskSequence;
 
     private int nextIndex;
+
+    public string endMenu;
 
     void Awake()
     {
@@ -29,7 +32,9 @@ public class TaskAssigner : MonoBehaviour
 
         if (nextIndex >= taskSequence.Length)
         {
-            Debug.Log("You finished the game, thank you for playing our game -- Us"); return;
+            Debug.Log("You finished the game, thank you for playing our game -- Us");
+            SceneManager.LoadScene(endMenu);
+            return;
         }
 
         TaskManager.Instance.PushTask(taskSequence[nextIndex]);

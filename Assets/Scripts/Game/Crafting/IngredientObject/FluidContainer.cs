@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,6 +11,9 @@ public class FluidContainer : SolidObject, IFluidContainer
     [SerializeField] private float angleThreshold = 45f;
     [SerializeField] private ParticleSystem pourEffect;
     [SerializeField] private GameObject fluidDisplay;
+    [SerializeField] private IngredientTagDef dust;
+    [SerializeField] private Material fluidMat;
+    [SerializeField] private Material dustMat;
 
     //private bool isPouring;
     private CauldronLiquidReceiver receiverCache;
@@ -24,6 +28,11 @@ public class FluidContainer : SolidObject, IFluidContainer
         this.fluidIngredient = fluidIngredient;
     }
 
+    private void UpdateFluidLevel()
+    {
+        fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial.SetFloat("_Fill", fluidIngredient.volume / capacity);
+    }
+
     private new void Start()
     {
         base.Start();
@@ -34,7 +43,83 @@ public class FluidContainer : SolidObject, IFluidContainer
         base.Init(base.ingredient);
         if (ingredient.Def == null) return;
         this.fluidIngredient = ingredient;
-        fluidDisplay.GetComponent<MeshRenderer>().material = ingredient.Def.GetMaterial();
+        // fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial = ingredient.Def.GetMaterial();
+        SetMaterial(ingredient);
+        UpdateFluidLevel();
+    }
+
+    private void SetMaterial(FluidStack ingredient)
+    {
+        if (HasTag(ingredient.tags, dust))
+        {
+            fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial = new Material(dustMat);
+            
+            Material source = ingredient.Def.GetMaterial();
+            Material target = fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial;
+
+            string[] propertyNames = {
+                "_BaseMap", "_BaseColor",
+                "_MetallicMap", "_Smoothness",
+                "_NormalMap", "_HeightMap",
+                "_OcclusionMap", "_FillAmount"
+            };
+
+            foreach (var prop in propertyNames)
+            {
+                if (source.HasProperty(prop) && target.HasProperty(prop))
+                {
+                    if (prop == "_BaseColor")
+                        target.SetColor(prop, source.GetColor(prop));
+                    else if (prop == "_Smoothness" || prop == "_FillAmount")
+                        target.SetFloat(prop, source.GetFloat(prop));
+                    else if (source.GetTexture(prop) != null)
+                        target.SetTexture(prop, source.GetTexture(prop));
+                }
+            }
+            
+        }
+        else
+        {
+            fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial = new Material(fluidMat);
+            
+            Material source = ingredient.Def.GetMaterial();
+            Material target = fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial;
+
+            string[] propertyNames = {
+                "_BaseMap", "_BaseColor",
+                "_MetallicMap", "_Smoothness",
+                "_NormalMap", "_HeightMap",
+                "_OcclusionMap", "_FillAmount"
+            };
+
+            foreach (var prop in propertyNames)
+            {
+                if (source.HasProperty(prop) && target.HasProperty(prop))
+                {
+                    if (prop == "_BaseColor")
+                        target.SetColor(prop, source.GetColor(prop));
+                    else if (prop == "_Smoothness" || prop == "_FillAmount")
+                        target.SetFloat(prop, source.GetFloat(prop));
+                    else if (source.GetTexture(prop) != null)
+                        target.SetTexture(prop, source.GetTexture(prop));
+                }
+            }
+        }
+        UpdateFluidLevel();
+    }
+    
+    public static bool HasTag(List<IngredientTag> tags, IngredientTagDef targetDef)
+    {
+        if (tags == null || targetDef == null)
+            return false;
+
+        foreach (var tag in tags)
+        {
+            if (tag.ingredientTagDef == targetDef)
+                return true;
+        }
+
+        return false;
     }
 
     public override IngredientStack GetIngredient()
@@ -56,7 +141,9 @@ public class FluidContainer : SolidObject, IFluidContainer
             this.fluidIngredient = fluidIngredient;
             // TODO:
             // change liquid color to fluidIngredient.Def.GetMaterial();
-            fluidDisplay.GetComponent<MeshRenderer>().material = fluidIngredient.Def.GetMaterial();
+            // fluidDisplay.GetComponent<MeshRenderer>().material = fluidIngredient.Def.GetMaterial();
+            SetMaterial(fluidIngredient);
+            UpdateFluidLevel();
         }
         else
         {
@@ -112,6 +199,8 @@ public class FluidContainer : SolidObject, IFluidContainer
             SetFluidIngredient(stack.CopyWithVolume(toFill));
         else
             fluidIngredient.volume += toFill;
+        
+        UpdateFluidLevel();
 
         return stack.volume - toFill;
     }
@@ -138,6 +227,7 @@ public class FluidContainer : SolidObject, IFluidContainer
         if (Mathf.Approximately(fluidIngredient.volume, 0f))
             fluidIngredient = new FluidStack(null, 0);
 
+        UpdateFluidLevel();
 
         return drained;
     }

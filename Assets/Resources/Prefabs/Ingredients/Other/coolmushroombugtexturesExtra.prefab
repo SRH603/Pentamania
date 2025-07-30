@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 9b42e9478b0264e63a0804c9f5eba321, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 23dfac2e6111a42d48f654c036470ab4, type: 2}
+      objectReference: {fileID: 2100000, guid: f3ec8df9cb4c846ac981afc055b03b3f, type: 2}
     - target: {fileID: 919132149155446097, guid: 9b42e9478b0264e63a0804c9f5eba321, type: 3}
       propertyPath: m_Name
       value: coolmushroombugtexturesExtra

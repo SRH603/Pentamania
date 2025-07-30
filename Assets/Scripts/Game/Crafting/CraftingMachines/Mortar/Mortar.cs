@@ -11,6 +11,7 @@ public class Mortar
     private readonly List<ItemStack> solids = new();
     private readonly FluidStorage fluidStorage;
     private readonly FluidDef mixedDustDef;
+    private readonly IngredientTag dustTag;
     private const float PROGRESS_DECAY = 0.7f;
     private float grindProgress;
 
@@ -18,12 +19,13 @@ public class Mortar
     public event Action<float> OnProgressChanged;
     public event Action<bool> OnCraftComplete;
 
-    public Mortar(IEnumerable<MortarRecipe> recipeSrc, FluidDef mixedDust, int tankCap = 9999)
+    public Mortar(IEnumerable<MortarRecipe> recipeSrc, FluidDef mixedDust, IngredientTag tag, int tankCap = 9999)
     {
         recipes = new List<MortarRecipe>(recipeSrc);
         mixedDustDef = mixedDust;
         fluidStorage = new FluidStorage(1, tankCap);
         grindProgress = 0f;
+        dustTag = tag;
     }
 
     public float Progress => grindProgress;
@@ -208,6 +210,14 @@ public class Mortar
         };
         outStack = recipe.product.CopyWithVolume(outVol);
         Debug.Log($"[Mortar] ProduceRecipe {outStack.Def.GetId()} volume={outStack.volume}");
+        
+        List<IngredientTag> tagMap = BuildTagMap();
+        foreach (var tag in tagMap)
+        {
+            outStack.tags.Add(new IngredientTag(tag));
+        }
+
+        
         fluidStorage.Fill(outStack);
 
         solids.Clear();
@@ -229,6 +239,7 @@ public class Mortar
         {
             mixed.tags.Add(new IngredientTag(tag));
         }
+        mixed.tags.Add(dustTag);
         
         Debug.Log($"[Mortar] MakeByproduct mixed_dust volume={totalVol} tagCount={tagMap.Count}");
         fluidStorage.Fill(mixed);
@@ -242,7 +253,6 @@ public class Mortar
 
     private List<IngredientTag> BuildTagMap()
     {
-        // 直接用 TagDef 作为 key，避免在收尾阶段再反查
         var dict = new Dictionary<IngredientTagDef, float>();
 
         foreach (var st in solids)
@@ -260,7 +270,6 @@ public class Mortar
             }
         }
 
-        // 按 TagDef 聚合后直接生成新的 IngredientTag 列表
         return dict.Select(kv => new IngredientTag(kv.Key, kv.Value)).ToList();
     }
 

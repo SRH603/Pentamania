@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d770b78bdf43e5bc18ca5dd5947d85, type: 3}
   m_Name: Potion of Chaos
   m_EditorClassIdentifier: 
-  ingredientId: 
+  ingredientId: potion_of_chaos
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 6a21de0ce386a4e92956082616ea94d7, type: 2}

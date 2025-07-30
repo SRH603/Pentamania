@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using UnityEngine;
 
 public class CrystalBall
 {
@@ -20,6 +18,12 @@ public class CrystalBall
                 product = recipe.GetProduct();
                 return true;
             }
+
+            if (MatchReverseRecipe(recipe, ingredient))
+            {
+                product = recipe.GetReactant();
+                return true;
+            }
         }
 
         product = null;
@@ -28,6 +32,11 @@ public class CrystalBall
 
     private bool MatchRecipe(CrystalBallRecipe recipe, IngredientStack ingredient)
     {
-        return ingredient.GetAbstractDef().GetId().Equals(recipe.GetReactant().GetId());
+        return ingredient.GetAbstractDef().GetId().Equals(recipe.GetReactant().GetAbstractDef().GetId());
+    }
+
+    private bool MatchReverseRecipe(CrystalBallRecipe recipe, IngredientStack ingredient)
+    {
+        return ingredient.GetAbstractDef().GetId().Equals(recipe.GetProduct().GetAbstractDef().GetId());
     }
 }

@@ -11,18 +11,20 @@ public class TaskSubmitZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SolidObject solid = other.GetComponent<SolidObject>();
+        FluidContainer solid = other.GetComponent<FluidContainer>();
         if (solid == null) return;
-
-        IngredientStack info = solid.GetIngredient();
-        if (!(info is ItemStack)) return;
-
-        ItemStack stack = (ItemStack)info;
+        
+        IngredientStack info = solid.GetFluidIngredient();
+        if (!(info is FluidStack)) return;
+        
+        FluidStack stack = (FluidStack)info;
+        IngredientStack itemInfo = solid.GetIngredient();
+        ItemStack itemStack = (ItemStack)itemInfo;
         if (stack.IsEmpty) return;
-
+        
         TaskManager manager = TaskManager.Instance;
         if (manager == null) return;
-
+        
         bool needed = manager.NeedThisItem(stack.Def);
         if (!needed)
         {
@@ -31,8 +33,8 @@ public class TaskSubmitZone : MonoBehaviour
             return;
         }
 
-        Debug.Log("[Task System] Submited " + stack.Def.GetId() + " x " + stack.amount);
-        manager.SubmitItem(stack.Def, stack.amount);
+        Debug.Log("[Task System] Submited " + stack.Def.GetId() + " x " + stack.volume);
+        manager.SubmitItem(stack, itemStack.amount);
         Destroy(solid.gameObject);
     }
 }

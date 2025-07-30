@@ -40,7 +40,6 @@ public class IngredientTag
     
     public override int GetHashCode()
     {
-        // ① “unchecked” 防止溢出异常；② null 时返回 0
         unchecked
         {
             int hash = 17;

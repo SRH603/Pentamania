@@ -101,6 +101,18 @@ public class FluidStorage : IFluidStorage
 
     public IReadOnlyList<FluidStack> View() => tanks;
 
+    public bool IsEmpty()
+    {
+        foreach (var tank in tanks)
+        {
+            if (tank.IsEmpty)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public float Fill(FluidStack stack)
     {
         if (stack.IsEmpty) return 0;

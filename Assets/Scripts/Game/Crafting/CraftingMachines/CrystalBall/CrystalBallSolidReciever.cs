@@ -11,6 +11,7 @@ public class CrystalBallSolidReceiver : MonoBehaviour
         ball = GetComponentInParent<CrystalBallObject>();
     }
 
+
     void OnTriggerEnter(Collider other)
     {
         PassableIngredientObject ingredientObject = other.GetComponent<PassableIngredientObject>();
@@ -21,5 +22,15 @@ public class CrystalBallSolidReceiver : MonoBehaviour
         }
 
         ball.IngredientObjectEntered(ingredientObject);
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<PassableIngredientObject>() == null)
+        {
+            return;
+        }
+
+        ball.IngredientObjectExit();
     }
 }

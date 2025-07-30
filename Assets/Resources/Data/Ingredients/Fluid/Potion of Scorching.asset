@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d770b78bdf43e5bc18ca5dd5947d85, type: 3}
   m_Name: Potion of Scorching
   m_EditorClassIdentifier: 
-  ingredientId: 
+  ingredientId: potion_of_scorching
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 9c5694f6a20174e28b7c3dd98b741388, type: 2}

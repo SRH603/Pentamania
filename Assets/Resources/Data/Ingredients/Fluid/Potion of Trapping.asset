@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d770b78bdf43e5bc18ca5dd5947d85, type: 3}
   m_Name: Potion of Trapping
   m_EditorClassIdentifier: 
-  ingredientId: 
+  ingredientId: potion_of_trapping
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 0925d2c94b48a4039a5555ee79b8a625, type: 2}

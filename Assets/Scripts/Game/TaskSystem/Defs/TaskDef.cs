@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum TaskCategory
@@ -9,8 +10,10 @@ public enum TaskCategory
 [System.Serializable]
 public struct ItemRequirement
 {
-    public ItemDef item;
+    public FluidDef fluid;
     public int count;
+    public List<TagRequirement> tags;
+    public float otherTags;
 }
 
 [System.Serializable]
@@ -28,4 +31,13 @@ public abstract class TaskDef : ScriptableObject
     public Reward[] rewards;
 
     public abstract TaskCategory Category { get; }
+}
+
+
+[System.Serializable]
+public class TagRequirement
+{
+    public IngredientTagDef tag;
+    public float amount;
+    public bool more;
 }

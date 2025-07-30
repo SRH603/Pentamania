@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Motar Dev
   m_EditorClassIdentifier: 
   reactants:
-  - ingredient: {fileID: 11400000, guid: d4e96d4b7294e3d4da40fe321e44bfaf, type: 2}
+  - ingredient: {fileID: 11400000, guid: 43ae9eb4355fd4a4fa7f7503fe40089c, type: 2}
     amount: 1
   product:
     def: {fileID: 11400000, guid: a33849be8f979485f89a4a4140f73a97, type: 2}

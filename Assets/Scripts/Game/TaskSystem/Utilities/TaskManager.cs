@@ -1,19 +1,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Game.Utilities;
 
 [DefaultExecutionOrder(-100)]
 public class TaskManager : MonoBehaviour
 {
+
     public static TaskManager Instance;
 
     [SerializeField] private Transform rewardSpawnPoint;
+    //[SerializeField] private TaskSubmitZone submitZone;
 
     private readonly Dictionary<string, SubmitProgressData> submitMap =
         new Dictionary<string, SubmitProgressData>();
-
+    
     private readonly List<TaskDef> activeTaskList = new List<TaskDef>();
     private readonly List<TaskDef> finishedTaskList = new List<TaskDef>();
+
+    public int taskFinished;
 
     public event Action<TaskDef, float> ProgressChanged;
     public event Action<TaskDef> TaskCompleted;
@@ -41,8 +46,10 @@ public class TaskManager : MonoBehaviour
 
     public void PushTask(TaskDef task)
     {
+        Debug.Log("[Task System] Try pushing the new task");
         if (submitMap.ContainsKey(task.taskId))
         {
+            Debug.Log("[Task System] Contains ID");
             return;
         }
 
@@ -77,8 +84,9 @@ public class TaskManager : MonoBehaviour
         Debug.LogWarning("[Task System] Task system reset");
     }
     
-    public void SubmitItem(ItemDef itemDefinition, int amount)
+    public void SubmitItem(FluidStack item, int amount)
     {
+        FluidDef fluidDefinition = item.Def;
         for (int i = activeTaskList.Count - 1; i >= 0; i--)
         {
             TaskDef genericTask = activeTaskList[i];
@@ -95,9 +103,45 @@ public class TaskManager : MonoBehaviour
             for (int r = 0; r < submitTask.requirements.Length; r++)
             {
                 ItemRequirement requirement = submitTask.requirements[r];
-                if (requirement.item != itemDefinition)
+                if (requirement.fluid != fluidDefinition)
                 {
                     continue;
+                }
+
+                var tagList = item.tags;
+
+                int index = 0;
+                foreach (var tagRequirement in requirement.tags)
+                {
+                    foreach (var tag in tagList)
+                    {
+                        if (tag.ingredientTagDef == tagRequirement.tag)
+                        {
+                            if (tagRequirement.more && tag.value < tagRequirement.amount)
+                            {
+                                Debug.Log("[Task System] Tag not matched of index: " + index);
+                                return;
+                            }
+                            else if (!tagRequirement.more && tag.value > tagRequirement.amount)
+                            {
+                                Debug.Log("[Task System] Tag not matched of index: " + index);
+                                return;
+                            }
+
+                            tagList.Remove(tag);
+                            break;
+                        }
+                    }
+
+                    index++;
+                }
+
+                foreach (var tag in tagList)
+                {
+                    if (tag.value > requirement.otherTags)
+                    {
+                        return;
+                    }
                 }
 
                 int before = progressData.currentAmounts[r];
@@ -110,8 +154,9 @@ public class TaskManager : MonoBehaviour
                 progressData.currentAmounts[r] = after;
                 anyMatched = true;
 
-                Debug.Log("[Task System] Submitted: " + requirement.item.GetId() +
+                Debug.Log("[Task System] Submitted: " + requirement.fluid.GetId() +
                           " x " + amount + ", progress " + after + "/" + target);
+                //submitZone
             }
 
             if (anyMatched)
@@ -134,7 +179,7 @@ public class TaskManager : MonoBehaviour
             MarkTaskFinished(task);
         }
     }
-    
+    /*
     public void CraftItemProduced(ItemDef itemDefinition, int amount)
     {
         for (int i = activeTaskList.Count - 1; i >= 0; i--)
@@ -186,12 +231,13 @@ public class TaskManager : MonoBehaviour
             }
         }
     }
-    
+    */
     private void MarkTaskFinished(TaskDef task)
     {
         activeTaskList.Remove(task);
         finishedTaskList.Add(task);
 
+        taskFinished ++;
         Debug.Log("[Task System] Task completed: " + task.displayName);
         SpawnRewards(task);
 
@@ -266,7 +312,7 @@ public class TaskManager : MonoBehaviour
         }
     }
     
-    public bool NeedThisItem(ItemDef itemDefinition)
+    public bool NeedThisItem(FluidDef fluidDefinition)
     {
         for (int i = 0; i < activeTaskList.Count; i++)
         {
@@ -279,7 +325,7 @@ public class TaskManager : MonoBehaviour
             SubmitItemTaskDef submitTask = (SubmitItemTaskDef)task;
             for (int r = 0; r < submitTask.requirements.Length; r++)
             {
-                if (submitTask.requirements[r].item == itemDefinition)
+                if (submitTask.requirements[r].fluid == fluidDefinition)
                 {
                     SubmitProgressData dataValue = submitMap[submitTask.taskId];
                     int have = dataValue.currentAmounts[r];

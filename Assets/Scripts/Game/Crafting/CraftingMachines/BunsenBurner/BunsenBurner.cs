@@ -83,8 +83,10 @@ public class BunsenBurner
 
             if (p.matched)
                 ApplyRecipe(p);
+            /*
             else
                 ApplyBurnLogic(p);
+                */
 
             OnCookFinish?.Invoke(p.solid);
             processes.RemoveAt(i);
@@ -97,8 +99,26 @@ public class BunsenBurner
     private void ApplyRecipe(ProcessEntry p)
     {
         ItemStack prod = p.recipe.output.CopyWithAmount(p.inStack.amount);
+        ItemStack st = p.inStack.CopyWithAmount(p.inStack.amount);
+        
+        if (!st.tags.Any())
+            st.tags.Add(new IngredientTag(burnedTagDef, 0.001f));
+        else
+        {
+            IngredientTag maxTag = st.tags.OrderByDescending(t => t.value).First();
+            foreach (var t in st.tags)
+                if (t != maxTag) t.value *= 2f;
+
+            st.tags.Add(new IngredientTag(burnedTagDef, 0.001f));
+        }
+
+        foreach (var tag in p.inStack.tags)
+        {
+            prod.tags.Add(tag);
+        }
+        
         p.solid.SetIngredient(prod);
-        Debug.Log($"[Bunsen] Recipe found: {prod.Def.GetId()}");
+        Debug.Log($"[Bunsen Burner] Recipe found: {prod.Def.GetId()}");
     }
 
     private void ApplyBurnLogic(ProcessEntry p)
@@ -109,18 +129,18 @@ public class BunsenBurner
             st.tags = new List<IngredientTag>();
 
         if (!st.tags.Any())
-            st.tags.Add(new IngredientTag(burnedTagDef, 1f));
+            st.tags.Add(new IngredientTag(burnedTagDef, 0.001f));
         else
         {
             IngredientTag maxTag = st.tags.OrderByDescending(t => t.value).First();
             foreach (var t in st.tags)
                 if (t != maxTag) t.value *= 2f;
 
-            st.tags.Add(new IngredientTag(burnedTagDef, 1f));
+            st.tags.Add(new IngredientTag(burnedTagDef, 0.001f));
         }
 
         p.solid.SetIngredient(st);
-        Debug.Log("[Bunsen] Burned, tags adjusted & burned added");
+        Debug.Log("[Bunsen Burner] Burned, tags adjusted & burned added");
     }
     #endregion
 

@@ -156,7 +156,7 @@ public class CauldronObject : MonoBehaviour
         if (stack.IsEmpty) return;
         
         Debug.Log($"[Cauldron] Inserting a solid object with: {stack.Def.GetId()}");
-        
+
         data.InsertSolid(stack);
         Destroy(sObj.gameObject);
         
@@ -279,7 +279,21 @@ public class CauldronObject : MonoBehaviour
                 foreach (var s in solids) SpawnSolid(s);
 
             if (liquids != null && liquids.Count > 0)
-                UpdateCustomTargetColor(liquids[0].Def.GetMaterial().color);
+                if (liquids[0].Def.GetMaterial() != null)
+                {
+                    Color.RGBToHSV(liquids[0].Def.GetMaterial().color, out float h, out float s, out float v);
+        
+                    float oldV = v * 100f;
+                    float mappedV = oldV / 100f * 85f;
+                    float finalV = mappedV / 100f;
+
+                    Color newColor = Color.HSVToRGB(h, s, finalV);
+                    UpdateCustomTargetColor(newColor);
+                }
+                else
+                {
+                    UpdateTargetColor();
+                }
                 //liquidPlane.GetComponent<MeshRenderer>().material = liquids[0].Def.GetMaterial();
             
 

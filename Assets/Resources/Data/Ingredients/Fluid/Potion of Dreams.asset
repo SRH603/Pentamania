@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d770b78bdf43e5bc18ca5dd5947d85, type: 3}
   m_Name: Potion of Dreams
   m_EditorClassIdentifier: 
-  ingredientId: 
+  ingredientId: potion_of_dreams
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: f658976c5489d431a9c5fe44079c79e0, type: 2}

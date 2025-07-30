@@ -128,13 +128,10 @@ public class Cauldron
         Color.RGBToHSV(finalColor, out float h, out float s, out float v);
         
         float oldV = v * 100f;
-        
-        float mappedV = oldV / 100f * 60f;
-        
+        float mappedV = oldV / 100f * 80f;
         float finalV = mappedV / 100f;
 
         Color newColor = Color.HSVToRGB(h, s, finalV);
-
         return newColor;
     }
     
@@ -169,7 +166,7 @@ public class Cauldron
     {
         if (stack.IsEmpty)
             return;
-        if (stack.Def.GetId() == "cleansing_elixir")
+        if (stack.Def.GetId() == "crystal")
         {
             itemStorage.Clear();
             fluidStorage.Clear();
@@ -280,11 +277,16 @@ public class Cauldron
                 solidsToSpawn.Add(ni);
             }
 
-            if (!p.itemProduct.IsEmpty)
+            if (!p.fluidProduct.IsEmpty)
             {
                 var nf = p.fluidProduct.CopyWithVolume(p.fluidProduct.volume * amt * m);
+                foreach (var tag in tagMap)
+                {
+                    nf.tags.Add(new IngredientTag(tag.Key, (float)tag.Value));
+                }
                 liquidsToStay.Add(nf);
                 InsertLiquid(nf);
+                Debug.Log($"[Cauldron] Inserted Liquid: {nf.tags}");
             }
             //Debug.Log(p.fluidProduct);
             /*
@@ -344,6 +346,7 @@ public class Cauldron
         fluidStorage.Clear();
     }
     
+    /*
 private Dictionary<string, double> BuildTagMap()
 {
     var map = new Dictionary<string, double>();
@@ -371,8 +374,126 @@ private Dictionary<string, double> BuildTagMap()
     }
     return map;
 }
+*/
+
+private Dictionary<IngredientTagDef, double> BuildTagMap()
+{
+    var map = new Dictionary<IngredientTagDef, double>();
+    
+    foreach (var st in itemStorage.View())
+    {
+        if (st.IsEmpty || st.tags == null) continue;
+        foreach (var t in st.tags)
+        {
+            double add = t.value * st.amount;
+            if (map.TryGetValue(t.ingredientTagDef, out var cur)) map[t.ingredientTagDef] = cur + add;
+            else map[t.ingredientTagDef] = add;
+        }
+    }
+    
+    foreach (var fl in fluidStorage.View())
+    {
+        if (fl.IsEmpty || fl.tags == null) continue;
+        foreach (var t in fl.tags)
+        {
+            double add = t.value * fl.volume;
+            if (map.TryGetValue(t.ingredientTagDef, out var cur)) map[t.ingredientTagDef] = cur + add;
+            else map[t.ingredientTagDef] = add;
+        }
+    }
+    return map;
+}
 
 
+public float GetSimilarity(
+    CauldronRecipe recipe,
+    IDictionary<IngredientTagDef, double> actual,
+    double extraPenalty = 2.0)
+{
+    var target = new Dictionary<IngredientTagDef, (double r, int w)>();
+    foreach (var req in recipe.requirement)
+    {
+        var id = req.ingredientTag;
+        double value = req.weight;
+        int weight = Mathf.Max(1, req.weight);
+
+        if (target.TryGetValue(id, out var old))
+        {
+            target[id] = (old.r + value, old.w + weight);
+        }
+        else
+        {
+            target[id] = (value, weight);
+        }
+    }
+    
+    double totalTarget = target.Sum(kv => kv.Value.r * kv.Value.w);
+    if (totalTarget <= 0)
+    {
+        return 0f;
+    }
+
+    var targetDist = target.ToDictionary(
+        kv => kv.Key,
+        kv =>
+        {
+            double normalized = kv.Value.r * kv.Value.w / totalTarget;
+            return (r: normalized, w: kv.Value.w);
+        }
+    );
+
+    double totalActual = actual.Values.Sum();
+    if (totalActual <= 0)
+    {
+        return 0f;
+    }
+    
+    var actualDist = actual.ToDictionary(
+        kv => kv.Key,
+        kv =>
+        {
+            double pk = kv.Value / totalActual;
+            return pk;
+        }
+    );
+    
+    double diff = 0.0;
+    foreach (var kv in targetDist)
+    {
+        var tagId = kv.Key;
+        double r = kv.Value.r;
+        int w = kv.Value.w;
+
+        if (actualDist.TryGetValue(tagId, out double pk))
+        {
+            double term = w * Math.Abs(r - pk);
+            diff += term;
+            actualDist.Remove(tagId);
+        }
+        else
+        {
+            double term = w * r;
+            diff += term;
+        }
+    }
+    
+    double extraMass = 0.0;
+    foreach (var kv in actualDist)
+    {
+        double pk = kv.Value;
+        extraMass += pk;
+    }
+    double extraTerm = extraPenalty * extraMass;
+    diff += extraTerm;
+
+    double targetSum = targetDist.Sum(kvp => kvp.Value.w * kvp.Value.r);
+    double maxDiff = targetSum + extraPenalty * 1.0;
+
+    double score = Math.Max(0.0, 1.0 - diff / maxDiff) * 100.0;
+    return (float)score;
+}
+
+/*
 public float GetSimilarity(
     CauldronRecipe recipe,
     IDictionary<string, double> actual,
@@ -460,7 +581,7 @@ public float GetSimilarity(
     double score = Math.Max(0.0, 1.0 - diff / maxDiff) * 100.0;
     return (float)score;
 }
-
+*/
 
     // DEBUG STUFF
     public void ShowIngredients()

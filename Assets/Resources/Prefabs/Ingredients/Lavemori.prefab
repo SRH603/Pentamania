@@ -67,7 +67,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: e77b4ceca30ec4ba18d89216a93f0d10, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 9346e8cca828940b4ad0eb0a31c1ca27, type: 2}
+      objectReference: {fileID: 2100000, guid: 6b0502e65ed264b34b2b35b8e6a5233a, type: 2}
+    - target: {fileID: -5754084199372789682, guid: e77b4ceca30ec4ba18d89216a93f0d10, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -1392461830242278656, guid: 4bbc2b7064f6746cc8744426c76f3564, type: 3}
     - target: {fileID: 919132149155446097, guid: e77b4ceca30ec4ba18d89216a93f0d10, type: 3}
       propertyPath: m_Name
       value: Lavemori
@@ -115,7 +119,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 5595516657732599146, guid: e77b4ceca30ec4ba18d89216a93f0d10, type: 3}
+  m_Mesh: {fileID: -1392461830242278656, guid: 4bbc2b7064f6746cc8744426c76f3564, type: 3}
 --- !u!114 &2142044224250760193
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,22 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class MortarObject : MonoBehaviour
 {
     [Header("Recipe / MixedDust")]
     [SerializeField] private MortarRecipe[] recipeArray;
     [SerializeField] private FluidDef mixedDust;
+    [SerializeField] private IngredientTag dustTag;
 
     [Header("Pestle / Output")]
     [SerializeField] private float pestleBaseStep = 0.15f;
     [SerializeField] private Transform outputPoint;
 
     [Header("VFX")]
-    [SerializeField] private ParticleSystem vfxHit;
-    [SerializeField] private ParticleSystem vfxInsert;
-    [SerializeField] private ParticleSystem vfxSuccess;
-    [SerializeField] private ParticleSystem vfxByproduct;
-    [SerializeField] private ParticleSystem vfxScoop;
+    [SerializeField] private VisualEffect vfxHit;
+    [SerializeField] private VisualEffect vfxInsert;
+    [SerializeField] private VisualEffect vfxSuccess;
+    [SerializeField] private VisualEffect vfxByproduct;
+    [SerializeField] private VisualEffect vfxScoop;
+    [SerializeField] private VisualEffect vfxMetalHit;
 
     private Mortar mortar;
     private readonly HashSet<SolidObject> solidsInside = new();
@@ -25,9 +28,13 @@ public class MortarObject : MonoBehaviour
     [SerializeField] private List<ItemStack> itemStorage;
     [SerializeField] private FluidStorage fluidStorage;
 
+    [SerializeField] private GameObject dustPlane;
+
+    [SerializeField] private IngredientTagDef MetalTag;
+
     void Awake()
     {
-        mortar = new Mortar(recipeArray, mixedDust);
+        mortar = new Mortar(recipeArray, mixedDust, dustTag);
         mortar.OnCraftComplete += PlayCraftFX;
         Debug.Log($"[MortarObj] Awake, recipes={recipeArray.Length}");
     }
@@ -37,6 +44,10 @@ public class MortarObject : MonoBehaviour
         //DEBUG
         itemStorage = mortar.GetItemStorage();
         fluidStorage = mortar.GetFluidStorage();
+        
+        dustPlane.SetActive(!fluidStorage.IsEmpty());
+        if (fluidStorage.View()[0].Def != null)
+            dustPlane.GetComponent<MeshRenderer>().sharedMaterial = fluidStorage.View()[0].Def.GetMaterial();
     }
     
     public void SolidEntered(SolidObject so)
@@ -58,6 +69,12 @@ public class MortarObject : MonoBehaviour
 
     public void PestleHit()
     {
+        if (!CheckMetal())
+        {
+            Debug.Log($"[MortarObj] Pestle hit failed because of the metal");
+            vfxMetalHit.Play();
+            return;
+        }
         mortar.PestleHit(pestleBaseStep);
         Debug.Log($"[MortarObj] Pestle hit, progress={mortar.Progress:F3}");
         if (vfxHit) vfxHit.Play();
@@ -117,5 +134,17 @@ public class MortarObject : MonoBehaviour
             if (so) Destroy(so.gameObject);
         Debug.Log($"[MortarObj] Cleared {solidsInside.Count} solids after craft");
         solidsInside.Clear();
+    }
+
+    private bool CheckMetal()
+    {
+        foreach (var so in itemStorage)
+        {
+            foreach (var tag in so.tags)
+            {
+                if (tag.ingredientTagDef == MetalTag) return false;
+            }
+        }
+        return true;
     }
 }

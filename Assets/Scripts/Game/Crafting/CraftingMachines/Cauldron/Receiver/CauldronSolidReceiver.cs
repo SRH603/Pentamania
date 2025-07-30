@@ -19,6 +19,7 @@ public class CauldronSolidReceiver : MonoBehaviour
             //Destroy(other);
             return;
         
+        AudioManager.instance.playSoundAtLocation("cauldron_pickup", other.transform);
         cauldron.ReceiveSolid(solid);
     }
 }

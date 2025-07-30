@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 7c973d7a7769c4bd59326da69da60c70, type: 2}
+    - target: {fileID: 4412392939524465718, guid: bbda2e4ad61174a9eb99bee030259546, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6885164274559482579, guid: e24b9f26cddc241e69712df5d47bacc3, type: 3}
     - target: {fileID: 4989459730928648926, guid: bbda2e4ad61174a9eb99bee030259546, type: 3}
       propertyPath: ShapeModule.angle
       value: 42.943905
