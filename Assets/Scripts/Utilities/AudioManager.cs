@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Machines")]
     [SerializeField] private EventReference crystalBallAmbience;
-    [SerializeField] private EventReference crystallBallUsage;
+    [SerializeField] private EventReference crystalBallUsage;
     public EventInstance crystallBallUsageInstance;
 
     [SerializeField] private EventReference mortarGrind;
@@ -45,10 +45,6 @@ public class AudioManager : MonoBehaviour
 
 
     public static AudioManager instance;
-    void Start()
-    {
-
-    }
 
     void Awake()
     {
@@ -66,13 +62,72 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-
-    public void playEventInstance(string instance, string paramName, int param, Transform location)
+    
+    public void PlaySound(string sound, GameObject gameobject)
     {
         EventInstance eventInstance;
-
-        switch (instance)
+        switch (sound)
         {
+            case "firepit":
+                eventInstance = RuntimeManager.CreateInstance(firepitEvent);
+                break;
+            
+            case "cauldron_start":
+                eventInstance = RuntimeManager.CreateInstance(cauldronStart);
+                break;
+            
+            case "cauldron_success":
+                eventInstance = RuntimeManager.CreateInstance(cauldronSuccess);
+                break;
+            
+            case "cauldron_failure":
+                eventInstance = RuntimeManager.CreateInstance(cauldronFailure);
+                break;
+            
+            case "cauldron_pickup":
+                eventInstance = RuntimeManager.CreateInstance(cauldronTakeIngredient);
+                break;
+            
+            case "bunsen_start":
+                eventInstance = RuntimeManager.CreateInstance(bunsenBurnerStart);
+                break;
+            
+            case "bunsen_stop":
+                eventInstance = RuntimeManager.CreateInstance(bunsenBurnerStop);
+                break;
+            
+            case "book_page_flip":
+                eventInstance = RuntimeManager.CreateInstance(pageFlip);
+                break;
+            
+            case "crystal_ball_ambience":
+                eventInstance = RuntimeManager.CreateInstance(crystalBallAmbience);
+                break;
+            
+            case "clock_tick":
+                eventInstance = RuntimeManager.CreateInstance(clockTickEvent);
+                break;
+            
+            
+            default:
+                return;
+        }
+        
+        RuntimeManager.AttachInstanceToGameObject(eventInstance, gameobject);
+            
+        eventInstance.start();
+        eventInstance.release();
+    }
+
+    public void PlaySound(string sound, string param_name, int param, GameObject gameobject)
+    {
+        EventInstance eventInstance;
+        switch (sound)
+        {
+            case "crystal_ball_usage":
+                eventInstance = RuntimeManager.CreateInstance(crystalBallUsage);
+                break;
+            
             case "pickup":
                 eventInstance = RuntimeManager.CreateInstance(pickupEvent);
                 break;
@@ -80,48 +135,16 @@ public class AudioManager : MonoBehaviour
             case "drop":
                 eventInstance = RuntimeManager.CreateInstance(dropEvent);
                 break;
-            
-            default:
-                Debug.LogError("AudioManager: playEventInstance - Invalid instance name provided: " + instance);
-                return;
 
-        }        
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, location);
-        eventInstance.setParameterByName(paramName, param);
+            default:
+                return;
+        }
+        
+        RuntimeManager.AttachInstanceToGameObject(eventInstance, gameobject);
+        eventInstance.setParameterByName(param_name, param);
+        
         eventInstance.start();
         eventInstance.release();
-    }
-    
-
-    public void playPickup(int itemType, Transform location)
-    {
-        pickupInstance = RuntimeManager.CreateInstance(pickupEvent);
-        RuntimeManager.AttachInstanceToGameObject(pickupInstance, location);
-        pickupInstance.setParameterByName("Item", itemType);
-        pickupInstance.start();
-        pickupInstance.release();
-    }
-
-    public void playDrop(int itemType, Transform location)
-    {
-        dropInstance = RuntimeManager.CreateInstance(dropEvent);
-        RuntimeManager.AttachInstanceToGameObject(dropInstance, location);
-        dropInstance.setParameterByName("Item", itemType);
-        dropInstance.start();
-        dropInstance.release();
-    }
-
-    public void playSoundAtLocation(string sound, Transform location)
-    {
-        switch (sound)
-        {
-            case "firepit":
-                EventInstance firepitInstance = RuntimeManager.CreateInstance(firepitEvent);
-                RuntimeManager.AttachInstanceToGameObject(firepitInstance, location);
-                firepitInstance.start();
-                firepitInstance.release();
-                break;
-        }
     }
 
     public void PickupIngredient(PassableIngredientObject ingredientObject)
@@ -134,11 +157,12 @@ public class AudioManager : MonoBehaviour
         //pickupInstance.release();
     }
     
-    public void PlayVoiceLine(int voicelineEvent, Transform location, int potionId = -1)
+    public void PlayVoiceLine(int voicelineEvent, GameObject gameobject, int potionId = -1)
     {
         voiceLineManagerInstance = RuntimeManager.CreateInstance(voiceLineManager);
-        RuntimeManager.AttachInstanceToGameObject(voiceLineManagerInstance, location);
+        RuntimeManager.AttachInstanceToGameObject(voiceLineManagerInstance, gameobject);
         voiceLineManagerInstance.setParameterByName("Voiceline Event", voicelineEvent);
+        
         if (potionId != -1)
         {
             voiceLineManagerInstance.setParameterByName("Potion Brewed", potionId);

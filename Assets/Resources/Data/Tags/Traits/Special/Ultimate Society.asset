@@ -15,3 +15,5 @@ MonoBehaviour:
   id: ultimate_society
   color: {r: 0.73933244, g: 0.495283, b: 1, a: 1}
   colorWeight: 50
+  defaultRangeMin: 0
+  defaultRangeMax: 0

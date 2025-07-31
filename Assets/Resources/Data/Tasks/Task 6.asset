@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Dreams
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: 737993d32e7aa4c2182ec773636b2875, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: 6d19594bdf8d24737ac129695994a1a7, type: 2}
     count: 1

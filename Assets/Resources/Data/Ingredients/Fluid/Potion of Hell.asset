@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientId: potion_of_hell
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: dcba0f878e06140c0b5800c150484754, type: 2}

@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Catastrophe
   m_EditorClassIdentifier: 
-  requirement:
+  requirements:
   - ingredientTag: {fileID: 11400000, guid: 692405114681e47c6bc384a85c623e94, type: 2}
-    weight: 1
+    min: 1
+    max: 9999
   - ingredientTag: {fileID: 11400000, guid: f95178fa52f9d41db80084747caf58d2, type: 2}
-    weight: 1
+    min: 1
+    max: 9999
   - ingredientTag: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
-    weight: 1
+    min: 1
+    max: 9999
   products:
   - itemProduct:
       def: {fileID: 0}

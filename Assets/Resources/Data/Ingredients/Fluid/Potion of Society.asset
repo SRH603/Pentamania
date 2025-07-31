@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientId: potion_of_society
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 5d46bb438eef41d449bb7588f4a77e06, type: 2}

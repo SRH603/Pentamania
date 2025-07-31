@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Chaos
   m_EditorClassIdentifier: 
-  requirement:
+  requirements:
   - ingredientTag: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
-    weight: 1
+    min: 0.8
+    max: 9999
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -22,6 +23,8 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: 50de5f95e79a845938d918c34a8101e2, type: 2}
-      volume: 1
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
+        value: 1
     amount: 1

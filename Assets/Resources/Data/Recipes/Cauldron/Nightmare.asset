@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Nightmare
   m_EditorClassIdentifier: 
-  requirement:
+  requirements:
   - ingredientTag: {fileID: 11400000, guid: f95178fa52f9d41db80084747caf58d2, type: 2}
-    weight: 9
+    min: 0.9
+    max: 9999
   - ingredientTag: {fileID: 11400000, guid: fad7b79c1ad55496c9eb8a5d5746fe94, type: 2}
-    weight: 5
+    min: 0.5
+    max: 9999
+  - ingredientTag: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
+    min: -0.5
+    max: 0.3
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -24,6 +29,8 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: 35d248730555646b583f4ce97838fda3, type: 2}
-      volume: 14
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: f95178fa52f9d41db80084747caf58d2, type: 2}
+        value: 1
     amount: 1

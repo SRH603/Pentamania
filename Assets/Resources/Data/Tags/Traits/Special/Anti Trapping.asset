@@ -15,3 +15,5 @@ MonoBehaviour:
   id: anti_trapping
   color: {r: 0.8620283, g: 0.8160377, b: 1, a: 1}
   colorWeight: 5
+  defaultRangeMin: 0
+  defaultRangeMax: 9999

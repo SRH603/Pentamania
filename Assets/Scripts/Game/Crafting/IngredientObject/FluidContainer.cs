@@ -15,6 +15,8 @@ public class FluidContainer : SolidObject, IFluidContainer
     [SerializeField] private Material fluidMat;
     [SerializeField] private Material dustMat;
 
+    [SerializeField] private bool isPouring;
+
     //private bool isPouring;
     private CauldronLiquidReceiver receiverCache;
 
@@ -151,19 +153,22 @@ public class FluidContainer : SolidObject, IFluidContainer
         }
     }
     
-    private void StartPour()
+    public void StartPour()
     {
-        //isPouring = true;
+        if (isPouring) return;
+        isPouring = true;
+        var main = pourEffect.main;
+        main.startColor = fluidDisplay.GetComponent<Renderer>().sharedMaterial.GetColor("_BaseColor");
         if (pourEffect) pourEffect.Play();
-        //Debug.Log("111");
+        Debug.Log("[Container] Started pouring");
     }
 
-    private void StopPour()
+    public void StopPour()
     {
-        //if (!isPouring) return;
-        //isPouring = false;
+        if (!isPouring) return;
+        isPouring = false;
         if (pourEffect) pourEffect.Stop();
-        //Debug.Log("111");
+        Debug.Log("[Container] Stopped pouring");
     }
 
     /*

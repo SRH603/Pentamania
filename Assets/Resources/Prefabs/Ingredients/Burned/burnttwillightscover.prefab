@@ -4901,6 +4901,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 12d7a6e9d6fe540cdb20c64023954ed0, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 2cd50bae8c8df411298787263dbe38e5, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6885164274559482579, guid: e24b9f26cddc241e69712df5d47bacc3, type: 3}
     - target: {fileID: 919132149155446097, guid: 2cd50bae8c8df411298787263dbe38e5, type: 3}
       propertyPath: m_Name
       value: burnttwillightscover

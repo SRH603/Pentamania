@@ -19,7 +19,7 @@ public class TaskSubmitZone : MonoBehaviour
         
         FluidStack stack = (FluidStack)info;
         IngredientStack itemInfo = solid.GetIngredient();
-        ItemStack itemStack = (ItemStack)itemInfo;
+        FluidStack itemStack = (FluidStack)itemInfo;
         if (stack.IsEmpty) return;
         
         TaskManager manager = TaskManager.Instance;
@@ -34,7 +34,7 @@ public class TaskSubmitZone : MonoBehaviour
         }
 
         Debug.Log("[Task System] Submited " + stack.Def.GetId() + " x " + stack.volume);
-        manager.SubmitItem(stack, itemStack.amount);
+        manager.SubmitItem(stack, (int)itemStack.volume);
         Destroy(solid.gameObject);
     }
 }

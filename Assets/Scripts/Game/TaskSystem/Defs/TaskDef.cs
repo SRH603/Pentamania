@@ -29,6 +29,7 @@ public abstract class TaskDef : ScriptableObject
     public string displayName;
     [TextArea] public string description;
     public Reward[] rewards;
+    public Sprite icon;
 
     public abstract TaskCategory Category { get; }
 }

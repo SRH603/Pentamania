@@ -83,7 +83,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PageForward
-  m_Speed: 1
+  m_Speed: -10
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7189163548227901968}
@@ -96,7 +96,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 24127fc830abc2d4fbc6ea183cbed9e0, type: 3}
+  m_Motion: {fileID: 7400000, guid: c13c844136fc9f649a0fb80fd3d61adc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -135,7 +135,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PageBack
-  m_Speed: -1
+  m_Speed: 10
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8873249663850408010}
@@ -148,7 +148,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 24127fc830abc2d4fbc6ea183cbed9e0, type: 3}
+  m_Motion: {fileID: 7400000, guid: c13c844136fc9f649a0fb80fd3d61adc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -163,14 +163,14 @@ AnimatorController:
   m_Name: BookAnimationController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: FlipRight
-    m_Type: 4
+  - m_Name: FlipLeft
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: FlipLeft
-    m_Type: 4
+  - m_Name: FlipRight
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0

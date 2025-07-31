@@ -12,11 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Release
   m_EditorClassIdentifier: 
-  requirement:
-  - ingredientTag: {fileID: 11400000, guid: 57fdd353b2fc0493e89e82944a8057fe, type: 2}
-    weight: 1
-  - ingredientTag: {fileID: 11400000, guid: 284e8d47ba62f417188cf490f129bb79, type: 2}
-    weight: 5
+  requirements:
+  - ingredientTag: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
+    min: -2
+    max: -9999
+  - ingredientTag: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: e15919704693749d492234c87767cd97, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: ffe9f5647300f419cb68fdfa43618c70, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: 5a6be0cec336644eebb548eed921ff16, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: fad7b79c1ad55496c9eb8a5d5746fe94, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: f95178fa52f9d41db80084747caf58d2, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: 692405114681e47c6bc384a85c623e94, type: 2}
+    min: 0.4
+    max: -0.4
+  - ingredientTag: {fileID: 11400000, guid: a7d7b232b698d47d193295d8a923eef6, type: 2}
+    min: -5
+    max: -9999
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -24,6 +47,8 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: 1c3d8c44821e74993bae22f1ad3d2c10, type: 2}
-      volume: 6
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
+        value: -1
     amount: 1

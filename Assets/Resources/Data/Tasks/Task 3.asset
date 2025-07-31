@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Scorching
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: 7c1872722bb9c4fd8bc68bb2fe988548, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: 59bd352f0b2624d8ead5fca26b55811d, type: 2}
     count: 1

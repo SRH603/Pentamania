@@ -76,13 +76,15 @@ Material:
     - _Smoothness: 0
     - _SrcBlend: 1
     - _Surface: 0
+    - _WobbleX: 0
+    - _WobbleZ: 0
     - _WorkflowMode: 0
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Min_Max: {r: -0.23, g: 0.227, b: 0, a: 0}
+    - _Min_Max: {r: -0.23, g: 0.3, b: 0, a: 0}
     - _SideColor: {r: 1, g: 1, b: 1, a: 0}
     - _TopColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 0}
   m_BuildTextureStacks: []

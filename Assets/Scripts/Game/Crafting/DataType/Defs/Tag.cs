@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,19 +8,19 @@ public class IngredientTag
 {
     public IngredientTagDef ingredientTagDef;
     public float value;
-    
+
     public IngredientTag(IngredientTagDef ingredientTagDef, float value)
     {
         this.ingredientTagDef = ingredientTagDef;
         this.value = value;
     }
-    
+
     public IngredientTag(IngredientTag src)
     {
         ingredientTagDef = src.ingredientTagDef;
         value = src.value;
     }
-    
+
     public override bool Equals(object obj)
     {
         if (obj is IngredientTag other)
@@ -37,7 +38,7 @@ public class IngredientTag
         return ingredientTagDef.GetHashCode() ^ value.GetHashCode();
     }
     */
-    
+
     public override int GetHashCode()
     {
         unchecked
@@ -47,6 +48,16 @@ public class IngredientTag
             hash = hash * 31 + value.GetHashCode();
             return hash;
         }
+    }
+
+    public bool Equals(IngredientTag tag)
+    {
+        return tag.ingredientTagDef == ingredientTagDef && tag.value == value;
+    }
+
+    public Color GetColor()
+    {
+        return ingredientTagDef.GetColor(value >= 0);
     }
 }
 

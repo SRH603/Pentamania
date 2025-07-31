@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Nightmare
   m_EditorClassIdentifier: 
   id: nightmare
-  color: {r: 0, g: 0.2172996, b: 0.5754717, a: 1}
+  color: {r: 0.32819057, g: 0.13706656, b: 0.3509434, a: 1}
+  inverseElementColor: {r: 0.6619224, g: 0.8792453, b: 0.862311, a: 0}
   colorWeight: 1
+  defaultRangeMin: -0.3
+  defaultRangeMax: 0.3

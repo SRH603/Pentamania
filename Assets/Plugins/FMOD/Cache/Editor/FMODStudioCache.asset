@@ -198,12 +198,12 @@ MonoBehaviour:
   Banks:
   - {fileID: 7331892254997206150}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
-  MaxDistance: 20
-  Length: 0
+  MaxDistance: 2600
+  Length: 983
 --- !u!114 &-6423602140287110012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,11 +549,10 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
-  Parameters:
-  - {fileID: -14323042498935845}
+  Parameters: []
   MinDistance: 0
   MaxDistance: 750
-  Length: 1062
+  Length: 1050
 --- !u!114 &-1446720478306695577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,30 +710,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 2800
   Length: 0
---- !u!114 &-14323042498935845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Usage/Crystal Ball Usage State
-  m_EditorClassIdentifier: 
-  Name: Crystal Ball Usage State
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 3727718006
-    data2: 2914850922
-  Type: 1
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,7 +773,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 7007597937853415162}
   cacheVersion: 131848
-  cacheTime: 638894808628205106
+  cacheTime: 638895512454067488
   SerializableEventsDict:
   - key: event:/SFX/Ambience/Fireplace
     index: 0
@@ -1600,10 +1575,10 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638894808628205106
+  lastModified: 638895512454067488
   FileSizes:
   - Name: Desktop
-    Value: 3462
+    Value: 3408
   Exists: 1
 --- !u!114 &7331892254997206150
 MonoBehaviour:
@@ -1620,10 +1595,10 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638894808628119411
+  lastModified: 638895512453913535
   FileSizes:
   - Name: Desktop
-    Value: 3275072
+    Value: 3344960
   Exists: 1
 --- !u!114 &7347295884685123188
 MonoBehaviour:

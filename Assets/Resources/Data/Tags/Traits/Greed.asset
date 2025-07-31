@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Greed
   m_EditorClassIdentifier: 
   id: greed
-  color: {r: 0.6886792, g: 0.19815768, b: 0.20357502, a: 1}
+  color: {r: 0.4473248, g: 0.6377357, b: 0.25389096, a: 1}
+  inverseElementColor: {r: 0.6150943, g: 0.5243605, b: 0, a: 0}
   colorWeight: 1
+  defaultRangeMin: -0.3
+  defaultRangeMax: 0.3

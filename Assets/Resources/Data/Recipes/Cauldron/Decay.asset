@@ -12,9 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Decay
   m_EditorClassIdentifier: 
-  requirement:
+  requirements:
   - ingredientTag: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
-    weight: 8
+    min: 0.8
+    max: 9999
+  - ingredientTag: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
+    min: -1.2
+    max: 0.3
+  - ingredientTag: {fileID: 11400000, guid: 692405114681e47c6bc384a85c623e94, type: 2}
+    min: -0.3
+    max: 0.6
+  - ingredientTag: {fileID: 11400000, guid: e15919704693749d492234c87767cd97, type: 2}
+    min: -0.3
+    max: 0.4
+  - ingredientTag: {fileID: 11400000, guid: 5a6be0cec336644eebb548eed921ff16, type: 2}
+    min: -0.3
+    max: 0.4
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -22,6 +35,10 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: 84855d7a6c4364d57bad8fe46bad1139, type: 2}
-      volume: 8
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
+        value: 0.5
+      - ingredientTagDef: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
+        value: -0.5
     amount: 1

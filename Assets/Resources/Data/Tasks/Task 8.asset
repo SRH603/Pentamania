@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Chaos
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: 7073b86d7fe3044748c4a08cf077565c, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: 50de5f95e79a845938d918c34a8101e2, type: 2}
     count: 1

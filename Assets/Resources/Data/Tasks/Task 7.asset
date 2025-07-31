@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Truth
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: 1549f316351f040b48c99de4514bc410, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: e17bf7db9db934b41bcd53ed23f2911e, type: 2}
     count: 1

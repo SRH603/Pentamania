@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Power
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: d80233cf482334318b899dbb3600d551, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: 449de82ca21cb4e34b999684bbcc92c3, type: 2}
     count: 1

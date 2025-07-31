@@ -95,30 +95,30 @@ public class Cauldron
         Color totalColor = Color.black;
         float totalWeight = 0f;
         
-        foreach (var st in itemStorage.View())
+        foreach (var itemStack in itemStorage.View())
         {
-            if (st.IsEmpty || st.tags == null) continue;
+            if (itemStack.IsEmpty || itemStack.tags == null) continue;
 
-            foreach (var t in st.tags)
+            foreach (var tag in itemStack.tags)
             {
-                if (t.ingredientTagDef == null)
+                if (tag.ingredientTagDef == null)
                     continue;
-                float weight = t.value * st.amount * t.ingredientTagDef.GetColorWeight();
-                totalColor += t.ingredientTagDef.GetColor() * weight;
+                float weight = tag.value * itemStack.amount * tag.ingredientTagDef.GetColorWeight();
+                totalColor += tag.GetColor() * weight;
                 totalWeight += weight;
             }
         }
         
-        foreach (var fl in fluidStorage.View())
+        foreach (var fluidStack in fluidStorage.View())
         {
-            if (fl.IsEmpty || fl.tags == null) continue;
+            if (fluidStack.IsEmpty || fluidStack.tags == null) continue;
 
-            foreach (var t in fl.tags)
+            foreach (var tag in fluidStack.tags)
             {
-                if (t.ingredientTagDef == null)
+                if (tag.ingredientTagDef == null)
                     continue;
-                float weight = t.value * fl.volume * t.ingredientTagDef.GetColorWeight();
-                totalColor += t.ingredientTagDef.GetColor() * weight;
+                float weight = tag.value * fluidStack.volume * tag.ingredientTagDef.GetColorWeight();
+                totalColor += tag.GetColor() * weight;
                 totalWeight += weight;
             }
         }
@@ -205,7 +205,7 @@ public class Cauldron
         stack.volume = got;
         return stack;
     }
-    
+
     /*
     public float TakeFluid(FluidDef def, float request)
     {
@@ -221,88 +221,141 @@ public class Cauldron
         return got;
     }
     */
-    
+
+    // public bool TryProcessOnce(out List<ItemStack> solidsToSpawn,
+    //     out List<FluidStack> liquidsToStay)
+    // {
+    //     Debug.Log("[Cauldron] Matching Recipe");
+    //     solidsToSpawn  = new List<ItemStack>();
+    //     liquidsToStay  = new List<FluidStack>();
+
+    //     var tagMap = BuildTagMap();
+
+    //     CauldronRecipe best = null;
+    //     float bestScore = 0f;
+
+    //     foreach (var r in recipes)
+    //     {
+    //         if (r.requirements == null || r.requirements.Length == 0) continue;
+    //         float s = GetSimilarity(r, tagMap, extraPenalty: 2.0);
+    //         if (s > bestScore)
+    //         {
+    //             bestScore = s;
+    //             best = r;
+    //         }
+    //     }
+
+    //     if (best == null || bestScore <= 0.0001)
+    //     {
+    //         Debug.Log("[Cauldron] No recipe matched");
+    //         return false;
+    //     }
+
+    //     Debug.Log($"[Cauldron] Recipe matched: {best} with a similarity of {bestScore}");
+
+    //     float t = GetTotalAmount();
+    //     float c = 0f;
+
+    //     itemStorage.Clear();
+    //     fluidStorage.Clear();
+
+    //     foreach (var i in best.requirements)
+    //     {
+    //         //c += i.weight;
+    //     }
+
+    //     float m = t / c;
+
+    //     Debug.Log($"[Cauldron] Recipe multiplier is: {m}");
+
+    //     foreach (var p in best.products)
+    //     {
+    //         float amt = p.amount;
+    //         if (!p.itemProduct.IsEmpty)
+    //         {
+    //             var ni = p.itemProduct.CopyWithAmount((int)(p.itemProduct.amount * amt * m));
+    //             solidsToSpawn.Add(ni);
+    //         }
+
+    //         if (!p.fluidProduct.IsEmpty)
+    //         {
+    //             var nf = p.fluidProduct.CopyWithVolume(p.fluidProduct.volume * amt * m);
+    //             foreach (var tag in tagMap)
+    //             {
+    //                 nf.tags.Add(new IngredientTag(tag.Key, (float)tag.Value));
+    //             }
+    //             liquidsToStay.Add(nf);
+    //             InsertLiquid(nf);
+    //             Debug.Log($"[Cauldron] Inserted Liquid: {nf.tags}");
+    //         }
+    //         //Debug.Log(p.fluidProduct);
+    //         /*
+    //         if (p.ingredient is ItemDef itemDef)
+    //             solidsToSpawn.Add(new ItemStack(itemDef, Mathf.RoundToInt(amt)));
+    //         else if (p.ingredient is FluidDef fluidDef)
+    //             liquidsToStay.Add(new FluidStack(fluidDef, amt));
+    //             */
+    //     }
+
+    //     //Debug.Log(liquidsToStay.Count);
+    //     /*
+    //     foreach (var fl in liquidsToStay)
+    //         InsertLiquid(fl);
+    //         */
+
+
+    //     OnInventoryChanged?.Invoke();
+    //     return true;
+    // }
+
     public bool TryProcessOnce(out List<ItemStack> solidsToSpawn,
         out List<FluidStack> liquidsToStay)
     {
         Debug.Log("[Cauldron] Matching Recipe");
         solidsToSpawn  = new List<ItemStack>();
         liquidsToStay  = new List<FluidStack>();
-        
-        var tagMap = BuildTagMap();
-        
-        CauldronRecipe best = null;
-        float bestScore = 0f;
 
-        foreach (var r in recipes)
+        Dictionary<IngredientTagDef, double> tagMap = BuildTagMap();
+
+        ProductSpec[] products = null;
+        foreach (CauldronRecipe recipe in recipes)
         {
-            if (r.requirement == null || r.requirement.Length == 0) continue;
-            float s = GetSimilarity(r, tagMap, extraPenalty: 2.0);
-            if (s > bestScore)
+            if (recipe.requirements == null || recipe.requirements.Length == 0) continue;
+
+            if (recipe.CheckForRecipeMatch(tagMap))
             {
-                bestScore = s;
-                best = r;
+                products = recipe.products;
+                break;
             }
         }
 
-        if (best == null || bestScore <= 0.0001)
+        if (products == null)
         {
             Debug.Log("[Cauldron] No recipe matched");
             return false;
         }
-        
-        Debug.Log($"[Cauldron] Recipe matched: {best} with a similarity of {bestScore}");
-        
-        float t = GetTotalAmount();
-        float c = 0f;
-        
+
+        Debug.Log("[Cauldron] Recipe matched!");
+
         itemStorage.Clear();
         fluidStorage.Clear();
 
-        foreach (var i in best.requirement)
+        foreach (ProductSpec product in products)
         {
-            c += i.weight;
-        }
-
-        float m = t / c;
-        
-        Debug.Log($"[Cauldron] Recipe multiplier is: {m}");
-        
-        foreach (var p in best.products)
-        {
-            float amt = p.amount;
-            if (!p.itemProduct.IsEmpty)
+            if (!product.itemProduct.IsEmpty)
             {
-                var ni = p.itemProduct.CopyWithAmount((int)(p.itemProduct.amount * amt * m));
-                solidsToSpawn.Add(ni);
+                ItemStack newItem = product.itemProduct.CopyWithAmount(product.itemProduct.amount);
+                solidsToSpawn.Add(newItem);
             }
 
-            if (!p.fluidProduct.IsEmpty)
+            if (!product.fluidProduct.IsEmpty)
             {
-                var nf = p.fluidProduct.CopyWithVolume(p.fluidProduct.volume * amt * m);
-                foreach (var tag in tagMap)
-                {
-                    nf.tags.Add(new IngredientTag(tag.Key, (float)tag.Value));
-                }
-                liquidsToStay.Add(nf);
-                InsertLiquid(nf);
-                Debug.Log($"[Cauldron] Inserted Liquid: {nf.tags}");
+                FluidStack newFluid = product.fluidProduct.CopyWithVolume(product.fluidProduct.volume);
+                liquidsToStay.Add(newFluid);
+                InsertLiquid(newFluid);
+                Debug.Log($"[Cauldron] Inserted Liquid: {newFluid.tags}");
             }
-            //Debug.Log(p.fluidProduct);
-            /*
-            if (p.ingredient is ItemDef itemDef)
-                solidsToSpawn.Add(new ItemStack(itemDef, Mathf.RoundToInt(amt)));
-            else if (p.ingredient is FluidDef fluidDef)
-                liquidsToStay.Add(new FluidStack(fluidDef, amt));
-                */
         }
-        
-        //Debug.Log(liquidsToStay.Count);
-        /*
-        foreach (var fl in liquidsToStay)
-            InsertLiquid(fl);
-            */
-            
 
         OnInventoryChanged?.Invoke();
         return true;
@@ -315,15 +368,15 @@ public class Cauldron
         {
             if (it.IsEmpty)
                 continue;
-            if (!map.TryAdd(it.Def, it.amount)) 
+            if (!map.TryAdd(it.Def, it.amount))
                 map[it.Def] += it.amount;
         }
         foreach (var fl in fluidStorage.View())
         {
-            if (fl.IsEmpty) 
+            if (fl.IsEmpty)
                 continue;
             if (!map.TryAdd(fl.Def, fl.volume))
-                 map[fl.Def] += fl.volume;
+                map[fl.Def] += fl.volume;
         }
         return map;
     }
@@ -405,92 +458,93 @@ private Dictionary<IngredientTagDef, double> BuildTagMap()
 }
 
 
-public float GetSimilarity(
-    CauldronRecipe recipe,
-    IDictionary<IngredientTagDef, double> actual,
-    double extraPenalty = 2.0)
-{
-    var target = new Dictionary<IngredientTagDef, (double r, int w)>();
-    foreach (var req in recipe.requirement)
+    public float GetSimilarity(
+        CauldronRecipe recipe,
+        IDictionary<IngredientTagDef, double> actual,
+        double extraPenalty = 2.0)
     {
-        var id = req.ingredientTag;
-        double value = req.weight;
-        int weight = Mathf.Max(1, req.weight);
+        // var target = new Dictionary<IngredientTagDef, (double r, int w)>();
+        // foreach (var req in recipe.requirement)
+        // {
+        //     var id = req.ingredientTag;
+        //     double value = req.weight;
+        //     int weight = Mathf.Max(1, req.weight);
 
-        if (target.TryGetValue(id, out var old))
-        {
-            target[id] = (old.r + value, old.w + weight);
-        }
-        else
-        {
-            target[id] = (value, weight);
-        }
-    }
-    
-    double totalTarget = target.Sum(kv => kv.Value.r * kv.Value.w);
-    if (totalTarget <= 0)
-    {
+        //     if (target.TryGetValue(id, out var old))
+        //     {
+        //         target[id] = (old.r + value, old.w + weight);
+        //     }
+        //     else
+        //     {
+        //         target[id] = (value, weight);
+        //     }
+        // }
+
+        // double totalTarget = target.Sum(kv => kv.Value.r * kv.Value.w);
+        // if (totalTarget <= 0)
+        // {
+        //     return 0f;
+        // }
+
+        // var targetDist = target.ToDictionary(
+        //     kv => kv.Key,
+        //     kv =>
+        //     {
+        //         double normalized = kv.Value.r * kv.Value.w / totalTarget;
+        //         return (r: normalized, w: kv.Value.w);
+        //     }
+        // );
+
+        // double totalActual = actual.Values.Sum();
+        // if (totalActual <= 0)
+        // {
+        //     return 0f;
+        // }
+
+        // var actualDist = actual.ToDictionary(
+        //     kv => kv.Key,
+        //     kv =>
+        //     {
+        //         double pk = kv.Value / totalActual;
+        //         return pk;
+        //     }
+        // );
+
+        // double diff = 0.0;
+        // foreach (var kv in targetDist)
+        // {
+        //     var tagId = kv.Key;
+        //     double r = kv.Value.r;
+        //     int w = kv.Value.w;
+
+        //     if (actualDist.TryGetValue(tagId, out double pk))
+        //     {
+        //         double term = w * Math.Abs(r - pk);
+        //         diff += term;
+        //         actualDist.Remove(tagId);
+        //     }
+        //     else
+        //     {
+        //         double term = w * r;
+        //         diff += term;
+        //     }
+        // }
+
+        // double extraMass = 0.0;
+        // foreach (var kv in actualDist)
+        // {
+        //     double pk = kv.Value;
+        //     extraMass += pk;
+        // }
+        // double extraTerm = extraPenalty * extraMass;
+        // diff += extraTerm;
+
+        // double targetSum = targetDist.Sum(kvp => kvp.Value.w * kvp.Value.r);
+        // double maxDiff = targetSum + extraPenalty * 1.0;
+
+        // double score = Math.Max(0.0, 1.0 - diff / maxDiff) * 100.0;
+        // return (float)score;
         return 0f;
-    }
-
-    var targetDist = target.ToDictionary(
-        kv => kv.Key,
-        kv =>
-        {
-            double normalized = kv.Value.r * kv.Value.w / totalTarget;
-            return (r: normalized, w: kv.Value.w);
-        }
-    );
-
-    double totalActual = actual.Values.Sum();
-    if (totalActual <= 0)
-    {
-        return 0f;
-    }
-    
-    var actualDist = actual.ToDictionary(
-        kv => kv.Key,
-        kv =>
-        {
-            double pk = kv.Value / totalActual;
-            return pk;
-        }
-    );
-    
-    double diff = 0.0;
-    foreach (var kv in targetDist)
-    {
-        var tagId = kv.Key;
-        double r = kv.Value.r;
-        int w = kv.Value.w;
-
-        if (actualDist.TryGetValue(tagId, out double pk))
-        {
-            double term = w * Math.Abs(r - pk);
-            diff += term;
-            actualDist.Remove(tagId);
-        }
-        else
-        {
-            double term = w * r;
-            diff += term;
-        }
-    }
-    
-    double extraMass = 0.0;
-    foreach (var kv in actualDist)
-    {
-        double pk = kv.Value;
-        extraMass += pk;
-    }
-    double extraTerm = extraPenalty * extraMass;
-    diff += extraTerm;
-
-    double targetSum = targetDist.Sum(kvp => kvp.Value.w * kvp.Value.r);
-    double maxDiff = targetSum + extraPenalty * 1.0;
-
-    double score = Math.Max(0.0, 1.0 - diff / maxDiff) * 100.0;
-    return (float)score;
 }
 
 /*
@@ -609,6 +663,12 @@ public float GetSimilarity(
                 continue;
             }
             debugOutput += $"ItemStack {fluidStack.Def.GetId()} with quant {fluidStack.volume}\n";
+        }
+
+        debugOutput += "Tags: \n";
+        foreach (var tag in BuildTagMap())
+        {
+            debugOutput += $"Key: {tag.Key}, Value: {tag.Value}\n";
         }
 
         Debug.Log(debugOutput);

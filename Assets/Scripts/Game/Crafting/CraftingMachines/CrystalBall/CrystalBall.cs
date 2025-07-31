@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 public class CrystalBall
 {
@@ -11,8 +13,34 @@ public class CrystalBall
 
     public bool TryConversion(IngredientStack ingredient, out IngredientStack product)
     {
+        Debug.Log("CRYSTAL BALL TRY CONVERSION");
+        if (ingredient.GetType() == typeof(FluidStack))
+        {
+            Debug.Log("Found liquid ingredient, running alt");
+            List<IngredientTag> tags = new();
+
+            foreach (IngredientTag tag in ingredient.GetTags())
+            {
+                tags.Add(new IngredientTag(tag.ingredientTagDef, tag.value * -1));
+            }
+
+            FluidStack fluidStack = (FluidStack)ingredient;
+            product = new FluidStack((FluidDef)ingredient.GetAbstractDef(), fluidStack.volume, tags);
+
+            // DEBUG
+            foreach (IngredientTag tag in product.GetTags())
+            {
+                Debug.Log("Crystal Ball Result ID:" + tag.ingredientTagDef.GetId() + " with quant " + tag.value);
+            }
+
+            return true;
+        }
+
+        Debug.Log("Checking all recipes");
         foreach (var recipe in recipes)
         {
+
+
             if (MatchRecipe(recipe, ingredient))
             {
                 product = recipe.GetProduct();

@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 4332805695139172968}
   - component: {fileID: 1044373862479662330}
   - component: {fileID: 2298778321501803079}
+  - component: {fileID: 8177196880308296211}
   m_Layer: 0
   m_Name: Soul
   m_TagString: Untagged
@@ -438,7 +439,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76618f7490c40334fa7b685859587d2e, type: 2}
+  - {fileID: 2100000, guid: 244a60ca0263d407dbb022cce8c3e2e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -672,3 +673,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -39870243276581033, guid: cec1aebf75b74914097378398b58a48e, type: 3}
+--- !u!114 &8177196880308296211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6640387835271095783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1cf6f7de484c90b605b601d28e8d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 0, z: 0}
+  followPosition: 1
+  followRotation: 1

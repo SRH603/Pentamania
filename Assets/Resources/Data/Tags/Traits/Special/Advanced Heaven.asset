@@ -15,3 +15,5 @@ MonoBehaviour:
   id: advanced_heaven
   color: {r: 0.33333337, g: 0.86584634, b: 1, a: 1}
   colorWeight: 10
+  defaultRangeMin: 0
+  defaultRangeMax: 9999

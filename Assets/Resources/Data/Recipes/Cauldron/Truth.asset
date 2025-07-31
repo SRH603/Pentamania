@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Truth
   m_EditorClassIdentifier: 
-  requirement:
-  - ingredientTag: {fileID: 11400000, guid: 796dbe0e7ece743cc9bf06968c483a9c, type: 2}
-    weight: 1
+  requirements:
+  - ingredientTag: {fileID: 11400000, guid: fad7b79c1ad55496c9eb8a5d5746fe94, type: 2}
+    min: -9999
+    max: -2
+  - ingredientTag: {fileID: 11400000, guid: 5a6be0cec336644eebb548eed921ff16, type: 2}
+    min: -0.4
+    max: 0.3
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -22,6 +26,8 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: e17bf7db9db934b41bcd53ed23f2911e, type: 2}
-      volume: 1
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: fad7b79c1ad55496c9eb8a5d5746fe94, type: 2}
+        value: -1
     amount: 1

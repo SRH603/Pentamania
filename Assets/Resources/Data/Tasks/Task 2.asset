@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Decay
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: 588e333057715484b9f579e50de07461, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: 84855d7a6c4364d57bad8fe46bad1139, type: 2}
     count: 1

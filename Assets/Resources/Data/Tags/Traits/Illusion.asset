@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Illusion
   m_EditorClassIdentifier: 
   id: illusion
-  color: {r: 0.26138687, g: 0, b: 1, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  inverseElementColor: {r: 0.58011955, g: 0.94716984, b: 0.39852613, a: 0}
   colorWeight: 1
+  defaultRangeMin: -0.3
+  defaultRangeMax: 0.3

@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Power
   m_EditorClassIdentifier: 
-  requirement:
-  - ingredientTag: {fileID: 11400000, guid: 4c5a3cb4556584040a09e72ef10f046c, type: 2}
-    weight: 15
+  requirements:
+  - ingredientTag: {fileID: 11400000, guid: 692405114681e47c6bc384a85c623e94, type: 2}
+    min: -9999
+    max: -1.5
   - ingredientTag: {fileID: 11400000, guid: ffe9f5647300f419cb68fdfa43618c70, type: 2}
-    weight: 10
+    min: 1
+    max: 9999
+  - ingredientTag: {fileID: 11400000, guid: 3ceca486b0f3748928051686afd55f3e, type: 2}
+    min: -0.6
+    max: 0.3
+  - ingredientTag: {fileID: 11400000, guid: 5a6be0cec336644eebb548eed921ff16, type: 2}
+    min: -0.3
+    max: 0.5
+  - ingredientTag: {fileID: 11400000, guid: e15919704693749d492234c87767cd97, type: 2}
+    min: -0.5
+    max: 0.3
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -24,6 +35,10 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: 449de82ca21cb4e34b999684bbcc92c3, type: 2}
-      volume: 25
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: 692405114681e47c6bc384a85c623e94, type: 2}
+        value: -1
+      - ingredientTagDef: {fileID: 11400000, guid: ffe9f5647300f419cb68fdfa43618c70, type: 2}
+        value: 1
     amount: 1

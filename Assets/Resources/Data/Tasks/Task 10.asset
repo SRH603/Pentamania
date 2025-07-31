@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Ultimate Challenge - The Universal Solvent
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: 62b8c07e3847749d891a6f968a06ad76, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: d3f0a81f7f1ae4cc08ea5af39b9f6c3c, type: 2}
     count: 1

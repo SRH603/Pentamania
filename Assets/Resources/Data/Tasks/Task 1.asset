@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Potion of Venom
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: c68787d4e84b045689458f60699596e8, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: c5cac72771e44426cbe161965148cc8c, type: 2}
     count: 1

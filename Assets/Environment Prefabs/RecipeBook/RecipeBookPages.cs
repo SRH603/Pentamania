@@ -4,30 +4,38 @@ public class RecipeBookPages : MonoBehaviour
 {
     public string pageType;
     public RecipeBookManager manager;
-    private MeshRenderer mesh;
+    private MeshRenderer pageMesh;
+    private SkinnedMeshRenderer flipMesh;
 
     void Start()
     {
-        mesh = GetComponent<MeshRenderer>();
+        if (pageType == "Page1" || pageType == "Page2")
+        {
+            pageMesh = GetComponent<MeshRenderer>();
+        }
+        if (pageType == "Flip1" || pageType == "Flip2")
+        {
+            flipMesh = GetComponent<SkinnedMeshRenderer>();
+        }
     }
 
     void Update()
     {
         if (pageType == "Page1")
         {
-            mesh.material = manager.page1mat;
+            pageMesh.material = manager.page1mat;
         }
         if (pageType == "Page2")
         {
-            mesh.material = manager.page2mat;
+            pageMesh.material = manager.page2mat;
         }
         if (pageType == "Flip1")
         {
-            mesh.material = manager.flip1mat;
+            flipMesh.material = manager.flip1mat;
         }
         if (pageType == "Flip2")
         {
-            mesh.material = manager.flip2mat;
+            flipMesh.material = manager.flip2mat;
         }
     }
 }

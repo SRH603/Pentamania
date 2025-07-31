@@ -9,6 +9,7 @@ public class ItemDeletion : MonoBehaviour
         //Debug.Log("111rytu");
         if (other.TryGetComponent<SolidObject>(out var interactable))
         {
+            Debug.Log("Deleted item");
             if (interactable.gameObject != gameObject)
             {
                 Destroy(interactable.gameObject);

@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Trapping or Release?
   description: 
   rewards: []
+  icon: {fileID: 21300000, guid: a12603c87eb914237b46abdeb06b747f, type: 3}
   requirements:
   - fluid: {fileID: 11400000, guid: 01ea2cb6e0da04fe4b6b9ff615037d70, type: 2}
     count: 1

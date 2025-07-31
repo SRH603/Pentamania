@@ -135,6 +135,7 @@ public class CauldronObject : MonoBehaviour
         if (progress >= progressMax)
         {
             Debug.Log("[Cauldron] Stirring progress reached max");
+            data.ShowIngredients();
             TryProcessCauldron();
         }
             
@@ -156,7 +157,7 @@ public class CauldronObject : MonoBehaviour
         if (stack.IsEmpty) return;
         
         Debug.Log($"[Cauldron] Inserting a solid object with: {stack.Def.GetId()}");
-
+        
         data.InsertSolid(stack);
         Destroy(sObj.gameObject);
         

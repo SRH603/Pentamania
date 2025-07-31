@@ -112,12 +112,14 @@ public class BunsenBurner
             st.tags.Add(new IngredientTag(burnedTagDef, 0.001f));
         }
 
-        foreach (var tag in p.inStack.tags)
+        foreach (var tag in st.tags)
         {
             prod.tags.Add(tag);
         }
         
+        foreach (Transform t in p.solid.GetComponentsInChildren<Transform>(true)) if (t != p.solid.transform && t.name == "Color Affordance") GameObject.Destroy(t.gameObject);
         p.solid.SetIngredient(prod);
+        p.solid.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor", new Color(0,0,0,1));
         Debug.Log($"[Bunsen Burner] Recipe found: {prod.Def.GetId()}");
     }
 

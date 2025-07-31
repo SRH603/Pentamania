@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientId: potion_of_truth
   audioType: 0
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 3da32b252bdd14e048bc4da45f918e4f, type: 2}

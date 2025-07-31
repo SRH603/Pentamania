@@ -6,7 +6,7 @@ using UnityEngine;
 public class CrystalBallRecipe : ScriptableObject
 {
     [SerializeField] private IngredientDef reactant;
-    [SerializeField] private IngredientDef product;
+    [SerializeField] protected IngredientDef product;
 
     void Awake()
     {
@@ -41,4 +41,11 @@ public class CrystalBallRecipe : ScriptableObject
         }
         throw new Exception("A crystal ball recipe was found to contain a product that was neither a fluid nor an item.");
     }
+
+    public virtual bool TryConversion(IngredientStack ingredient, out IngredientStack product)
+    {
+        ingredient = null;
+        product = null;
+        return false;
+    } 
 }

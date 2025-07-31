@@ -5,18 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Game/StartMenu_Melodie.unity
-    guid: b69c591ad9d7b294ba14668734020801
-  - enabled: 1
-    path: Assets/Scenes/Game/StartMenu.unity
-    guid: d6bfc3b275e7a4d5684ab3c52291b7bc
   - enabled: 1
     path: Assets/Scenes/Game/MasterScene.unity
     guid: 85c4bae2c514445018ef79694d26230d
-  - enabled: 1
-    path: Assets/Scenes/Game/EndMenu.unity
-    guid: 76eef7bbe032f46d48147e7da3f2a028
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

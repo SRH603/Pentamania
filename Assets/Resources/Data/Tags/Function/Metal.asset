@@ -15,3 +15,5 @@ MonoBehaviour:
   id: metal
   color: {r: 0, g: 0, b: 0, a: 1}
   colorWeight: 0.1
+  defaultRangeMin: -9999
+  defaultRangeMax: 9999

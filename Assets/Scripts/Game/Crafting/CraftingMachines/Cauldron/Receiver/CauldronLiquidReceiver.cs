@@ -15,13 +15,19 @@ public class CauldronLiquidReceiver : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("[Cauldron Liquid receiver] Received liquid");
         var src = other.GetComponent<FluidContainer>();
         if (src) sources.Add(src);
     }
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("[Cauldron Liquid receiver] Stopped Receiving liquid");
         var src = other.GetComponent<FluidContainer>();
-        if (src) sources.Remove(src);
+        if (src)
+        {
+            sources.Remove(src);
+            src.StopPour();
+        }
     }
 
     private void FixedUpdate()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Game.Utilities;
@@ -19,6 +20,8 @@ public class TaskManager : MonoBehaviour
     private readonly List<TaskDef> finishedTaskList = new List<TaskDef>();
 
     public int taskFinished;
+
+    public List<Animator> tentacles;
 
     public event Action<TaskDef, float> ProgressChanged;
     public event Action<TaskDef> TaskCompleted;
@@ -237,6 +240,7 @@ public class TaskManager : MonoBehaviour
         activeTaskList.Remove(task);
         finishedTaskList.Add(task);
 
+        SpawnTentacle(taskFinished);
         taskFinished ++;
         Debug.Log("[Task System] Task completed: " + task.displayName);
         SpawnRewards(task);
@@ -248,9 +252,25 @@ public class TaskManager : MonoBehaviour
         
         if (TaskAssigner.Instance != null)
         {
-            Debug.Log("[Task System] Trying assigning next task");
+            StartCoroutine(DelayedAssignNextTask());
+        }
+    }
+    
+    private IEnumerator DelayedAssignNextTask()
+    {
+        Debug.Log("[Task System] Waiting 10s before assigning next task...");
+        yield return new WaitForSeconds(10f);
+    
+        if (TaskAssigner.Instance != null)
+        {
+            Debug.Log("[Task System] Assigning next task now");
             TaskAssigner.Instance.TryAssignNext();
         }
+    }
+
+    private void SpawnTentacle(int index)
+    {
+        tentacles[index].enabled = true;
     }
 
     private void SpawnRewards(TaskDef task)
@@ -335,5 +355,14 @@ public class TaskManager : MonoBehaviour
             }
         }
         return false;
+    }
+    
+    public void ForceCompleteAllTasks()
+    {
+        var tasks = activeTaskList.ToArray();
+        foreach (var task in tasks)
+        {
+            MarkTaskFinished(task);
+        }
     }
 }

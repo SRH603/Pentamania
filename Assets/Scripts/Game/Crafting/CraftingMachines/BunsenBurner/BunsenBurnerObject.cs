@@ -58,7 +58,7 @@ public class BunsenBurnerObject : MonoBehaviour
         }
         else
         {
-            if (vfxSuccess) vfxSuccess.Play();
+            //if (vfxSuccess) vfxSuccess.Play();
 
             Debug.Log("[BunsenObj] Burned with recipe");
         }

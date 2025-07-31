@@ -15,3 +15,5 @@ MonoBehaviour:
   id: ultimate_world
   color: {r: 1, g: 0.59416246, b: 0.33333337, a: 1}
   colorWeight: 50
+  defaultRangeMin: 0
+  defaultRangeMax: 0

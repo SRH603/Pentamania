@@ -1,6 +1,7 @@
 
 
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class CrystalBallObject : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class CrystalBallObject : MonoBehaviour
     private bool canConvert = true;
 
     private CrystalBall ballData;
+
+    public VisualEffect craftingEffect;
 
     private void Awake()
     {
@@ -22,14 +25,15 @@ public class CrystalBallObject : MonoBehaviour
             return;
         }
         if (ballData.TryConversion(ingredientObject.GetIngredient(), out IngredientStack ingredient))
-            {
-                canConvert = false;
-                ingredientObject.SetIngredient(ingredient);
+        {
 
-                // CREATE PARTICLES HERE
+            canConvert = false;
+            ingredientObject.SetIngredient(ingredient);
 
+            // CREATE PARTICLES HERE
+            craftingEffect.Play();
 
-            }
+        }
     }
 
     public void IngredientObjectExit() {

@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: hellish
   color: {r: 0.26415092, g: 0.105118014, b: 0.08597365, a: 1}
+  inverseElementColor: {r: 1, g: 0.9573982, b: 0.5641509, a: 0}
   colorWeight: 1
+  defaultRangeMin: -0.3
+  defaultRangeMax: 0.3

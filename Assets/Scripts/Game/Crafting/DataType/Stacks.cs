@@ -4,8 +4,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public interface IngredientStack {
+public interface IngredientStack
+{
     public IngredientDef GetAbstractDef();
+    public IngredientTag[] GetTags();
+    public IngredientStack CopyAbs();
 }
 
 [System.Serializable]
@@ -86,6 +89,24 @@ public struct ItemStack : IStackable<ItemStack>, IngredientStack
         return new ItemStack(def, newAmount, newTags);
     }
     
+    public readonly IngredientStack CopyAbs()
+    {
+        List<IngredientTag> newTags = null;
+
+        if (tags != null)
+        {
+            newTags = new List<IngredientTag>(tags.Count);
+            foreach (var tag in tags)
+            {
+                newTags.Add(new IngredientTag(tag));
+            }
+        }
+        
+        // var newTags = tags == null ? null : new List<IngredientTag>(tags);
+        //Debug.Log("[Fluid Stack] " + newTags.Count);
+        return new ItemStack(def, amount, newTags);
+    }
+    
     private static bool TagListsEqual(List<IngredientTag> a, List<IngredientTag> b)
     {
         if (ReferenceEquals(a, b))
@@ -105,11 +126,16 @@ public struct ItemStack : IStackable<ItemStack>, IngredientStack
             //Debug.Log($"[Item Stack] Comparing tags: Quantity different");
             return false;
         }
-        
+
         //Debug.Log($"[Item Stack] Comparing tags: Final judgment");
         return !a.Except(b).Any() && !b.Except(a).Any();
     }
-    
+
+    public IngredientTag[] GetTags()
+    {
+        return tags.ToArray();
+    }
+
     public static readonly ItemStack Empty = new ItemStack(null, 0);
 
 }
@@ -240,6 +266,29 @@ public struct FluidStack : IngredientStack, IStackable<FluidStack>
         //Debug.Log($"[Item Stack] Comparing tags: Final judgment");
         //Debug.Log($"[Item Stack] First: {a[0].id}, Second: {b[0].id}");
         return !a.Except(b).Any() && !b.Except(a).Any();
+    }
+
+    public IngredientTag[] GetTags()
+    {
+        return tags.ToArray();
+    }
+
+    public IngredientStack CopyAbs()
+    {
+        List<IngredientTag> newTags = null;
+
+        if (tags != null)
+        {
+            newTags = new List<IngredientTag>(tags.Count);
+            foreach (var tag in tags)
+            {
+                newTags.Add(new IngredientTag(tag));
+            }
+        }
+        
+        // var newTags = tags == null ? null : new List<IngredientTag>(tags);
+        //Debug.Log("[Fluid Stack] " + newTags.Count);
+        return new FluidStack(def, volume, newTags);
     }
 
     public static readonly FluidStack Empty = new FluidStack(null, 0);

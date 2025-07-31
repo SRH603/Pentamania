@@ -82,7 +82,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
-    - _Min_Max: {r: -0.15, g: 0.234, b: 0, a: 0}
+    - _Min_Max: {r: -0.35, g: 0.34, b: 0, a: 0}
     - _SideColor: {r: 1, g: 1, b: 1, a: 0}
     - _TopColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 0}
   m_BuildTextureStacks: []

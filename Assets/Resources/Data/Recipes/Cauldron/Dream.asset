@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e573a81ccbc74ec448b8206ed04c2cc0, type: 3}
   m_Name: Dream
   m_EditorClassIdentifier: 
-  requirement:
-  - ingredientTag: {fileID: 11400000, guid: 82f4ad0b09b7340bab45689c3df6256f, type: 2}
-    weight: 12
-  - ingredientTag: {fileID: 11400000, guid: 796dbe0e7ece743cc9bf06968c483a9c, type: 2}
-    weight: 6
+  requirements:
+  - ingredientTag: {fileID: 11400000, guid: f95178fa52f9d41db80084747caf58d2, type: 2}
+    min: -1.2
+    max: -9999
+  - ingredientTag: {fileID: 11400000, guid: fad7b79c1ad55496c9eb8a5d5746fe94, type: 2}
+    min: -0.6
+    max: -9999
   products:
   - itemProduct:
       def: {fileID: 0}
@@ -24,6 +26,8 @@ MonoBehaviour:
       tags: []
     fluidProduct:
       def: {fileID: 11400000, guid: 6d19594bdf8d24737ac129695994a1a7, type: 2}
-      volume: 18
-      tags: []
+      volume: 3
+      tags:
+      - ingredientTagDef: {fileID: 11400000, guid: f95178fa52f9d41db80084747caf58d2, type: 2}
+        value: -1
     amount: 1

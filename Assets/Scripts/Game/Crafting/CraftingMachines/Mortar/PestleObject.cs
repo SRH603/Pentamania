@@ -2,5 +2,15 @@ using UnityEngine;
 
 public class PestleObject : MonoBehaviour
 {
-    // 无人在意
+    [SerializeField] private Vector3 returnPosition;
+    [SerializeField] private float returnCheckLevel;
+
+    private void Update()
+    {
+        if (transform.position.y <= returnCheckLevel)
+        {
+            transform.position = returnPosition;
+            GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        }
+    }
 }

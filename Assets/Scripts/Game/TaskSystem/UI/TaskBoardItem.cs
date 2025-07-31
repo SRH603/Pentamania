@@ -7,6 +7,7 @@ public class TaskBoardItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Slider progressBar;
+    [SerializeField] private Image icon;
     
     [HideInInspector] public TaskDef RepresentingTask;
     
@@ -22,6 +23,11 @@ public class TaskBoardItem : MonoBehaviour
         if (descriptionText != null)
         {
             descriptionText.text = task.description;
+        }
+        
+        if (icon != null)
+        {
+            icon.sprite = task.icon;
         }
 
         SetProgress(0f);
