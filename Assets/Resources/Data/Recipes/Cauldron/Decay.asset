@@ -17,17 +17,17 @@ MonoBehaviour:
     min: 0.8
     max: 9999
   - ingredientTag: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
-    min: -1.2
-    max: 0.3
+    min: -1.21
+    max: 0.31
   - ingredientTag: {fileID: 11400000, guid: 692405114681e47c6bc384a85c623e94, type: 2}
-    min: -0.3
-    max: 0.6
+    min: -0.31
+    max: 0.61
   - ingredientTag: {fileID: 11400000, guid: e15919704693749d492234c87767cd97, type: 2}
-    min: -0.3
-    max: 0.4
+    min: -0.31
+    max: 0.51
   - ingredientTag: {fileID: 11400000, guid: 5a6be0cec336644eebb548eed921ff16, type: 2}
-    min: -0.3
-    max: 0.4
+    min: -0.31
+    max: 0.51
   products:
   - itemProduct:
       def: {fileID: 0}

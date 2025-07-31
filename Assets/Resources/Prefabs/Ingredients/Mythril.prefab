@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 895098755915719165}
   - component: {fileID: 4341227241949732365}
   - component: {fileID: 3590504818928540920}
+  - component: {fileID: 6617437700347488694}
   m_Layer: 0
   m_Name: Mythril
   m_TagString: Untagged
@@ -286,6 +287,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056829706606133244}
   m_Mesh: {fileID: -8054150197230986032, guid: 059b62801a90d4f2e803c1fa92d609d0, type: 3}
+--- !u!114 &6617437700347488694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056829706606133244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37afe1b8d1bf4ddc98991cf2afb4face, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6768717039264293303
 GameObject:
   m_ObjectHideFlags: 0

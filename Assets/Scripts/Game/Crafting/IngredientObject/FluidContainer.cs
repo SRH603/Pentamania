@@ -55,7 +55,7 @@ public class FluidContainer : SolidObject, IFluidContainer
         if (HasTag(ingredient.tags, dust))
         {
             fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial = new Material(dustMat);
-            
+
             Material source = ingredient.Def.GetMaterial();
             Material target = fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial;
 
@@ -78,38 +78,69 @@ public class FluidContainer : SolidObject, IFluidContainer
                         target.SetTexture(prop, source.GetTexture(prop));
                 }
             }
-            
+
         }
         else
         {
-            fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial = new Material(fluidMat);
+            // fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial = new Material(fluidMat);
+
+            // Material source = ingredient.Def.GetMaterial(ingredient.isInverted);
+            // Material target = fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial;
+
+            // string[] propertyNames = {
+            //     "_BaseMap", "_BaseColor",
+            //     "_MetallicMap", "_Smoothness",
+            //     "_NormalMap", "_HeightMap",
+            //     "_OcclusionMap", "_FillAmount"
+            // };
+
+            // foreach (var prop in propertyNames)
+            // {
+            //     if (source.HasProperty(prop) && target.HasProperty(prop))
+            //     {
+            //         if (prop == "_BaseColor")
+            //             target.SetColor(prop, source.GetColor(prop));
+            //         else if (prop == "_Smoothness" || prop == "_FillAmount")
+            //             target.SetFloat(prop, source.GetFloat(prop));
+            //         else if (source.GetTexture(prop) != null)
+            //             target.SetTexture(prop, source.GetTexture(prop));
+            //     }
+            // }
             
-            Material source = ingredient.Def.GetMaterial();
-            Material target = fluidDisplay.GetComponent<MeshRenderer>().sharedMaterial;
-
-            string[] propertyNames = {
-                "_BaseMap", "_BaseColor",
-                "_MetallicMap", "_Smoothness",
-                "_NormalMap", "_HeightMap",
-                "_OcclusionMap", "_FillAmount"
-            };
-
-            foreach (var prop in propertyNames)
-            {
-                if (source.HasProperty(prop) && target.HasProperty(prop))
-                {
-                    if (prop == "_BaseColor")
-                        target.SetColor(prop, source.GetColor(prop));
-                    else if (prop == "_Smoothness" || prop == "_FillAmount")
-                        target.SetFloat(prop, source.GetFloat(prop));
-                    else if (source.GetTexture(prop) != null)
-                        target.SetTexture(prop, source.GetTexture(prop));
-                }
-            }
+            fluidDisplay.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", CalculateFluidColor(ingredient));
         }
         UpdateFluidLevel();
     }
-    
+
+    private Color CalculateFluidColor(FluidStack ingredient)
+    {
+        Color totalColor = Color.black;
+        float totalWeight = 0f;
+
+        if (ingredient.IsEmpty || ingredient.tags == null) return totalColor;
+
+        foreach (var tag in ingredient.tags)
+        {
+            if (tag.ingredientTagDef == null)
+                continue;
+            float weight = tag.value * ingredient.volume * tag.ingredientTagDef.GetColorWeight();
+            totalColor += tag.GetColor() * weight;
+            totalWeight += weight;
+        }
+        
+        Color finalColor = totalWeight > 0 ? totalColor / totalWeight : Color.grey;
+        
+        Color.RGBToHSV(finalColor, out float h, out float s, out float v);
+        
+        float oldV = v * 100f;
+        float mappedV = oldV / 100f * 80f;
+        float finalV = mappedV / 100f;
+
+        Color newColor = Color.HSVToRGB(h, s, finalV);
+        Debug.Log(newColor.ToString());
+        return newColor;
+    }
+
     public static bool HasTag(List<IngredientTag> tags, IngredientTagDef targetDef)
     {
         if (tags == null || targetDef == null)
@@ -161,6 +192,7 @@ public class FluidContainer : SolidObject, IFluidContainer
         main.startColor = fluidDisplay.GetComponent<Renderer>().sharedMaterial.GetColor("_BaseColor");
         if (pourEffect) pourEffect.Play();
         Debug.Log("[Container] Started pouring");
+        AudioManager.instance.PlaySound("water_pour_start", gameObject);
     }
 
     public void StopPour()
@@ -169,6 +201,7 @@ public class FluidContainer : SolidObject, IFluidContainer
         isPouring = false;
         if (pourEffect) pourEffect.Stop();
         Debug.Log("[Container] Stopped pouring");
+        AudioManager.instance.PlaySound("water_pour_stop", gameObject);
     }
 
     /*

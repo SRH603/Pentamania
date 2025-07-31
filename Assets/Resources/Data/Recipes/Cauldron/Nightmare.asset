@@ -20,8 +20,8 @@ MonoBehaviour:
     min: 0.5
     max: 9999
   - ingredientTag: {fileID: 11400000, guid: cfd1e8bca9e2d45809bd8d806026ce16, type: 2}
-    min: -0.5
-    max: 0.3
+    min: -0.51
+    max: 0.31
   products:
   - itemProduct:
       def: {fileID: 0}

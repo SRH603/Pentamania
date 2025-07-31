@@ -154,7 +154,7 @@ public struct FluidStack : IngredientStack, IStackable<FluidStack>
 
     public float volume;
     public List<IngredientTag> tags;
-    
+
     public FluidStack(FluidDef def, float volume, List<IngredientTag> tags)
     {
         this.def = def;

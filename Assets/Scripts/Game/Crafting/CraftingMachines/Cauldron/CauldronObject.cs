@@ -46,6 +46,12 @@ public class CauldronObject : MonoBehaviour
     [SerializeField] private CauldronShaker shaker;
     [SerializeField] private CauldronEffects effects;
 
+    [Header("Sounds")] 
+    [SerializeField] private List<FluidDef> potionSounds;
+    [SerializeField] private GameObject voiceLocation;
+
+    private bool isBubbling;
+
     private void Awake()
     {
         data = new Cauldron(recipes, itemSlots, fluidTanks, tankCapacity);
@@ -55,6 +61,11 @@ public class CauldronObject : MonoBehaviour
         SetFluidColor(targetColor);
         if (liquidPlane != null)
             liquidMaterial = liquidPlane.GetComponent<MeshRenderer>().material;
+    }
+
+    void Start()
+    {
+        AudioManager.instance.PlayVoiceLine(0, voiceLocation);
     }
     
     void Update()
@@ -80,6 +91,22 @@ public class CauldronObject : MonoBehaviour
 
         shaker.positionShakeStrength = 0.06f * data.GetTotalAmount() / maxCapacity;
         shaker.rotationShakeStrength = 5 * data.GetTotalAmount() / maxCapacity;
+
+        if (data.GetTotalAmount() >= 0.01)
+        {
+            if (isBubbling == false)
+                AudioManager.instance.PlaySound("cauldron_start", gameObject);
+            isBubbling = true;
+        }
+        /*
+        else
+        {
+            if (isBubbling == true)
+                AudioManager.instance.PlaySound("cauldron_", gameObject);
+            isBubbling = false;
+        }
+        */
+            
     }
 
     public float GetCurrentStrength()
@@ -273,7 +300,7 @@ public class CauldronObject : MonoBehaviour
                 liquidPlane.GetComponent<MeshRenderer>().material = liquids[0].Def.GetMaterial();
         }
     */
-        bool anyRecipe = data.TryProcessOnce(out var solids, out var liquids);
+        bool anyRecipe = data.TryProcessOnce(out var solids, out var liquids, out bool violatePower);
         if (anyRecipe)
         {
             if (solids != null)
@@ -296,10 +323,28 @@ public class CauldronObject : MonoBehaviour
                     UpdateTargetColor();
                 }
                 //liquidPlane.GetComponent<MeshRenderer>().material = liquids[0].Def.GetMaterial();
-            
+                foreach (var potion in potionSounds)
+                {
+                    if (potion == liquids[0].Def)
+                    {
+                        AudioManager.instance.PlayVoiceLine(3, voiceLocation, potionSounds.IndexOf(potion));
+                        AudioManager.instance.PlaySound("cauldron_success", gameObject);
+                        break;
+                    }
+                }
 
             Debug.Log("[Cauldron] Recipe processed once");
         }
+        else
+        {
+            AudioManager.instance.PlaySound("cauldron_failure", gameObject);
+            if (violatePower)
+                AudioManager.instance.PlayVoiceLine(1, voiceLocation);
+            else
+                AudioManager.instance.PlayVoiceLine(2, voiceLocation);
+
+        }
+        
         //if (anyRecipe) Debug.Log("[Cauldron] Recipes processed");
 
         // TODO Byproduct Logic

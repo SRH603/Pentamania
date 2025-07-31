@@ -16,5 +16,5 @@ MonoBehaviour:
   color: {r: 0.29350588, g: 0.28846562, b: 0.6981132, a: 1}
   inverseElementColor: {r: 0.5999999, g: 0.5999999, b: 0.5999999, a: 0}
   colorWeight: 1
-  defaultRangeMin: -0.3
-  defaultRangeMax: 0.3
+  defaultRangeMin: -0.31
+  defaultRangeMax: 0.31

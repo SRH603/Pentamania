@@ -17,7 +17,7 @@ public class IngredientTagDef : ScriptableObject
 
     public Color GetColor(bool getInverse)
     {
-        return getInverse ? color : inverseElementColor;
+        return getInverse ? inverseElementColor : color;
     }
 
     public float GetColorWeight()

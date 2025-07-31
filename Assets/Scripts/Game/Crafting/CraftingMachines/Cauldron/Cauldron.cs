@@ -309,11 +309,12 @@ public class Cauldron
     // }
 
     public bool TryProcessOnce(out List<ItemStack> solidsToSpawn,
-        out List<FluidStack> liquidsToStay)
+        out List<FluidStack> liquidsToStay, out bool violatePower)
     {
         Debug.Log("[Cauldron] Matching Recipe");
         solidsToSpawn  = new List<ItemStack>();
         liquidsToStay  = new List<FluidStack>();
+        violatePower = false;
 
         Dictionary<IngredientTagDef, double> tagMap = BuildTagMap();
 
@@ -322,8 +323,9 @@ public class Cauldron
         {
             if (recipe.requirements == null || recipe.requirements.Length == 0) continue;
 
-            if (recipe.CheckForRecipeMatch(tagMap))
+            if (recipe.CheckForRecipeMatch(tagMap, out bool hasViolatePower))
             {
+                violatePower = hasViolatePower;
                 products = recipe.products;
                 break;
             }

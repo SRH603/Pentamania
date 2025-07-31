@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5354412313769719160}
   - component: {fileID: 5086202227306517532}
   - component: {fileID: -5543114952758328473}
+  - component: {fileID: 8184978738107150517}
   m_Layer: 0
   m_Name: Zinc
   m_TagString: Untagged
@@ -286,6 +287,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1918751277576962457, guid: 20706f5f2b23d42b09a85634b81f1a3e, type: 3}
+--- !u!114 &8184978738107150517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521949580971439030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37afe1b8d1bf4ddc98991cf2afb4face, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &583322315208862736
 GameObject:
   m_ObjectHideFlags: 0

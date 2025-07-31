@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Recipe/CrystalBall")]
@@ -20,7 +21,10 @@ public class CrystalBallRecipe : ScriptableObject
     {
         if (reactant.GetType() == typeof(ItemDef))
         {
-            return new ItemStack((ItemDef)reactant, 1);
+            ItemDef reactantDef = (ItemDef)reactant;
+            var temp = new ItemStack(reactantDef, 1);
+            temp.tags = reactantDef.GetPrefab().GetComponent<SolidObject>().GetIngredient().GetTags().ToList();
+            return temp;
         }
         else if (reactant.GetType() == typeof(FluidDef))
         {
@@ -33,7 +37,10 @@ public class CrystalBallRecipe : ScriptableObject
     {
         if (product.GetType() == typeof(ItemDef))
         {
-            return new ItemStack((ItemDef)product, 1);
+            ItemDef productDef = (ItemDef)product;
+            var temp = new ItemStack(productDef, 1);
+            temp.tags = productDef.GetPrefab().GetComponent<SolidObject>().GetIngredient().GetTags().ToList();
+            return temp;
         }
         else if (product.GetType() == typeof(FluidDef))
         {

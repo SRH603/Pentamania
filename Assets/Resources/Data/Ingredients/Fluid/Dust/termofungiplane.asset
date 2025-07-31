@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d770b78bdf43e5bc18ca5dd5947d85, type: 3}
   m_Name: termofungiplane
   m_EditorClassIdentifier: 
-  ingredientId: potion_of_catastrophe
+  ingredientId: dust
   audioType: 0
   material: {fileID: 2100000, guid: b04c5aed938fa48e49d6beb6701aefac, type: 2}

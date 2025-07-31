@@ -14,6 +14,7 @@ public class CrystalBall
     public bool TryConversion(IngredientStack ingredient, out IngredientStack product)
     {
         Debug.Log("CRYSTAL BALL TRY CONVERSION");
+        Debug.Log(ingredient.GetType().ToString());
         if (ingredient.GetType() == typeof(FluidStack))
         {
             Debug.Log("Found liquid ingredient, running alt");
@@ -22,6 +23,7 @@ public class CrystalBall
             foreach (IngredientTag tag in ingredient.GetTags())
             {
                 tags.Add(new IngredientTag(tag.ingredientTagDef, tag.value * -1));
+                Debug.Log("Crystal Ball: Tag in process: " + tag.ingredientTagDef + " with val: " + tag.value);
             }
 
             FluidStack fluidStack = (FluidStack)ingredient;
@@ -43,6 +45,7 @@ public class CrystalBall
 
             if (MatchRecipe(recipe, ingredient))
             {
+                // please send help
                 product = recipe.GetProduct();
                 return true;
             }

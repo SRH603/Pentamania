@@ -10,7 +10,7 @@ public class RecipeBookManager : MonoBehaviour
 
     [SerializeField] private Vector3 returnPosition;
     [SerializeField] private float returnCheck = 0.9f; //defines at what y-level the book will return to position
-    private float animSpeed = 5;
+    private float animSpeed = 10;
 
     private int taskProgress => TaskManager.Instance.taskFinished;
     private int currentPage;
@@ -82,10 +82,10 @@ public class RecipeBookManager : MonoBehaviour
 
     IEnumerator WaitForLeftFlip()
     {
-        yield return new WaitForSeconds(0.9f / animSpeed);
+        yield return new WaitForSeconds(2.5f / animSpeed);
         page2page = currentPage;
 
-        yield return new WaitForSeconds(3.267f / animSpeed);
+        yield return new WaitForSeconds(1f / animSpeed);
         page1page = currentPage;
         page2page = currentPage;
         flippability = true;
@@ -94,10 +94,10 @@ public class RecipeBookManager : MonoBehaviour
     
     IEnumerator WaitForRightFlip()
     {
-        yield return new WaitForSeconds(0.9f / animSpeed);
+        yield return new WaitForSeconds(2.5f / animSpeed);
         page1page = currentPage;
 
-        yield return new WaitForSeconds(3.267f / animSpeed);
+        yield return new WaitForSeconds(1f / animSpeed);
         page1page = currentPage;
         page2page = currentPage;
         flippability = true;

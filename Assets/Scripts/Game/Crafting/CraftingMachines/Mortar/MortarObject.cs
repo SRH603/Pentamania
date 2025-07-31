@@ -73,6 +73,7 @@ public class MortarObject : MonoBehaviour
         {
             Debug.Log($"[MortarObj] Pestle hit with metal");
             vfxMetalHit.Play();
+            AudioManager.instance.PlaySound("mortar_grind", gameObject);
             //return;
         }
         mortar.PestleHit(pestleBaseStep);

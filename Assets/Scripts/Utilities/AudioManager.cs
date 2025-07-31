@@ -1,4 +1,4 @@
-    using UnityEngine;
+using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -26,6 +26,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference bunsenBurnerStart;
     [SerializeField] private EventReference bunsenBurnerStop;
 
+    [SerializeField] private EventReference waterPourStart;
+    [SerializeField] private EventReference waterPourStop;
 
     [Header("Items")]
     [SerializeField] private EventReference pickupEvent;
@@ -62,6 +64,7 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+    
     
     public void PlaySound(string sound, GameObject gameobject)
     {
@@ -108,6 +111,17 @@ public class AudioManager : MonoBehaviour
                 eventInstance = RuntimeManager.CreateInstance(clockTickEvent);
                 break;
             
+            case "mortar_grind":
+                eventInstance = RuntimeManager.CreateInstance(mortarGrind);
+                break;
+            
+            case "water_pour_start":
+                eventInstance = RuntimeManager.CreateInstance(waterPourStart);
+                break;
+            
+            case "water_pour_stop":
+                eventInstance = RuntimeManager.CreateInstance(waterPourStop);
+                break;
             
             default:
                 return;
@@ -147,6 +161,7 @@ public class AudioManager : MonoBehaviour
         eventInstance.release();
     }
 
+
     public void PickupIngredient(PassableIngredientObject ingredientObject)
     {
         pickupInstance = RuntimeManager.CreateInstance(pickupEvent);
@@ -154,7 +169,17 @@ public class AudioManager : MonoBehaviour
         print("playing ts pmo " + ingredientObject.GetAudioType());
         pickupInstance.setParameterByName("Item", ingredientObject.GetAudioType());
         pickupInstance.start();
-        //pickupInstance.release();
+        pickupInstance.release();
+    }
+
+    public void DropIngredient(PassableIngredientObject ingredientObject)
+    {
+        dropInstance = RuntimeManager.CreateInstance(dropEvent);
+        RuntimeManager.AttachInstanceToGameObject(dropInstance, ingredientObject.gameObject);
+        pickupInstance.setParameterByName("Item", ingredientObject.GetAudioType());
+        dropInstance.start();
+        dropInstance.release();
+        
     }
     
     public void PlayVoiceLine(int voicelineEvent, GameObject gameobject, int potionId = -1)

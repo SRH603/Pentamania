@@ -24,6 +24,11 @@ public class BunsenBurnerObject : MonoBehaviour
         burner.OnCookFinish += HandleFinish;
     }
 
+    private void Start()
+    {
+        AudioManager.instance.PlaySound("bunsen_start", gameObject);
+    }
+
     private void Update()
     {
         burner.Tick(Time.deltaTime);

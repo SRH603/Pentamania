@@ -85,6 +85,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2df5bd523fda460bb11e8fe52d27040, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2159386066628869512}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a2df5bd523fda460bb11e8fe52d27040, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5074977302401229580}
   m_SourcePrefab: {fileID: 100100000, guid: a2df5bd523fda460bb11e8fe52d27040, type: 3}
 --- !u!1 &7926880649580361676 stripped
 GameObject:
@@ -105,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeList:
   - {fileID: 11400000, guid: 20b4699b08035834490c157a8bc7240e, type: 2}
+  craftingEffect: {fileID: 0}
 --- !u!65 &3584274359333802135
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -138,3 +142,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf18d0bb5d7a50f49bd04d06173ee34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5074977302401229580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7926880649580361676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -138429875
+      Data2: 1240618630
+      Data3: 358938297
+      Data4: -280394261
+    Path: event:/SFX/Machines/Crystal Ball/Ambience
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 1800

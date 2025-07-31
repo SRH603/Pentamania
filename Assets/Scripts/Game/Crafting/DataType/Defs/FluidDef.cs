@@ -4,16 +4,16 @@ using UnityEngine;
 public class FluidDef : IngredientDef
 {
     [SerializeField] private Material material;
-    
+
     public Material GetMaterial()
     {
         return material;
     }
 
 /*
-    public IngredientProperty[] GetProperties()
-    {
-        return properties;
-    }
-    */
+                public IngredientProperty[] GetProperties()
+                {
+                    return properties;
+                }
+                */
 }

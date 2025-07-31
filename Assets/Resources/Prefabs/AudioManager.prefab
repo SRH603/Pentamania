@@ -65,7 +65,7 @@ MonoBehaviour:
       Data3: 358938297
       Data4: -280394261
     Path: event:/SFX/Machines/Crystal Ball/Ambience
-  crystallBallUsage:
+  crystalBallUsage:
     Guid:
       Data1: 1744007504
       Data2: 1341368322
@@ -156,3 +156,10 @@ MonoBehaviour:
       Data3: 574943111
       Data4: -1276927163
     Path: event:/Voicelines/Voiceline Manager
+  musicManager:
+    Guid:
+      Data1: -1202821001
+      Data2: 1180920344
+      Data3: 849759122
+      Data4: 1273590336
+    Path: event:/Music/Music Manager

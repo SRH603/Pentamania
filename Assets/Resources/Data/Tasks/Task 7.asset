@@ -20,11 +20,5 @@ MonoBehaviour:
   requirements:
   - fluid: {fileID: 11400000, guid: e17bf7db9db934b41bcd53ed23f2911e, type: 2}
     count: 1
-    tags:
-    - tag: {fileID: 11400000, guid: 796dbe0e7ece743cc9bf06968c483a9c, type: 2}
-      amount: 2
-      more: 1
-    - tag: {fileID: 11400000, guid: a432e5359c5734079a074041cf292220, type: 2}
-      amount: 0.4
-      more: 0
-    otherTags: 0.3
+    tags: []
+    otherTags: 9999
