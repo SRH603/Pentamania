@@ -71,9 +71,9 @@ public class MortarObject : MonoBehaviour
     {
         if (!CheckMetal())
         {
-            Debug.Log($"[MortarObj] Pestle hit failed because of the metal");
+            Debug.Log($"[MortarObj] Pestle hit with metal");
             vfxMetalHit.Play();
-            return;
+            //return;
         }
         mortar.PestleHit(pestleBaseStep);
         Debug.Log($"[MortarObj] Pestle hit, progress={mortar.Progress:F3}");

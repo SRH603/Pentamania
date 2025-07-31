@@ -4,7 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [DisallowMultipleComponent]
-public class InfiniteSourceList : MonoBehaviour
+public class InfiniteSource : MonoBehaviour
 {
     public List<XRGrabInteractable> initialItems = new();
 

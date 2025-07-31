@@ -112,12 +112,12 @@ MonoBehaviour:
         animationStateEndValue: {r: 0, g: 0, b: 0, a: 0}
       m_ColorBlendMode: 0
       m_BlendAmount: 1
-    m_Variable: {fileID: 11400000, guid: 3f64ff74c0b83314ba0d51fd6312625b, type: 2}
+    m_Variable: {fileID: 11400000, guid: 86b25a8d0a0f04e57b389a321703b1e6, type: 2}
   m_ValueUpdated:
     m_PersistentCalls:
       m_Calls: []
   m_MaterialPropertyBlockHelper: {fileID: 247140796221648049}
-  m_ColorPropertyName: 
+  m_ColorPropertyName: _EmissionColor
 --- !u!1 &6733527135795846586
 GameObject:
   m_ObjectHideFlags: 0
