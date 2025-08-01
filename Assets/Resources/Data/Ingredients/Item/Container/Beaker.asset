@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Beaker
   m_EditorClassIdentifier: 
   ingredientId: beaker
-  audioType: 0
+  audioType: 2
   maxStack: 2147483647
   baseIngredient: {fileID: 2981778192898620483, guid: 6028766a43f434519ba1f534e889b25a, type: 3}

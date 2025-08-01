@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Luck's Will
   m_EditorClassIdentifier: 
   ingredientId: lucks_will
-  audioType: 0
-  properties: []
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 1621567567717623436, guid: c87d158f2135d40578a34354979af286, type: 3}

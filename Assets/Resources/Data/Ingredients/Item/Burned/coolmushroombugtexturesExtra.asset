@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: coolmushroombugtexturesExtra
   m_EditorClassIdentifier: 
   ingredientId: burned_psibaro
-  audioType: 0
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 518335735680546847, guid: bbe36b9c5e5174b00be5544a0fe47039, type: 3}

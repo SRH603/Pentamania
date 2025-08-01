@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Temero Fungi
   m_EditorClassIdentifier: 
   ingredientId: temero_fungi
-  audioType: 0
-  properties: []
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 2059255495669509045, guid: e01533c490468418ca987f5b104deddd, type: 3}

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Devil Horn
   m_EditorClassIdentifier: 
   ingredientId: devil_horn
-  audioType: 0
-  properties: []
+  audioType: 3
   maxStack: 2147483647
   baseIngredient: {fileID: 7646978897565895005, guid: a954770bae499455288f82d890f76d33, type: 3}

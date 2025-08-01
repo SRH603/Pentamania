@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Wigsmound
   m_EditorClassIdentifier: 
   ingredientId: wigsmound
-  audioType: 0
-  properties: []
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 2531119713340506970, guid: e124e12a481f640c19395ab170971e9d, type: 3}

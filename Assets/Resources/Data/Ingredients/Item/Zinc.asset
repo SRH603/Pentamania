@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Zinc
   m_EditorClassIdentifier: 
   ingredientId: zinc
-  audioType: 0
-  properties: []
+  audioType: 4
   maxStack: 2147483647
   baseIngredient: {fileID: 521949580971439030, guid: 3dbf311a9fb564b71b8991fb2e3d6299, type: 3}

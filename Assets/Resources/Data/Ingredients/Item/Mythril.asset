@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Mythril
   m_EditorClassIdentifier: 
   ingredientId: mythril
-  audioType: 0
-  properties: []
+  audioType: 4
   maxStack: 2147483647
   baseIngredient: {fileID: 1056829706606133244, guid: aea8eb24b08b04d68a461730f05b9e6c, type: 3}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: burntluckwill
   m_EditorClassIdentifier: 
   ingredientId: burned_luckwill
-  audioType: 0
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 8353027685981901963, guid: cf3c1adac987344bea6d8deb402585a1, type: 3}

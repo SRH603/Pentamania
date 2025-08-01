@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: burntpsibaro
   m_EditorClassIdentifier: 
   ingredientId: burned_psibaro
-  audioType: 0
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 6435182922919829336, guid: 64e0fb848cfe846fe893b53d9f431f84, type: 3}

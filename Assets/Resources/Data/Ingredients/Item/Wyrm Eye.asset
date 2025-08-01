@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Wyrm Eye
   m_EditorClassIdentifier: 
   ingredientId: wyrm_eye
-  audioType: 0
-  properties: []
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 3066087079064055830, guid: 1699d0da9eee44c259efa688bd0e4a6c, type: 3}

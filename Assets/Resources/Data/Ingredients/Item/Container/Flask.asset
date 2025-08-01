@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flask
   m_EditorClassIdentifier: 
   ingredientId: flask
-  audioType: 0
+  audioType: 2
   maxStack: 2147483647
   baseIngredient: {fileID: 6984848923882216682, guid: 137a63e0ff55c44b99309b360249985d, type: 3}

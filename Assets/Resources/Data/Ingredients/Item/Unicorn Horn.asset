@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Unicorn Horn
   m_EditorClassIdentifier: 
   ingredientId: unicorn_horn
-  audioType: 0
-  properties: []
+  audioType: 3
   maxStack: 2147483647
   baseIngredient: {fileID: 7645868086871052190, guid: 6592cac33d98740cbb7ed6b648bc4fab, type: 3}

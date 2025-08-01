@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Crystal
   m_EditorClassIdentifier: 
   ingredientId: crystal
-  audioType: 0
+  audioType: 3
   maxStack: 2147483647
   baseIngredient: {fileID: 6445502329232654599, guid: c100ae492beb34a6e8a4eebf6a61fabd, type: 3}

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Hummingbird Eye
   m_EditorClassIdentifier: 
   ingredientId: hummingbird Eye
-  audioType: 0
-  properties: []
+  audioType: 5
   maxStack: 2147483647
   baseIngredient: {fileID: 3372391034856396047, guid: 202424f1278464f5499ba0066265a7c9, type: 3}

@@ -1399,6 +1399,7 @@ GameObject:
   - component: {fileID: 4961604217072633280}
   - component: {fileID: 565200137749229935}
   - component: {fileID: 5912964793954797200}
+  - component: {fileID: -2411167000434640150}
   m_Layer: 0
   m_Name: Finished_Recipe_Book_Prefab
   m_TagString: Untagged
@@ -1695,6 +1696,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37afe1b8d1bf4ddc98991cf2afb4face, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2411167000434640150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516768589070274693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66d7c9b4b1b888243b81d97ef602f85f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient:
+    def: {fileID: 11400000, guid: 78f25cbe39b114974b98cbe7a1b5c22b, type: 2}
+    amount: 1
+    tags: []
 --- !u!1 &5937419662427386461
 GameObject:
   m_ObjectHideFlags: 0

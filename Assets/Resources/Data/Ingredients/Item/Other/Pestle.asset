@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ead1d8eafc349d19b7a44493b5aaf84, type: 3}
-  m_Name: burntwigsmouth
+  m_Name: Pestle
   m_EditorClassIdentifier: 
-  ingredientId: burned_wigsmouth
-  audioType: 5
+  ingredientId: pestle
+  audioType: 1
   maxStack: 2147483647
-  baseIngredient: {fileID: 5861476680207754895, guid: 48a178d2721f64fe19302a4fd976b709, type: 3}
+  baseIngredient: {fileID: 5883678968876318758, guid: fe7737c648aaa4246bd7aa0f9a4db74e, type: 3}

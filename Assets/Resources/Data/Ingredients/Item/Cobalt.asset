@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Cobalt
   m_EditorClassIdentifier: 
   ingredientId: cobalt
-  audioType: 0
-  properties: []
+  audioType: 4
   maxStack: 2147483647
   baseIngredient: {fileID: 7197136316916206747, guid: 228ac7c3716154fe8b3efaf42b1c6f7e, type: 3}

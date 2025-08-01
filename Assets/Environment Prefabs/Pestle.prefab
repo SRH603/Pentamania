@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 8501300113748657942}
   - component: {fileID: 8136606358118618675}
   - component: {fileID: 4881789677642532513}
+  - component: {fileID: -4094736368721832964}
   m_Layer: 0
   m_Name: Pestle
   m_TagString: Untagged
@@ -482,6 +483,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   returnPosition: {x: -6.771927, y: 4.512068, z: 3.991998}
   returnCheckLevel: 1.5
+--- !u!114 &-4094736368721832964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883678968876318758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66d7c9b4b1b888243b81d97ef602f85f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient:
+    def: {fileID: 11400000, guid: 8b6e8b8d7a8204b0bb279edc98295b9e, type: 2}
+    amount: 1
+    tags: []
 --- !u!1 &7613772586937584833
 GameObject:
   m_ObjectHideFlags: 0
