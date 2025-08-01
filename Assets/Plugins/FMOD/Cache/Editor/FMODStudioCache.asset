@@ -51,6 +51,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6857
+--- !u!114 &-8113626858470133396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Items/Water/Water Pour End
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Items/Water/Water Pour End
+  Guid:
+    Data1: -1137881088
+    Data2: 1200771249
+    Data3: 740175034
+    Data4: -733388044
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &-8018978690835935118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +180,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 24900
---- !u!114 &-6981039297725062035
+--- !u!114 &-6954325560230693448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,23 +190,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Items/Water/Water Pour End
+  m_Name: event:/SFX/Items/Water/Water Pour
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Items/Water/Water Pour End
+  Path: event:/SFX/Items/Water/Water Pour
   Guid:
-    Data1: -1137881088
-    Data2: 1200771249
-    Data3: 740175034
-    Data4: -733388044
+    Data1: 544050964
+    Data2: 1194990558
+    Data3: 1306728341
+    Data4: -377056197
   Banks:
   - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
-  MaxDistance: 20
-  Length: 2000
+  MaxDistance: 6200
+  Length: 18600
 --- !u!114 &-6793383085743842736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +231,33 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &-6596262278903084399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cthulu/Tentacle Spawn
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cthulu/Tentacle Spawn
+  Guid:
+    Data1: -98281547
+    Data2: 1291840017
+    Data3: -173064518
+    Data4: -1005776668
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 5400
+  Length: 11995
 --- !u!114 &-6462225673093671230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,33 +309,6 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-5760817305434158726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cthulu/Cthulu Spawn
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Cthulu/Cthulu Spawn
-  Guid:
-    Data1: -98281547
-    Data2: 1291840017
-    Data3: -173064518
-    Data4: -1005776668
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &-5725713812574539641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +333,33 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &-5699656736956818383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Magic Circle/Magic Circle Submit
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Magic Circle/Magic Circle Submit
+  Guid:
+    Data1: -1912658319
+    Data2: 1236446776
+    Data3: -24481895
+    Data4: -593797943
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 4000
+  Length: 2191
 --- !u!114 &-4841401090273976155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,6 +531,33 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &-3842344267907604558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Machines/Bunsen Burner/Burn
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Machines/Bunsen Burner/Burn
+  Guid:
+    Data1: 1227421382
+    Data2: 1285139529
+    Data3: 1714267045
+    Data4: 1512668271
+  Banks:
+  - {fileID: 7331892254997206150}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 8000
+  Length: 1928
 --- !u!114 &-3474315408662018273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +661,30 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 750
   Length: 1050
+--- !u!114 &-1356890699160700848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music Manager/BGM Intensity
+  m_EditorClassIdentifier: 
+  Name: BGM Intensity
+  StudioPath: 
+  Min: 0
+  Max: 10
+  Default: 0
+  ID:
+    data1: 2763456249
+    data2: 1371815228
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-1338451231105212416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,14 +780,14 @@ MonoBehaviour:
     Data4: -77623433
   Banks:
   - {fileID: 7331892254997206150}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters:
   - {fileID: 6197941085388269817}
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 91320
 --- !u!114 &-208808985973638836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,10 +856,12 @@ MonoBehaviour:
   - {fileID: -8297779940375084325}
   - {fileID: 3585026753387032668}
   - {fileID: -6462225673093671230}
-  - {fileID: -5760817305434158726}
-  - {fileID: -6981039297725062035}
-  - {fileID: 2306812248748351898}
-  - {fileID: 8000054763610690250}
+  - {fileID: -8113626858470133396}
+  - {fileID: -6954325560230693448}
+  - {fileID: 7188457520073437151}
+  - {fileID: -5699656736956818383}
+  - {fileID: -6596262278903084399}
+  - {fileID: -3842344267907604558}
   EditorParameters:
   - {fileID: -3474315408662018273}
   - {fileID: -4352216224616514025}
@@ -775,7 +882,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 7007597937853415162}
   cacheVersion: 131848
-  cacheTime: 638895906698001819
+  cacheTime: 638896030193892777
   SerializableEventsDict:
   - key: event:/SFX/Ambience/Fireplace
     index: 0
@@ -827,14 +934,18 @@ MonoBehaviour:
     index: 23
   - key: event:/SFX/Ambience/Clock
     index: 24
-  - key: event:/SFX/Cthulu/Cthulu Spawn
-    index: 25
   - key: event:/SFX/Items/Water/Water Pour End
-    index: 26
+    index: 25
   - key: event:/SFX/Items/Water/Water Pour
-    index: 27
+    index: 26
   - key: event:/SFX/Items/Water/Water Pour Start
+    index: 27
+  - key: event:/SFX/Magic Circle/Magic Circle Submit
     index: 28
+  - key: event:/SFX/Cthulu/Tentacle Spawn
+    index: 29
+  - key: event:/SFX/Machines/Bunsen Burner/Burn
+    index: 30
 --- !u!114 &12941570004562122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,33 +1096,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &2306812248748351898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Items/Water/Water Pour
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Items/Water/Water Pour
-  Guid:
-    Data1: 544050964
-    Data2: 1194990558
-    Data3: 1306728341
-    Data4: -377056197
-  Banks:
-  - {fileID: 7331892254997206150}
-  IsStream: 1
-  Is3D: 1
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 3000
-  Length: 18600
 --- !u!114 &2449621225548233971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,7 +1146,7 @@ MonoBehaviour:
   Parameters:
   - {fileID: -6423602140287110012}
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 10000
   Length: 0
 --- !u!114 &2925648311631678380
 MonoBehaviour:
@@ -1084,14 +1168,15 @@ MonoBehaviour:
     Data4: 1273590336
   Banks:
   - {fileID: 7331892254997206150}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters:
   - {fileID: -2106600699525326897}
+  - {fileID: -1356890699160700848}
   MinDistance: 1
   MaxDistance: 20
-  Length: 15000
+  Length: 0
 --- !u!114 &3438436818721415865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,56 +1693,12 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638895906698001819
+  lastModified: 638896030193892777
   FileSizes:
   - Name: Desktop
-    Value: 3508
+    Value: 3618
   Exists: 1
---- !u!114 &7331892254997206150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/FMOD Banks/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638895906697721451
-  FileSizes:
-  - Name: Desktop
-    Value: 7686880
-  Exists: 1
---- !u!114 &7347295884685123188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Soul Grabbed
-  m_EditorClassIdentifier: 
-  Name: Soul Grabbed
-  StudioPath: parameter:/Potion Brewed Status/Soul Grabbed
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 1358246134
-    data2: 272857345
-  Type: 1
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &8000054763610690250
+--- !u!114 &7188457520073437151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1684,6 +1725,50 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2000
+--- !u!114 &7331892254997206150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD Banks/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638896030193825642
+  FileSizes:
+  - Name: Desktop
+    Value: 10964128
+  Exists: 1
+--- !u!114 &7347295884685123188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Soul Grabbed
+  m_EditorClassIdentifier: 
+  Name: Soul Grabbed
+  StudioPath: parameter:/Potion Brewed Status/Soul Grabbed
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1358246134
+    data2: 272857345
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &8355819736302701620
 MonoBehaviour:
   m_ObjectHideFlags: 0

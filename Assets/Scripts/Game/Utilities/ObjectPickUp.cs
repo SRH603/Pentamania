@@ -26,11 +26,32 @@ public class ObjectPickUp : MonoBehaviour
 
     private void OnGrabbed(SelectEnterEventArgs args)
     {
-        AudioManager.instance.PickupIngredient(GetComponent<PassableIngredientObject>());
+        var f = GetComponent<FluidContainer>();
+        if (f != null && !f.GetRealFluidIngredient().IsEmpty)
+        {
+            AudioManager.instance.PickupIngredient(7, gameObject);
+            Debug.Log("Picked up the object: " + 7);
+        }
+        else
+        {
+            AudioManager.instance.PickupIngredient(GetComponent<PassableIngredientObject>());
+            Debug.Log("Picked up the object: " + GetComponent<PassableIngredientObject>().GetAudioType());
+        }
     }
 
     private void OnReleased(SelectExitEventArgs args)
     {
-        AudioManager.instance.DropIngredient(GetComponent<PassableIngredientObject>());
+        var f = GetComponent<FluidContainer>();
+        if (f != null && !f.GetRealFluidIngredient().IsEmpty)
+        {
+            AudioManager.instance.PickupIngredient(7, gameObject);
+            Debug.Log("Dropped the object: " + 7);
+        }
+        else
+        {
+            AudioManager.instance.PickupIngredient(GetComponent<PassableIngredientObject>());
+            Debug.Log("Dropped the object: " + GetComponent<PassableIngredientObject>().GetAudioType());
+        }
+        
     }
 }

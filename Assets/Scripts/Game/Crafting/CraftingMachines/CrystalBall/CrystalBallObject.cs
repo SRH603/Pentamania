@@ -56,8 +56,8 @@ public class CrystalBallObject : MonoBehaviour
 
                 // CREATE PARTICLES HERE
                 if (craftingEffect != null) { craftingEffect.Play(); }
+                AudioManager.instance.PlaySound("crystal_ball_usage", gameObject);
             }
-            AudioManager.instance.PlaySound("crystal_ball_usage", gameObject);
             return;
         }
         
@@ -85,6 +85,7 @@ public class CrystalBallObject : MonoBehaviour
 
             // CREATE PARTICLES HERE
             if (craftingEffect != null) { craftingEffect.Play(); }
+            AudioManager.instance.PlaySound("crystal_ball_usage", gameObject);
         }
     }
 

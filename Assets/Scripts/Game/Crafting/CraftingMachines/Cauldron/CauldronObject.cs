@@ -144,7 +144,14 @@ public class CauldronObject : MonoBehaviour
     
     public void UpdateCustomTargetColor(Color color)
     {
-        targetColor = color;
+        Color.RGBToHSV(color, out float h, out float s, out float v);
+        
+        float oldV = v * 100f;
+        float mappedV = oldV / 100f * 80f;
+        float finalV = mappedV / 100f;
+
+        Color newColor = Color.HSVToRGB(h, s, finalV);
+        targetColor = newColor;
     }
 
     public Color GetCurrentLiquidColor()

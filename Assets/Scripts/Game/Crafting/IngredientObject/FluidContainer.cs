@@ -16,6 +16,11 @@ public class FluidContainer : SolidObject, IFluidContainer
     [SerializeField] private Material dustMat;
 
     [SerializeField] private bool isPouring;
+    
+    private AudioSource audioSource;
+
+    public AudioClip loopClip;
+
 
     //private bool isPouring;
     private CauldronLiquidReceiver receiverCache;
@@ -23,6 +28,15 @@ public class FluidContainer : SolidObject, IFluidContainer
     public float Capacity => capacity;
 
     public FluidStack CurrentFluid => fluidIngredient;
+    
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f;
+    }
+
 
     public FluidContainer(ItemStack ingredient,FluidStack fluidIngredient)
     {
@@ -164,6 +178,11 @@ public class FluidContainer : SolidObject, IFluidContainer
     {
         return fluidIngredient;
     }
+    
+    public FluidStack GetRealFluidIngredient()
+    {
+        return fluidIngredient;
+    }
 
     public void SetFluidIngredient(IngredientStack ingredient)
     {
@@ -192,7 +211,13 @@ public class FluidContainer : SolidObject, IFluidContainer
         main.startColor = fluidDisplay.GetComponent<Renderer>().sharedMaterial.GetColor("_BaseColor");
         if (pourEffect) pourEffect.Play();
         Debug.Log("[Container] Started pouring");
-        AudioManager.instance.PlaySound("water_pour_start", gameObject);
+         AudioManager.instance.PlaySound("water_pour_start", gameObject);
+        
+         /*
+        if (loopClip == null) return;
+        audioSource.clip = loopClip;
+        audioSource.Play();
+        */
     }
 
     public void StopPour()
@@ -201,7 +226,11 @@ public class FluidContainer : SolidObject, IFluidContainer
         isPouring = false;
         if (pourEffect) pourEffect.Stop();
         Debug.Log("[Container] Stopped pouring");
-        AudioManager.instance.PlaySound("water_pour_stop", gameObject);
+         AudioManager.instance.PlaySound("water_pour_stop", gameObject);
+        
+         /*
+        audioSource.Stop();
+        audioSource.clip = null;*/
     }
 
     /*

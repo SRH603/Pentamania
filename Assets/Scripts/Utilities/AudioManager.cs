@@ -32,6 +32,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference waterPourStart;
     [SerializeField] private EventReference waterPourStop;
 
+    [SerializeField] private EventReference cthuluTentacleSpawn;
+
     [Header("Items")]
     [SerializeField] private EventReference pickupEvent;
     [SerializeField] private EventReference dropEvent;
@@ -125,6 +127,7 @@ public class AudioManager : MonoBehaviour
             case "mortar_grind":
                 eventInstance = RuntimeManager.CreateInstance(mortarGrind);
                 break;
+
             
             case "water_pour_start":
                 eventInstance = RuntimeManager.CreateInstance(waterPourStart);
@@ -132,6 +135,14 @@ public class AudioManager : MonoBehaviour
             
             case "water_pour_stop":
                 eventInstance = RuntimeManager.CreateInstance(waterPourStop);
+                break;
+            
+            case "cthulu_tentacle_spawn":
+                eventInstance = RuntimeManager.CreateInstance(cthuluTentacleSpawn);
+                break;
+            
+            case "crystal_ball_usage":
+                eventInstance = RuntimeManager.CreateInstance(crystalBallUsage);
                 break;
             
             default:
@@ -172,6 +183,14 @@ public class AudioManager : MonoBehaviour
         eventInstance.release();
     }
 
+    public void PlayMusic(int scene)
+    {
+        EventInstance musicInstance = RuntimeManager.CreateInstance(musicManager);
+        musicInstance.setParameterByName("Scene", scene);
+        musicInstance.start();
+        musicInstance.release();
+    }
+
 
     public void PickupIngredient(PassableIngredientObject ingredientObject)
     {
@@ -182,12 +201,32 @@ public class AudioManager : MonoBehaviour
         pickupInstance.start();
         pickupInstance.release();
     }
+    
+    public void PickupIngredient(int audioType, GameObject gameObject)
+    {
+        pickupInstance = RuntimeManager.CreateInstance(pickupEvent);
+        RuntimeManager.AttachInstanceToGameObject(pickupInstance, gameObject);
+        print("playing ts pmo " + audioType);
+        pickupInstance.setParameterByName("Item", audioType);
+        pickupInstance.start();
+        pickupInstance.release();
+    }
 
     public void DropIngredient(PassableIngredientObject ingredientObject)
     {
         dropInstance = RuntimeManager.CreateInstance(dropEvent);
         RuntimeManager.AttachInstanceToGameObject(dropInstance, ingredientObject.gameObject);
         pickupInstance.setParameterByName("Item", ingredientObject.GetAudioType());
+        dropInstance.start();
+        dropInstance.release();
+        
+    }
+    
+    public void DropIngredient(int audioType, GameObject gameObject)
+    {
+        dropInstance = RuntimeManager.CreateInstance(dropEvent);
+        RuntimeManager.AttachInstanceToGameObject(dropInstance, gameObject);
+        pickupInstance.setParameterByName("Item", audioType);
         dropInstance.start();
         dropInstance.release();
         

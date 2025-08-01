@@ -15,4 +15,4 @@ MonoBehaviour:
   ingredientId: bowl
   audioType: 6
   maxStack: 2147483647
-  baseIngredient: {fileID: 0}
+  baseIngredient: {fileID: 5639690126711625622, guid: 36cc1b3e73d454405a2cf9eb3e47a9b3, type: 3}

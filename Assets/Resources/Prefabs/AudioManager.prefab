@@ -114,6 +114,13 @@ MonoBehaviour:
       Data3: 1771818399
       Data4: 479271033
     Path: event:/SFX/Machines/Cauldron/[TODO] Cauldron Shaking
+  magicCircleAccept:
+    Guid:
+      Data1: -1912658319
+      Data2: 1236446776
+      Data3: -24481895
+      Data4: -593797943
+    Path: event:/SFX/Magic Circle/Magic Circle Submit
   bunsenBurnerStart:
     Guid:
       Data1: -68654755
@@ -128,6 +135,34 @@ MonoBehaviour:
       Data3: 1580128174
       Data4: 1659384432
     Path: event:/SFX/Machines/Bunsen Burner/Stop
+  bunsenBurnerBurn:
+    Guid:
+      Data1: 1227421382
+      Data2: 1285139529
+      Data3: 1714267045
+      Data4: 1512668271
+    Path: event:/SFX/Machines/Bunsen Burner/Burn
+  waterPourStart:
+    Guid:
+      Data1: -1233949149
+      Data2: 1316669084
+      Data3: -1213907288
+      Data4: 586318840
+    Path: event:/SFX/Items/Water/Water Pour Start
+  waterPourStop:
+    Guid:
+      Data1: -1137881088
+      Data2: 1200771249
+      Data3: 740175034
+      Data4: -733388044
+    Path: event:/SFX/Items/Water/Water Pour End
+  cthuluTentacleSpawn:
+    Guid:
+      Data1: -98281547
+      Data2: 1291840017
+      Data3: -173064518
+      Data4: -1005776668
+    Path: event:/SFX/Cthulu/Tentacle Spawn
   pickupEvent:
     Guid:
       Data1: 1116238938

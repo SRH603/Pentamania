@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: burnttermero
   m_EditorClassIdentifier: 
   input:
-    def: {fileID: 11400000, guid: 6dc31c5fe32aa48bdbd82884634e1433, type: 2}
+    def: {fileID: 11400000, guid: 5a8ab482750244c74a3264a4f43a64f8, type: 2}
     amount: 1
     tags: []
   output:
-    def: {fileID: 11400000, guid: 5a8ab482750244c74a3264a4f43a64f8, type: 2}
+    def: {fileID: 11400000, guid: 6dc31c5fe32aa48bdbd82884634e1433, type: 2}
     amount: 1
     tags: []
   burnTime: 5

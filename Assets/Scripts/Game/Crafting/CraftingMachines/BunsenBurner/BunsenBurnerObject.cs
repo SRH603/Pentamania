@@ -56,10 +56,11 @@ public class BunsenBurnerObject : MonoBehaviour
         bool burned = cur.tags != null &&
                       cur.tags.Exists(t => t.ingredientTagDef == burnedTagDef);
         
-        AudioManager.instance.PlaySound("bunsen_burn", gameObject);
+        
         if (burned)
         {
             if (vfxBurned) vfxBurned.Play();
+            AudioManager.instance.PlaySound("bunsen_burn", gameObject);
             Debug.Log("[BunsenObj] Burned with no recipe");
         }
         else

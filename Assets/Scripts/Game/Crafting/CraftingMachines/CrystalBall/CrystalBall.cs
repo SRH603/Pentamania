@@ -63,11 +63,19 @@ public class CrystalBall
 
     private bool MatchRecipe(CrystalBallRecipe recipe, IngredientStack ingredient)
     {
+        if (ingredient == null || recipe == null)
+        {
+            return false;
+        }
         return ingredient.GetAbstractDef().GetId().Equals(recipe.GetReactant().GetAbstractDef().GetId());
     }
 
     private bool MatchReverseRecipe(CrystalBallRecipe recipe, IngredientStack ingredient)
     {
+        if (ingredient == null || recipe == null)
+        {
+            return false;
+        }
         return ingredient.GetAbstractDef().GetId().Equals(recipe.GetProduct().GetAbstractDef().GetId());
     }
 }

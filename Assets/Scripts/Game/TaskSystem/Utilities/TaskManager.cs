@@ -243,6 +243,7 @@ public class TaskManager : MonoBehaviour
         finishedTaskList.Add(task);
 
         SpawnTentacle(taskFinished);
+        AudioManager.instance.PlaySound("cthulu_tentacle_spawn", gameObject);
         taskFinished ++;
         Debug.Log("[Task System] Task completed: " + task.displayName);
         SpawnRewards(task);
