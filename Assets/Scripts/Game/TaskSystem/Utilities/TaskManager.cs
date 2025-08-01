@@ -27,6 +27,8 @@ public class TaskManager : MonoBehaviour
     public event Action<TaskDef> TaskCompleted;
     public event Action TaskAssigned;
 
+    public float taskWaitTime;
+
     private void Awake()
     {
         if (Instance != null)
@@ -259,7 +261,7 @@ public class TaskManager : MonoBehaviour
     private IEnumerator DelayedAssignNextTask()
     {
         Debug.Log("[Task System] Waiting 10s before assigning next task...");
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(taskWaitTime);
     
         if (TaskAssigner.Instance != null)
         {

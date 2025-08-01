@@ -14,6 +14,7 @@ public class CauldronScoopReceiver : MonoBehaviour
         var c = other.GetComponent<IFluidContainer>();
         if (c == null)
             return;
+        AudioManager.instance.PlaySound("cauldron_pickup", gameObject);
         cauldron.TryScoopLiquid(c);
     }
 }

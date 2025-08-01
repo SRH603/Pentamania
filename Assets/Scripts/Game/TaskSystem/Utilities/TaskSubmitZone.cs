@@ -33,6 +33,7 @@ public class TaskSubmitZone : MonoBehaviour
             return;
         }
 
+        AudioManager.instance.PlaySound("magic_circle_accept", gameObject);
         Debug.Log("[Task System] Submited " + stack.Def.GetId() + " x " + stack.volume);
         manager.SubmitItem(stack, itemStack.amount);
         Destroy(solid.gameObject);

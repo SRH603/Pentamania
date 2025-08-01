@@ -55,7 +55,8 @@ public class BunsenBurnerObject : MonoBehaviour
         ItemStack cur = (ItemStack)so.GetIngredient();
         bool burned = cur.tags != null &&
                       cur.tags.Exists(t => t.ingredientTagDef == burnedTagDef);
-
+        
+        AudioManager.instance.PlaySound("bunsen_burn", gameObject);
         if (burned)
         {
             if (vfxBurned) vfxBurned.Play();

@@ -17,7 +17,7 @@ public class CrystalBallObject : MonoBehaviour
     private void Awake()
     {
         ballData = new CrystalBall(recipeList);
-
+        AudioManager.instance.PlaySound("crystal_ball_ambience", gameObject);
     }
 
     public void IngredientObjectEntered(PassableIngredientObject ingredientObject)

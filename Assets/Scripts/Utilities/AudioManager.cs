@@ -22,9 +22,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EventReference cauldronFailure;
     [SerializeField] private EventReference cauldronTakeIngredient;
     [SerializeField] private EventReference cauldronShaking;
+    
+    [SerializeField] private EventReference magicCircleAccept;
 
     [SerializeField] private EventReference bunsenBurnerStart;
     [SerializeField] private EventReference bunsenBurnerStop;
+    [SerializeField] private EventReference bunsenBurnerBurn;
 
     [SerializeField] private EventReference waterPourStart;
     [SerializeField] private EventReference waterPourStop;
@@ -87,6 +90,10 @@ public class AudioManager : MonoBehaviour
                 eventInstance = RuntimeManager.CreateInstance(cauldronFailure);
                 break;
             
+            case "magic_circle_accept":
+                eventInstance = RuntimeManager.CreateInstance(magicCircleAccept);
+                break;
+            
             case "cauldron_pickup":
                 eventInstance = RuntimeManager.CreateInstance(cauldronTakeIngredient);
                 break;
@@ -97,6 +104,10 @@ public class AudioManager : MonoBehaviour
             
             case "bunsen_stop":
                 eventInstance = RuntimeManager.CreateInstance(bunsenBurnerStop);
+                break;
+            
+            case "bunsen_burn":
+                eventInstance = RuntimeManager.CreateInstance(bunsenBurnerBurn);
                 break;
             
             case "book_page_flip":
