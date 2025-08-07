@@ -882,7 +882,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 7007597937853415162}
   cacheVersion: 131848
-  cacheTime: 638896030193892777
+  cacheTime: 638896462190000000
   SerializableEventsDict:
   - key: event:/SFX/Ambience/Fireplace
     index: 0
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638896030193892777
+  lastModified: 638896462190000000
   FileSizes:
   - Name: Desktop
     Value: 3618
@@ -1740,7 +1740,7 @@ MonoBehaviour:
   Path: Assets/FMOD Banks/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638896030193825642
+  lastModified: 638896462190000000
   FileSizes:
   - Name: Desktop
     Value: 10964128

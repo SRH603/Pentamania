@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{4ee8b59b-7419-4654-9f36-75e4f2cb8acc}">
+		<property name="assetPath">
+			<value>plant_pickup - Marker #2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.59583333333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{30628f8f-2603-46eb-b44f-c25ba4abd98f}</destination>
+		</relationship>
+	</object>
+</objects>

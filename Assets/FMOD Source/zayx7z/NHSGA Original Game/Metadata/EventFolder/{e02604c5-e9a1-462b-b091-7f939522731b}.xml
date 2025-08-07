@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EventFolder" id="{e02604c5-e9a1-462b-b091-7f939522731b}">
+		<property name="note">
+			<value>TODO
+
+Slight ambient hum
+sparkle woosh when used
+different sound from good -&gt; evil, evil -&gt; good
+</value>
+		</property>
+		<property name="name">
+			<value>Crystal Ball</value>
+		</property>
+		<relationship name="folder">
+			<destination>{1804001d-b7b8-4e97-9d00-f4ac7941505b}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{8f65aa0e-f031-4324-b82a-d43d8033197f}">
+		<property name="assetPath">
+			<value>KSHMR Chime Transition 03 - Up.flac</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>7.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{30628f8f-2603-46eb-b44f-c25ba4abd98f}</destination>
+		</relationship>
+	</object>
+</objects>

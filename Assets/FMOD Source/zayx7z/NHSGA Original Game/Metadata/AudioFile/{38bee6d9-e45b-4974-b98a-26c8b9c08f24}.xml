@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{38bee6d9-e45b-4974-b98a-26c8b9c08f24}">
+		<property name="assetPath">
+			<value>2  PENTAMANIA_VOICELINE_Potion Fail 2.flac</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>30.719999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{30628f8f-2603-46eb-b44f-c25ba4abd98f}</destination>
+		</relationship>
+	</object>
+</objects>

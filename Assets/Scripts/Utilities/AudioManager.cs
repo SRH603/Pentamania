@@ -69,7 +69,12 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-    
+
+    void Start()
+    {
+        //FMODUnity.RuntimeManager.LoadBank("NewMaster", true);
+        //FMODUnity.RuntimeManager.LoadBank("NewMaster.strings", true);
+    }
     
     public void PlaySound(string sound, GameObject gameobject)
     {

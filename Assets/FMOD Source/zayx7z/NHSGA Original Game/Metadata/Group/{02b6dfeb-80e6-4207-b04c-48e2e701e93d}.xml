@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{02b6dfeb-80e6-4207-b04c-48e2e701e93d}">
+		<property name="name">
+			<value>Crystal Ball</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{a7d5babe-42f8-4f62-a234-719801d8c74d}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{d79dc0bf-e18e-4461-843f-a7643f3cfee7}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{738d868a-d68d-4679-97b6-a10b4fbb0937}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{a7d5babe-42f8-4f62-a234-719801d8c74d}">
+		<relationship name="effects">
+			<destination>{6abd9dd3-2886-45cb-b6d4-346be537b501}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{d79dc0bf-e18e-4461-843f-a7643f3cfee7}" />
+	<object class="MixerBusFader" id="{6abd9dd3-2886-45cb-b6d4-346be537b501}" />
+</objects>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{7a72f67a-75d5-41a7-a63f-8aeee2c3da2d}">
+		<property name="name">
+			<value>Nightmare Potion Brewed</value>
+		</property>
+		<relationship name="folder">
+			<destination>{115a2a89-2e2c-4b4c-84ae-084696e65e67}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{a4371c7b-829d-42f3-b3a7-e1058105d5e2}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{a4371c7b-829d-42f3-b3a7-e1058105d5e2}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

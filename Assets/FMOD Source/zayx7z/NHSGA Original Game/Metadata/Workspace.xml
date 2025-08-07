@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="Workspace" id="{a819ca93-04bc-46dd-b10a-48c4081199d4}">
+		<property name="builtBanksOutputDirectory">
+			<value>../../../NHSGA 25/Original Round/perforce/project/Pentamania/Assets/FMOD Banks</value>
+		</property>
+		<relationship name="masterEventFolder">
+			<destination>{dff9f6f1-222b-413a-8f3c-bed95328d0a1}</destination>
+		</relationship>
+		<relationship name="masterTagFolder">
+			<destination>{d25c5bbc-1a17-4ba9-ae39-805490873b60}</destination>
+		</relationship>
+		<relationship name="masterEffectPresetFolder">
+			<destination>{58d8b40f-c55b-42de-8964-485ad36b452f}</destination>
+		</relationship>
+		<relationship name="masterParameterPresetFolder">
+			<destination>{63511fb4-39e3-4979-8d52-96b87437f1ab}</destination>
+		</relationship>
+		<relationship name="masterBankFolder">
+			<destination>{fece9359-fccc-482a-907b-10ddd48e1ef5}</destination>
+		</relationship>
+		<relationship name="masterSandboxFolder">
+			<destination>{698aa6e2-d00f-461e-aee7-413c6f7d9002}</destination>
+		</relationship>
+		<relationship name="masterAssetFolder">
+			<destination>{30628f8f-2603-46eb-b44f-c25ba4abd98f}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{7923550b-3fca-452c-a6c2-3a07aa1e5955}</destination>
+		</relationship>
+		<relationship name="profilerSessionFolder">
+			<destination>{c5b3b9a4-e5ec-4b6c-b30e-b919b4cea0bd}</destination>
+		</relationship>
+		<relationship name="platforms">
+			<destination>{6ed46757-315d-4be3-896d-4d80e95a5e05}</destination>
+		</relationship>
+	</object>
+</objects>

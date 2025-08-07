@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{f70bf37a-a194-4195-b612-ae41bee468ee}">
+		<property name="name">
+			<value>Bunsen Burner</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{e8c35705-41d6-4e46-822b-994a3ab25aa1}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{6dafd3c7-47a2-494e-8454-9112f524f299}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{738d868a-d68d-4679-97b6-a10b4fbb0937}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{e8c35705-41d6-4e46-822b-994a3ab25aa1}">
+		<relationship name="effects">
+			<destination>{13765131-d024-4f35-bb8d-4e317e2c3cb8}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{6dafd3c7-47a2-494e-8454-9112f524f299}" />
+	<object class="MixerBusFader" id="{13765131-d024-4f35-bb8d-4e317e2c3cb8}" />
+</objects>

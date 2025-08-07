@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{2039de01-8809-4b8b-b155-6b1cfc2b5438}">
+		<property name="name">
+			<value>BGM Intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{63511fb4-39e3-4979-8d52-96b87437f1ab}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{52020636-8789-40c1-b426-7bdd1aeb1b36}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{52020636-8789-40c1-b426-7bdd1aeb1b36}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>11</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

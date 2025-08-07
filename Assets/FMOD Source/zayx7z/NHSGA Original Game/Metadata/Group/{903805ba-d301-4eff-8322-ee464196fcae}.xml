@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{903805ba-d301-4eff-8322-ee464196fcae}">
+		<property name="name">
+			<value>Cauldron</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{aafa0dbd-0682-4638-b1ee-87783393b711}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{68daa23f-d201-4f7e-a497-31be50ca713d}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{738d868a-d68d-4679-97b6-a10b4fbb0937}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{aafa0dbd-0682-4638-b1ee-87783393b711}">
+		<relationship name="effects">
+			<destination>{7c2052df-1d1a-4019-bc13-8c36e415b51e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{68daa23f-d201-4f7e-a497-31be50ca713d}" />
+	<object class="MixerBusFader" id="{7c2052df-1d1a-4019-bc13-8c36e415b51e}" />
+</objects>

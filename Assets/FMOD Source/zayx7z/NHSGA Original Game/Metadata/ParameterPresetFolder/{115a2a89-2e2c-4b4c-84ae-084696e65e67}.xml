@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPresetFolder" id="{115a2a89-2e2c-4b4c-84ae-084696e65e67}">
+		<property name="name">
+			<value>Potion Brewed Status</value>
+		</property>
+		<relationship name="folder">
+			<destination>{63511fb4-39e3-4979-8d52-96b87437f1ab}</destination>
+		</relationship>
+	</object>
+</objects>

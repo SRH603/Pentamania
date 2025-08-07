@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{f43a898e-aba3-4fc3-891a-e93c24433e42}">
+		<property name="name">
+			<value>Mortar and Pestle</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{2e10cf8c-6d8d-44f7-9a63-85bcb54b2633}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{192617b6-1b27-4fd5-b860-854c078a39f5}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{738d868a-d68d-4679-97b6-a10b4fbb0937}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{2e10cf8c-6d8d-44f7-9a63-85bcb54b2633}">
+		<relationship name="effects">
+			<destination>{573852b0-84c0-4558-a967-fda69f34d25b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{192617b6-1b27-4fd5-b860-854c078a39f5}" />
+	<object class="MixerBusFader" id="{573852b0-84c0-4558-a967-fda69f34d25b}" />
+</objects>

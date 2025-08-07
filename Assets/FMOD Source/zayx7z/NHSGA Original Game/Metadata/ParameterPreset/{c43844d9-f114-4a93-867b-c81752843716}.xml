@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{c43844d9-f114-4a93-867b-c81752843716}">
+		<property name="name">
+			<value>Scorch Potion Brewed</value>
+		</property>
+		<relationship name="folder">
+			<destination>{115a2a89-2e2c-4b4c-84ae-084696e65e67}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{69ae4869-9070-44e6-b1ab-f5f37c136c65}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{69ae4869-9070-44e6-b1ab-f5f37c136c65}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

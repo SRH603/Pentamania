@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{f7582704-3ae2-4518-b446-94864c2d789e}">
+		<property name="name">
+			<value>Voiceline Event</value>
+		</property>
+		<relationship name="folder">
+			<destination>{63511fb4-39e3-4979-8d52-96b87437f1ab}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{5920e55c-f51e-4899-a515-958832720113}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{5920e55c-f51e-4899-a515-958832720113}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>21</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

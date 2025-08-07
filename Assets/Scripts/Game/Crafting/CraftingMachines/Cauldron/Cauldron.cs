@@ -431,33 +431,50 @@ private Dictionary<string, double> BuildTagMap()
 }
 */
 
-private Dictionary<IngredientTagDef, double> BuildTagMap()
-{
-    var map = new Dictionary<IngredientTagDef, double>();
-    
-    foreach (var st in itemStorage.View())
+    private Dictionary<IngredientTagDef, double> BuildTagMap()
     {
-        if (st.IsEmpty || st.tags == null) continue;
-        foreach (var t in st.tags)
+        var map = new Dictionary<IngredientTagDef, double>();
+
+        foreach (var st in itemStorage.View())
         {
-            double add = t.value * st.amount;
-            if (map.TryGetValue(t.ingredientTagDef, out var cur)) map[t.ingredientTagDef] = cur + add;
-            else map[t.ingredientTagDef] = add;
+            if (st.IsEmpty || st.tags == null) continue;
+            foreach (var t in st.tags)
+            {
+                if (t == null || t.ingredientTagDef == null)
+                {
+                    Debug.LogWarning($"[BuildTagMap] Empty Tag or TagDef: {st.Def?.name}");
+                    continue;
+                }
+
+                double add = t.value * st.amount;
+                if (map.TryGetValue(t.ingredientTagDef, out var cur))
+                    map[t.ingredientTagDef] = cur + add;
+                else
+                    map[t.ingredientTagDef] = add;
+            }
         }
-    }
-    
-    foreach (var fl in fluidStorage.View())
-    {
-        if (fl.IsEmpty || fl.tags == null) continue;
-        foreach (var t in fl.tags)
+
+        foreach (var fl in fluidStorage.View())
         {
-            double add = t.value * fl.volume;
-            if (map.TryGetValue(t.ingredientTagDef, out var cur)) map[t.ingredientTagDef] = cur + add;
-            else map[t.ingredientTagDef] = add;
+            if (fl.IsEmpty || fl.tags == null) continue;
+            foreach (var t in fl.tags)
+            {
+                if (t == null || t.ingredientTagDef == null)   // ② 同理
+                {
+                    Debug.LogWarning($"[BuildTagMap] 空 Tag 或 TagDef，来源：{fl.Def?.name}");
+                    continue;
+                }
+
+                double add = t.value * fl.volume;
+                if (map.TryGetValue(t.ingredientTagDef, out var cur))
+                    map[t.ingredientTagDef] = cur + add;
+                else
+                    map[t.ingredientTagDef] = add;
+            }
         }
+        return map;
     }
-    return map;
-}
+
 
 
     public float GetSimilarity(

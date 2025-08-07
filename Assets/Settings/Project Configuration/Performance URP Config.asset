@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Cascade4Split: {x: 0.067, y: 0.2, z: 0.467}
   m_CascadeBorder: 0.44000003
   m_ShadowDepthBias: 0.81
-  m_ShadowNormalBias: 6.21
+  m_ShadowNormalBias: 6.38
   m_AnyShadowsSupported: 1
   m_SoftShadowsSupported: 1
   m_ConservativeEnclosingSphere: 1
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_MaxPixelLights: 0
   m_ShadowAtlasResolution: 256
   m_VolumeFrameworkUpdateMode: 1
-  m_VolumeProfile: {fileID: 0}
+  m_VolumeProfile: {fileID: 11400000, guid: 857291ab5850f4348baa6b7c8e67211d, type: 2}
   apvScenesData:
     obsoleteSceneBounds:
       m_Keys: []

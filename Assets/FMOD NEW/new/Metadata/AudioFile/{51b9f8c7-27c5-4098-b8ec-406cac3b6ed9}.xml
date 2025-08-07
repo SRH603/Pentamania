@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{51b9f8c7-27c5-4098-b8ec-406cac3b6ed9}">
+		<property name="assetPath">
+			<value>betterpour_loop (1).wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>18.600000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d4920161-37a9-4250-9a63-29d173439edb}</destination>
+		</relationship>
+	</object>
+</objects>

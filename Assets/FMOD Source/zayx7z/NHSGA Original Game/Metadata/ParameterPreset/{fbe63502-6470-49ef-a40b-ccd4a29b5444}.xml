@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{fbe63502-6470-49ef-a40b-ccd4a29b5444}">
+		<property name="name">
+			<value>Crystal Ball Usage State</value>
+		</property>
+		<relationship name="folder">
+			<destination>{63511fb4-39e3-4979-8d52-96b87437f1ab}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{8b38dc52-b089-439c-9044-c10c6797ef49}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{8b38dc52-b089-439c-9044-c10c6797ef49}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

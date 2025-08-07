@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="Snapshot" id="{ce1468cd-2a26-438e-a4e4-979cc345a729}">
+		<property name="name">
+			<value>Pause Snapshot</value>
+		</property>
+		<relationship name="mixer">
+			<destination>{7923550b-3fca-452c-a6c2-3a07aa1e5955}</destination>
+		</relationship>
+		<relationship name="automatableProperties">
+			<destination>{4c5b2da0-8bad-4afe-a35e-7b724209566a}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{7a6bd4f7-981c-4481-95f9-1170a6c27a78}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{a3f0d0a5-9537-4068-91b9-1896d166f6fd}</destination>
+		</relationship>
+		<relationship name="snapshotMasterTrack">
+			<destination>{e20e515e-80a6-43b3-a9d2-0f048024444d}</destination>
+		</relationship>
+		<relationship name="snapshotProperties">
+			<destination>{539859ec-45d4-4730-8e7d-26031ca3d752}</destination>
+		</relationship>
+		<relationship name="snapshotTracks">
+			<destination>{48375fd2-1a25-4daa-8da3-dbfa58d97383}</destination>
+		</relationship>
+	</object>
+	<object class="EventAutomatableProperties" id="{4c5b2da0-8bad-4afe-a35e-7b724209566a}" />
+	<object class="MarkerTrack" id="{7a6bd4f7-981c-4481-95f9-1170a6c27a78}" />
+	<object class="Timeline" id="{a3f0d0a5-9537-4068-91b9-1896d166f6fd}" />
+	<object class="SnapshotMasterTrack" id="{e20e515e-80a6-43b3-a9d2-0f048024444d}" />
+	<object class="SnapshotProperty" id="{539859ec-45d4-4730-8e7d-26031ca3d752}">
+		<property name="propertyName">
+			<value>frequencyA</value>
+		</property>
+		<property name="value">
+			<value>1800</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{efe4ad49-fde4-403c-b0a2-8a89b5376fe4}</destination>
+		</relationship>
+		<relationship name="automatableObject">
+			<destination>{2cb69827-3a38-4ac3-bfc7-4d6011d45a34}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotTrack" id="{48375fd2-1a25-4daa-8da3-dbfa58d97383}">
+		<relationship name="mixerStrip">
+			<destination>{6ceeab86-463d-48b7-94b5-4127b5d5942b}</destination>
+		</relationship>
+	</object>
+	<object class="SeekModulator" id="{efe4ad49-fde4-403c-b0a2-8a89b5376fe4}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>value</value>
+		</property>
+		<property name="speedAscending">
+			<value>2</value>
+		</property>
+	</object>
+</objects>

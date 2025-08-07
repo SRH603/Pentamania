@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EventFolder" id="{2e675515-774d-4b95-8dde-02fc3a64863a}">
+		<property name="name">
+			<value>Potion Fail</value>
+		</property>
+		<relationship name="folder">
+			<destination>{88bbb703-7c9c-48f5-b571-5b4a7f1da8a5}</destination>
+		</relationship>
+	</object>
+</objects>

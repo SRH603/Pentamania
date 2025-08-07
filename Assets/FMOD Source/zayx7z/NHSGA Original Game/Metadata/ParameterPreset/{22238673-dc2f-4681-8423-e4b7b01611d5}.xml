@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{22238673-dc2f-4681-8423-e4b7b01611d5}">
+		<property name="name">
+			<value>Release Potion Brewed</value>
+		</property>
+		<relationship name="folder">
+			<destination>{115a2a89-2e2c-4b4c-84ae-084696e65e67}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{80d5b46c-4bdb-4aea-b7a8-83858e2f66a2}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{80d5b46c-4bdb-4aea-b7a8-83858e2f66a2}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

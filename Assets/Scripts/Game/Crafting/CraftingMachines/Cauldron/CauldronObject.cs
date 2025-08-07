@@ -50,7 +50,7 @@ public class CauldronObject : MonoBehaviour
     [SerializeField] private List<FluidDef> potionSounds;
     [SerializeField] private GameObject voiceLocation;
 
-    private bool isBubbling;
+    [SerializeField] private bool isBubbling;
 
     private void Awake()
     {
@@ -98,14 +98,14 @@ public class CauldronObject : MonoBehaviour
                 AudioManager.instance.PlaySound("cauldron_start", gameObject);
             isBubbling = true;
         }
-        /*
+        
         else
         {
-            if (isBubbling == true)
-                AudioManager.instance.PlaySound("cauldron_", gameObject);
+            //if (isBubbling == true)
+                //AudioManager.instance.PlaySound("cauldron_", gameObject);
             isBubbling = false;
         }
-        */
+        
             
     }
 
@@ -336,6 +336,7 @@ public class CauldronObject : MonoBehaviour
                     {
                         AudioManager.instance.PlayVoiceLine(3, voiceLocation, potionSounds.IndexOf(potion));
                         AudioManager.instance.PlaySound("cauldron_success", gameObject);
+                        isBubbling = false;
                         break;
                     }
                 }
@@ -344,7 +345,6 @@ public class CauldronObject : MonoBehaviour
         }
         else
         {
-            AudioManager.instance.PlaySound("cauldron_failure", gameObject);
             if (violatePower)
                 AudioManager.instance.PlayVoiceLine(1, voiceLocation);
             else
@@ -392,6 +392,7 @@ public class CauldronObject : MonoBehaviour
 
     private void HandleExplosion(float power)
     {
+        AudioManager.instance.PlaySound("cauldron_failure", gameObject);
         Debug.Log($"[Cauldron] EXPLOSION! power={power}");
         OnExplodeVisual?.Invoke(power);
         data.HandleExplosion(power);

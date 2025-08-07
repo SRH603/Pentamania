@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EventFolder" id="{de1514eb-09af-43eb-b768-7003d7e31355}">
+		<property name="name">
+			<value>Bunsen Burner</value>
+		</property>
+		<relationship name="folder">
+			<destination>{1804001d-b7b8-4e97-9d00-f4ac7941505b}</destination>
+		</relationship>
+	</object>
+</objects>
