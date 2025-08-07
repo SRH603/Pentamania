@@ -446,6 +446,7 @@ private Dictionary<string, double> BuildTagMap()
                     continue;
                 }
 
+                
                 double add = t.value * st.amount;
                 if (map.TryGetValue(t.ingredientTagDef, out var cur))
                     map[t.ingredientTagDef] = cur + add;
